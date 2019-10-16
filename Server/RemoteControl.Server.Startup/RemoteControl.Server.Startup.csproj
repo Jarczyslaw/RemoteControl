@@ -38,6 +38,9 @@
     <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\..\packages\CommonServiceLocator.2.0.4\lib\net47\CommonServiceLocator.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NLog.4.6.7\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="Prism, Version=7.2.0.1367, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Prism.Core.7.2.0.1367\lib\net45\Prism.dll</HintPath>
     </Reference>
@@ -50,9 +53,13 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
@@ -89,6 +96,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppExceptionHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -116,6 +124,26 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\JToolbox\JToolbox.AppConfig\JToolbox.AppConfig.csproj">
+      <Project>{7ace141d-b773-41ab-a8dc-467d98a4c821}</Project>
+      <Name>JToolbox.AppConfig</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\JToolbox\JToolbox.Core\JToolbox.Core.csproj">
+      <Project>{2FD449ED-DC75-479B-A68E-648018D19605}</Project>
+      <Name>JToolbox.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\JToolbox\JToolbox.Desktop.Dialogs\JToolbox.Desktop.Dialogs.csproj">
+      <Project>{7519097d-59ff-4717-a043-c083a7aa9a5d}</Project>
+      <Name>JToolbox.Desktop.Dialogs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\JToolbox\JToolbox.Logging\JToolbox.Logging.csproj">
+      <Project>{19241834-978d-4d78-b638-f2d09f334a7d}</Project>
+      <Name>JToolbox.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\JToolbox\WPF\JToolbox.WPF.Core\JToolbox.WPF.Core.csproj">
+      <Project>{56BEE9B3-2FCB-46E7-A837-D07F0BFCBD98}</Project>
+      <Name>JToolbox.WPF.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\JToolbox\WPF\JToolbox.WPF.PrismCore\JToolbox.WPF.PrismCore.csproj">
       <Project>{236252FE-AA5D-434F-87EA-1342C5B6E3B9}</Project>
       <Name>JToolbox.WPF.PrismCore</Name>
@@ -123,6 +151,10 @@
     <ProjectReference Include="..\..\JToolbox\WPF\JToolbox.WPF.UI\JToolbox.WPF.UI.csproj">
       <Project>{9594d7ee-c5d6-4f07-8f3e-63b7c83e21d0}</Project>
       <Name>JToolbox.WPF.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\JToolbox\WPF\JToolbox.WPF.Windows\JToolbox.WPF.Windows.csproj">
+      <Project>{44ce1158-08ab-452e-abcd-c6e305e1a01a}</Project>
+      <Name>JToolbox.WPF.Windows</Name>
     </ProjectReference>
     <ProjectReference Include="..\RemoteControl.Server.Core\RemoteControl.Server.Core.csproj">
       <Project>{84264C4D-C966-403A-AB8B-CA3CC46B6C45}</Project>

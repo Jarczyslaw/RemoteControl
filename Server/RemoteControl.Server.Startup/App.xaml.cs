@@ -1,4 +1,8 @@
-﻿using JToolbox.WPF.PrismCore;
+﻿using JToolbox.AppConfig;
+using JToolbox.Core.Abstraction;
+using JToolbox.Desktop.Dialogs;
+using JToolbox.Logging;
+using JToolbox.WPF.PrismCore;
 using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Unity;
@@ -16,6 +20,16 @@ namespace RemoteControl.Server.Startup
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterSingleton<ILoggerService, LoggerService>();
+            containerRegistry.RegisterSingleton<IDialogsService, DialogsService>();
+            containerRegistry.RegisterSingleton<IAppConfigService, AppConfigService>();
+            RegisterGlobalExceptionHandler();
+        }
+
+        private void RegisterGlobalExceptionHandler()
+        {
+            var globalExceptionHandler = Container.Resolve<AppExceptionHandler>();
+            globalExceptionHandler.Register();
         }
 
         protected override void InitializeShell(Window shell)
@@ -35,11 +49,17 @@ namespace RemoteControl.Server.Startup
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            var logger = Container.Resolve<ILoggerService>();
+            logger.Info("App started");
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
             base.OnExit(e);
+
+            var logger = Container.Resolve<ILoggerService>();
+            logger.Info("App finished");
         }
     }
 }
