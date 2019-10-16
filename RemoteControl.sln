@@ -43,6 +43,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.XamarinForms.Permi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.XamarinForms.Settings", "JToolbox\XamarinForms\JToolbox.XamarinForms.Settings\JToolbox.XamarinForms.Settings.csproj", "{41435C73-9328-4DA4-85F6-D6630B1F7A62}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.AppConfig", "JToolbox\JToolbox.AppConfig\JToolbox.AppConfig.csproj", "{7ACE141D-B773-41AB-A8DC-467D98A4C821}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.Logging", "JToolbox\JToolbox.Logging\JToolbox.Logging.csproj", "{19241834-978D-4D78-B638-F2D09F334A7D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -109,6 +113,14 @@ Global
 		{41435C73-9328-4DA4-85F6-D6630B1F7A62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41435C73-9328-4DA4-85F6-D6630B1F7A62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41435C73-9328-4DA4-85F6-D6630B1F7A62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7ACE141D-B773-41AB-A8DC-467D98A4C821}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ACE141D-B773-41AB-A8DC-467D98A4C821}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ACE141D-B773-41AB-A8DC-467D98A4C821}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ACE141D-B773-41AB-A8DC-467D98A4C821}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19241834-978D-4D78-B638-F2D09F334A7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19241834-978D-4D78-B638-F2D09F334A7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19241834-978D-4D78-B638-F2D09F334A7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19241834-978D-4D78-B638-F2D09F334A7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -131,6 +143,8 @@ Global
 		{7A0BFCE9-8B88-46AE-8195-08662BAF3A79} = {85F8F9DE-8F02-4706-8809-6FA35726653A}
 		{314C6272-D08A-4AB5-80D0-48299230138F} = {85F8F9DE-8F02-4706-8809-6FA35726653A}
 		{41435C73-9328-4DA4-85F6-D6630B1F7A62} = {85F8F9DE-8F02-4706-8809-6FA35726653A}
+		{7ACE141D-B773-41AB-A8DC-467D98A4C821} = {9970C235-BB17-4654-B8AD-9B10B983F125}
+		{19241834-978D-4D78-B638-F2D09F334A7D} = {9970C235-BB17-4654-B8AD-9B10B983F125}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BCB4424D-A73D-4F00-BC7F-7B616549F593}
