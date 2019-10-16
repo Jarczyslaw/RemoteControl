@@ -83,16 +83,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -122,6 +114,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\JToolbox\WPF\JToolbox.WPF.PrismCore\JToolbox.WPF.PrismCore.csproj">
+      <Project>{236252FE-AA5D-434F-87EA-1342C5B6E3B9}</Project>
+      <Name>JToolbox.WPF.PrismCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\JToolbox\WPF\JToolbox.WPF.UI\JToolbox.WPF.UI.csproj">
+      <Project>{9594d7ee-c5d6-4f07-8f3e-63b7c83e21d0}</Project>
+      <Name>JToolbox.WPF.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RemoteControl.Server.Core\RemoteControl.Server.Core.csproj">
+      <Project>{84264C4D-C966-403A-AB8B-CA3CC46B6C45}</Project>
+      <Name>RemoteControl.Server.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

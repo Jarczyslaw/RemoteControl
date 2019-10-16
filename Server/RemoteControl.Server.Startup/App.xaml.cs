@@ -1,6 +1,8 @@
-﻿using Prism.Ioc;
+﻿using JToolbox.WPF.PrismCore;
+using Prism.Ioc;
+using Prism.Mvvm;
 using Prism.Unity;
-using System;
+using RemoteControl.Server.Core.Views;
 using System.Windows;
 
 namespace RemoteControl.Server.Startup
@@ -9,17 +11,25 @@ namespace RemoteControl.Server.Startup
     {
         protected override Window CreateShell()
         {
-            throw new NotImplementedException();
+            return Container.Resolve<ShellWindow>();
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            throw new NotImplementedException();
         }
 
         protected override void InitializeShell(Window shell)
         {
-            base.InitializeShell(shell);
+            Current.MainWindow = shell;
+            Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
+        }
+
+        protected override void ConfigureViewModelLocator()
+        {
+            base.ConfigureViewModelLocator();
+            var resolver = new ViewModelResolver();
+            var currentAssembly = typeof(ShellWindow).Assembly;
+            ViewModelLocationProvider.SetDefaultViewTypeToViewModelTypeResolver(viewType => resolver.Resolve(viewType, currentAssembly));
         }
 
         protected override void OnStartup(StartupEventArgs e)

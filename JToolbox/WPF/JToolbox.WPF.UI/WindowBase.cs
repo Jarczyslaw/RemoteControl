@@ -5,16 +5,16 @@ using System.Windows;
 
 namespace JToolbox.WPF.UI
 {
-    public class BaseWindow : Window
+    public class WindowBase : Window
     {
         private bool windowRendered;
         private bool windowInitialized;
 
-        public BaseWindow()
+        public WindowBase()
         {
         }
 
-        public BaseWindow(object dataContext)
+        public WindowBase(object dataContext)
             : this()
         {
             DataContext = dataContext;
