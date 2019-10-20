@@ -1,11 +1,11 @@
-﻿<wpfUi:WindowBase
+﻿<mahapps:MetroWindow
     x:Class="RemoteControl.Server.Core.Views.ShellWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mahapps="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
-    xmlns:wpfUi="clr-namespace:JToolbox.WPF.UI;assembly=JToolbox.WPF.UI"
     Title="MainWindow"
     Width="800"
     Height="450"
@@ -14,4 +14,4 @@
     <Grid>
         <Label Content="{Binding Test}" />
     </Grid>
-</wpfUi:WindowBase>
+</mahapps:MetroWindow>

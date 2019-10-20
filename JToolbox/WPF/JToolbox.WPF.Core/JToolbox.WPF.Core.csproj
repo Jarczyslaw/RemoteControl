@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Awareness\ICloseSource.cs" />
+    <Compile Include="Awareness\IOnClosedAware.cs" />
     <Compile Include="Awareness\IOnClosingAware.cs" />
     <Compile Include="Awareness\IOnShowAware.cs" />
     <Compile Include="GlobalExceptionHandler.cs" />
