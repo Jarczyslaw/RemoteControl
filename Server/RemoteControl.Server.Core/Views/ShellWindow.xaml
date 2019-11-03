@@ -6,6 +6,7 @@
     xmlns:mahapps="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
+    xmlns:tb="http://www.hardcodet.net/taskbar"
     Title="MainWindow"
     Width="800"
     Height="450"
@@ -13,5 +14,23 @@
     mc:Ignorable="d">
     <Grid>
         <Label Content="{Binding Test}" />
+        <tb:TaskbarIcon
+            x:Name="taskBarIcon"
+            IconSource="pack://application:,,,/RemoteControl.Server.Core;component/Resources/rc.ico"
+            MenuActivation="RightClick"
+            ToolTipText="Remote Control">
+            <tb:TaskbarIcon.ContextMenu>
+                <ContextMenu>
+                    <MenuItem
+                        x:Name="miRestore"
+                        Click="miRestore_Click"
+                        Header="Restore" />
+                    <MenuItem
+                        x:Name="miClose"
+                        Click="miClose_Click"
+                        Header="Close" />
+                </ContextMenu>
+            </tb:TaskbarIcon.ContextMenu>
+        </tb:TaskbarIcon>
     </Grid>
 </mahapps:MetroWindow>
