@@ -1,22 +1,26 @@
 ﻿using JToolbox.Core.Abstraction;
 using JToolbox.WPF.Core;
 using System;
+using Unity;
+using Prism.Unity;
+using RemoteControl.Server.Core.Services;
 
 namespace RemoteControl.Server.Startup
 {
     public class AppExceptionHandler : GlobalExceptionHandler
     {
-        private readonly ILoggerService loggerService;
+        private readonly IUnityContainer container;
 
-        public AppExceptionHandler(ILoggerService loggerService)
+        public AppExceptionHandler(IUnityContainer container)
         {
-            this.loggerService = loggerService;
+            this.container = container;
         }
 
         public override bool HandleException(string source, Exception exception)
         {
             var message = $"Unexpected critical exception - {source}";
-            loggerService.Fatal(exception, message);
+            container.Resolve<ILoggerService>().Fatal(exception, message);
+            container.TryResolve<IDialogsService>()?.ShowException(exception);
             return true;
         }
     }

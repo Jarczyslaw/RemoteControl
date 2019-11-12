@@ -5,16 +5,29 @@ using JToolbox.WPF.PrismCore;
 using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Unity;
+using RemoteControl.Server.Core.Services;
 using RemoteControl.Server.Core.Views;
 using System.Windows;
+using Unity;
 
 namespace RemoteControl.Server.Startup
 {
     public partial class App : PrismApplication
     {
+        private IContainerRegistry containerRegistry;
+
         protected override Window CreateShell()
         {
-            return Container.Resolve<ShellWindow>();
+            var window = Container.Resolve<ShellWindow>();
+            var dialogService = new DialogsService(window);
+            containerRegistry.RegisterInstance<IDialogsService>(dialogService);
+            return window;
+        }
+
+        protected override void RegisterRequiredTypes(IContainerRegistry containerRegistry)
+        {
+            base.RegisterRequiredTypes(containerRegistry);
+            this.containerRegistry = containerRegistry;
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
