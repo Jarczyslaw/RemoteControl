@@ -102,21 +102,13 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\JToolbox\WPF\JToolbox.WPF.Core\JToolbox.WPF.Core.csproj">
-      <Project>{56bee9b3-2fcb-46e7-a837-d07f0bfcbd98}</Project>
-      <Name>JToolbox.WPF.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\JToolbox\WPF\JToolbox.WPF.PrismCore\JToolbox.WPF.PrismCore.csproj">
-      <Project>{236252fe-aa5d-434f-87ea-1342c5b6e3b9}</Project>
-      <Name>JToolbox.WPF.PrismCore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\JToolbox\WPF\JToolbox.WPF.UI\JToolbox.WPF.UI.csproj">
-      <Project>{9594d7ee-c5d6-4f07-8f3e-63b7c83e21d0}</Project>
-      <Name>JToolbox.WPF.UI</Name>
-    </ProjectReference>
+    <Resource Include="Resources\rc.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\rc.ico" />
+    <ProjectReference Include="..\..\JToolbox\WPF\JToolbox.WPF.UI\JToolbox.WPF.UI.csproj">
+      <Project>{9594D7EE-C5D6-4F07-8F3E-63B7C83E21D0}</Project>
+      <Name>JToolbox.WPF.UI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

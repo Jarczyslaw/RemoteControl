@@ -12,13 +12,22 @@
     Height="450"
     prism:ViewModelLocator.AutoWireViewModel="True"
     mc:Ignorable="d">
+    <mahapps:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <Image
+                Width="20"
+                Source="pack://application:,,,/RemoteControl.Server.Core;component/Resources/rc.ico"
+                Stretch="Uniform" />
+        </DataTemplate>
+    </mahapps:MetroWindow.IconTemplate>
     <Grid>
         <Label Content="{Binding Test}" />
         <tb:TaskbarIcon
             x:Name="taskBarIcon"
             IconSource="pack://application:,,,/RemoteControl.Server.Core;component/Resources/rc.ico"
             MenuActivation="RightClick"
-            ToolTipText="Remote Control">
+            ToolTipText="Remote Control"
+            TrayMouseDoubleClick="taskBarIcon_TrayMouseDoubleClick">
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu>
                     <MenuItem

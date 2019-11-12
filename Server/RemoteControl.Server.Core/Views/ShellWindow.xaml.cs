@@ -32,13 +32,23 @@ namespace RemoteControl.Server.Core.Views
 
         private void miRestore_Click(object sender, RoutedEventArgs e)
         {
-            Show();
-            WindowState = windowState;
+            WindowRestore();
         }
 
         private void miClose_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void taskBarIcon_TrayMouseDoubleClick(object sender, RoutedEventArgs e)
+        {
+            WindowRestore();
+        }
+
+        private void WindowRestore()
+        {
+            Show();
+            WindowState = windowState;
         }
     }
 }

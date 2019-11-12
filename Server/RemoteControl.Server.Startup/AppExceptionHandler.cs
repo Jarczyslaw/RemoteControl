@@ -1,5 +1,4 @@
 ﻿using JToolbox.Core.Abstraction;
-using JToolbox.Desktop.Dialogs;
 using JToolbox.WPF.Core;
 using System;
 
@@ -7,12 +6,10 @@ namespace RemoteControl.Server.Startup
 {
     public class AppExceptionHandler : GlobalExceptionHandler
     {
-        private readonly IDialogsService dialogsService;
         private readonly ILoggerService loggerService;
 
-        public AppExceptionHandler(IDialogsService dialogsService, ILoggerService loggerService)
+        public AppExceptionHandler(ILoggerService loggerService)
         {
-            this.dialogsService = dialogsService;
             this.loggerService = loggerService;
         }
 
@@ -20,7 +17,6 @@ namespace RemoteControl.Server.Startup
         {
             var message = $"Unexpected critical exception - {source}";
             loggerService.Fatal(exception, message);
-            dialogsService.ShowCriticalException(message, exception);
             return true;
         }
     }

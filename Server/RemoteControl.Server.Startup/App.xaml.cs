@@ -1,6 +1,5 @@
 ﻿using JToolbox.AppConfig;
 using JToolbox.Core.Abstraction;
-using JToolbox.Desktop.Dialogs;
 using JToolbox.Logging;
 using JToolbox.WPF.PrismCore;
 using Prism.Ioc;
@@ -21,7 +20,6 @@ namespace RemoteControl.Server.Startup
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton<ILoggerService, LoggerService>();
-            containerRegistry.RegisterSingleton<IDialogsService, DialogsService>();
             containerRegistry.RegisterSingleton<IAppConfigService, AppConfigService>();
             RegisterGlobalExceptionHandler();
         }
