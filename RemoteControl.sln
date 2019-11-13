@@ -57,6 +57,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.XamarinForms.Permi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.XamarinForms.Settings", "JToolbox\XamarinForms\JToolbox.XamarinForms.Settings\JToolbox.XamarinForms.Settings.csproj", "{95E8AD1F-641B-4C80-9E16-6CD4C4BF8D70}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Desktop", "Desktop", "{61643ABD-80ED-407F-9811-0F0315BBC446}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.Desktop.Core", "JToolbox\Desktop\JToolbox.Desktop.Core\JToolbox.Desktop.Core.csproj", "{F91C51E8-EEE9-405D-8D53-1BD1A8B462A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.Desktop.Dialogs", "JToolbox\Desktop\JToolbox.Desktop.Dialogs\JToolbox.Desktop.Dialogs.csproj", "{7519097D-59FF-4717-A043-C083A7AA9A5D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -141,6 +147,14 @@ Global
 		{95E8AD1F-641B-4C80-9E16-6CD4C4BF8D70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95E8AD1F-641B-4C80-9E16-6CD4C4BF8D70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95E8AD1F-641B-4C80-9E16-6CD4C4BF8D70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F91C51E8-EEE9-405D-8D53-1BD1A8B462A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F91C51E8-EEE9-405D-8D53-1BD1A8B462A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F91C51E8-EEE9-405D-8D53-1BD1A8B462A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F91C51E8-EEE9-405D-8D53-1BD1A8B462A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7519097D-59FF-4717-A043-C083A7AA9A5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7519097D-59FF-4717-A043-C083A7AA9A5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7519097D-59FF-4717-A043-C083A7AA9A5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7519097D-59FF-4717-A043-C083A7AA9A5D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -170,6 +184,9 @@ Global
 		{90DB18A1-C525-44DA-B79A-7EB0CE308BB2} = {69FB1547-D586-4BFD-AF82-8F49037C594D}
 		{06AB6E0D-4736-4A47-9EF6-48B8BDFC7E6A} = {69FB1547-D586-4BFD-AF82-8F49037C594D}
 		{95E8AD1F-641B-4C80-9E16-6CD4C4BF8D70} = {69FB1547-D586-4BFD-AF82-8F49037C594D}
+		{61643ABD-80ED-407F-9811-0F0315BBC446} = {9970C235-BB17-4654-B8AD-9B10B983F125}
+		{F91C51E8-EEE9-405D-8D53-1BD1A8B462A9} = {61643ABD-80ED-407F-9811-0F0315BBC446}
+		{7519097D-59FF-4717-A043-C083A7AA9A5D} = {61643ABD-80ED-407F-9811-0F0315BBC446}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BCB4424D-A73D-4F00-BC7F-7B616549F593}

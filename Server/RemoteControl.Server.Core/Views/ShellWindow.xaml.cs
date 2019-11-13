@@ -14,6 +14,8 @@ namespace RemoteControl.Server.Core.Views
         public ShellWindow()
         {
             InitializeComponent();
+            Width = MinWidth = 800;
+            Height = MinHeight = 600;
             windowEvents = new WindowEvents(this);
             windowEvents.Attach();
         }

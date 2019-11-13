@@ -9,9 +9,11 @@
     xmlns:tb="http://www.hardcodet.net/taskbar"
     Title="MainWindow"
     Width="800"
-    Height="450"
+    Height="600"
     prism:ViewModelLocator.AutoWireViewModel="True"
+    LeftWindowCommandsOverlayBehavior="Always"
     mc:Ignorable="d">
+
     <mahapps:MetroWindow.IconTemplate>
         <DataTemplate>
             <Image
@@ -20,8 +22,43 @@
                 Stretch="Uniform" />
         </DataTemplate>
     </mahapps:MetroWindow.IconTemplate>
+
+    <mahapps:MetroWindow.RightWindowCommands>
+        <mahapps:WindowCommands>
+            <Button Content="Settings" />
+            <ToggleButton Content="Connections" IsChecked="{Binding ElementName=fyConnections, Path=IsOpen}" />
+        </mahapps:WindowCommands>
+    </mahapps:MetroWindow.RightWindowCommands>
+
+    <mahapps:MetroWindow.Flyouts>
+        <mahapps:FlyoutsControl>
+            <mahapps:Flyout
+                x:Name="fyConnections"
+                BorderBrush="{DynamicResource AccentColorBrush}"
+                BorderThickness="2"
+                Position="Right"
+                Theme="Adapt">
+                <Grid Width="250" />
+            </mahapps:Flyout>
+        </mahapps:FlyoutsControl>
+    </mahapps:MetroWindow.Flyouts>
+
     <Grid>
-        <Label Content="{Binding Test}" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <GroupBox Header="Control panel" />
+        <GroupBox Grid.Column="1" Header="Logs">
+            <TextBox
+                AcceptsReturn="True"
+                Focusable="False"
+                IsReadOnly="True"
+                Text="{Binding Logs}"
+                TextWrapping="Wrap" />
+        </GroupBox>
+
         <tb:TaskbarIcon
             x:Name="taskBarIcon"
             IconSource="pack://application:,,,/RemoteControl.Server.Core;component/Resources/rc.ico"
