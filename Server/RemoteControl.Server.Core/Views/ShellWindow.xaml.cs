@@ -1,6 +1,5 @@
 ﻿using JToolbox.WPF.UI;
 using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Windows;
 
@@ -13,12 +12,15 @@ namespace RemoteControl.Server.Core.Views
 
         public ShellWindow()
         {
+            Instance = this;
             InitializeComponent();
             Width = MinWidth = 800;
             Height = MinHeight = 600;
             windowEvents = new WindowEvents(this);
             windowEvents.Attach();
         }
+
+        public static ShellWindow Instance { get; private set; }
 
         protected override void OnStateChanged(EventArgs e)
         {

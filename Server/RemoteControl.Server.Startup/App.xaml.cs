@@ -1,5 +1,7 @@
 ﻿using JToolbox.AppConfig;
 using JToolbox.Core.Abstraction;
+using JToolbox.Desktop.Core.Services;
+using JToolbox.Desktop.Dialogs;
 using JToolbox.Logging;
 using JToolbox.WPF.PrismCore;
 using Prism.Ioc;
@@ -14,26 +16,18 @@ namespace RemoteControl.Server.Startup
 {
     public partial class App : PrismApplication
     {
-        private IContainerRegistry containerRegistry;
-
         protected override Window CreateShell()
         {
-            var window = Container.Resolve<ShellWindow>();
-            var dialogService = new DialogsService(window);
-            containerRegistry.RegisterInstance<IDialogsService>(dialogService);
-            return window;
-        }
-
-        protected override void RegisterRequiredTypes(IContainerRegistry containerRegistry)
-        {
-            base.RegisterRequiredTypes(containerRegistry);
-            this.containerRegistry = containerRegistry;
+            return Container.Resolve<ShellWindow>();
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton<ILoggerService, LoggerService>();
+            containerRegistry.RegisterSingleton<IDialogsService, DialogsService>();
+            containerRegistry.RegisterSingleton<IShellDialogsService, ShellDialogsService>();
             containerRegistry.RegisterSingleton<IAppConfigService, AppConfigService>();
+            containerRegistry.RegisterSingleton<ISystemService, SystemService>();
             RegisterGlobalExceptionHandler();
         }
 

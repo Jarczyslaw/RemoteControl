@@ -84,8 +84,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\DialogsService.cs" />
-    <Compile Include="Services\IDialogsService.cs" />
+    <Compile Include="Services\ShellDialogsService.cs" />
+    <Compile Include="Services\IShellDialogsService.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\ShellWindow.xaml.cs">
       <DependentUpon>ShellWindow.xaml</DependentUpon>
@@ -105,6 +105,14 @@
     <Resource Include="Resources\rc.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\JToolbox\Desktop\JToolbox.Desktop.Core\JToolbox.Desktop.Core.csproj">
+      <Project>{F91C51E8-EEE9-405D-8D53-1BD1A8B462A9}</Project>
+      <Name>JToolbox.Desktop.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\JToolbox\Desktop\JToolbox.Desktop.Dialogs\JToolbox.Desktop.Dialogs.csproj">
+      <Project>{7519097D-59FF-4717-A043-C083A7AA9A5D}</Project>
+      <Name>JToolbox.Desktop.Dialogs</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\JToolbox\WPF\JToolbox.WPF.UI\JToolbox.WPF.UI.csproj">
       <Project>{9594D7EE-C5D6-4F07-8F3E-63B7C83E21D0}</Project>
       <Name>JToolbox.WPF.UI</Name>

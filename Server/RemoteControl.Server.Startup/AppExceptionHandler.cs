@@ -4,23 +4,26 @@ using System;
 using Unity;
 using Prism.Unity;
 using RemoteControl.Server.Core.Services;
+using JToolbox.Desktop.Dialogs;
 
 namespace RemoteControl.Server.Startup
 {
     public class AppExceptionHandler : GlobalExceptionHandler
     {
-        private readonly IUnityContainer container;
+        private readonly ILoggerService loggerService;
+        private readonly IDialogsService dialogsService;
 
-        public AppExceptionHandler(IUnityContainer container)
+        public AppExceptionHandler(ILoggerService loggerService, IDialogsService dialogsService)
         {
-            this.container = container;
+            this.loggerService = loggerService;
+            this.dialogsService = dialogsService;
         }
 
         public override bool HandleException(string source, Exception exception)
         {
             var message = $"Unexpected critical exception - {source}";
-            container.Resolve<ILoggerService>().Fatal(exception, message);
-            container.TryResolve<IDialogsService>()?.ShowException(exception);
+            loggerService.Fatal(exception, message);
+            dialogsService.ShowException(message, exception);
             return true;
         }
     }

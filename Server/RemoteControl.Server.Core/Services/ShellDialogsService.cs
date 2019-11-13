@@ -1,17 +1,18 @@
 ﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using RemoteControl.Server.Core.Views;
 using System;
 using System.Threading.Tasks;
 
 namespace RemoteControl.Server.Core.Services
 {
-    public class DialogsService : IDialogsService
+    public class ShellDialogsService : IShellDialogsService
     {
         private readonly MetroWindow window;
 
-        public DialogsService(MetroWindow window)
+        public ShellDialogsService()
         {
-            this.window = window;
+            window = ShellWindow.Instance;
         }
 
         public Task ShowError(string message)
@@ -27,6 +28,12 @@ namespace RemoteControl.Server.Core.Services
         public Task ShowInfo(string message)
         {
             return window.ShowMessageAsync("Information", message);
+        }
+
+        public async Task<bool> ShowYesNoQuestion(string question)
+        {
+            var result = await window.ShowMessageAsync("Question", question, MessageDialogStyle.AffirmativeAndNegative);
+            return result == MessageDialogResult.Affirmative;
         }
     }
 }

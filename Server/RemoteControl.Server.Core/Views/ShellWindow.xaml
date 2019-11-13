@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:tb="http://www.hardcodet.net/taskbar"
-    Title="MainWindow"
+    Title="Remote Control"
     Width="800"
     Height="600"
     prism:ViewModelLocator.AutoWireViewModel="True"
@@ -49,7 +49,29 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <GroupBox Header="Control panel" />
+        <GroupBox Header="Control panel">
+            <StackPanel>
+                <Button
+                    Command="{Binding ShutdownCommand}"
+                    Content="Shutdown"
+                    Style="{DynamicResource AccentedSquareButtonStyle}" />
+                <Button
+                    Margin="0,5,0,0"
+                    Command="{Binding RestartCommand}"
+                    Content="Restart"
+                    Style="{DynamicResource AccentedSquareButtonStyle}" />
+                <Button
+                    Margin="0,5,0,0"
+                    Command="{Binding ScreenshotCommand}"
+                    Content="Take screenshot"
+                    Style="{DynamicResource AccentedSquareButtonStyle}" />
+                <Button
+                    Margin="0,5,0,0"
+                    Command="{Binding AppScreenshotCommand}"
+                    Content="Take app screenshot"
+                    Style="{DynamicResource AccentedSquareButtonStyle}" />
+            </StackPanel>
+        </GroupBox>
         <GroupBox Grid.Column="1" Header="Logs">
             <TextBox
                 AcceptsReturn="True"

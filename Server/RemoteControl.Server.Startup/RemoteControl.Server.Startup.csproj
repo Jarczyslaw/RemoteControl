@@ -130,6 +130,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\JToolbox\Desktop\JToolbox.Desktop.Core\JToolbox.Desktop.Core.csproj">
+      <Project>{F91C51E8-EEE9-405D-8D53-1BD1A8B462A9}</Project>
+      <Name>JToolbox.Desktop.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\JToolbox\Desktop\JToolbox.Desktop.Dialogs\JToolbox.Desktop.Dialogs.csproj">
+      <Project>{7519097D-59FF-4717-A043-C083A7AA9A5D}</Project>
+      <Name>JToolbox.Desktop.Dialogs</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\JToolbox\JToolbox.Core\JToolbox.Core.csproj">
       <Project>{04f8ea9c-cd49-436b-a88c-0413f65e58be}</Project>
       <Name>JToolbox.Core</Name>
