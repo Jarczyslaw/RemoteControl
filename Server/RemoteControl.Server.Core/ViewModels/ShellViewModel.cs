@@ -77,14 +77,14 @@ namespace RemoteControl.Server.Core.ViewModels
             }
         });
 
-        public DelegateCommand ScreenshotCommand => new DelegateCommand(async () =>
+        public DelegateCommand CapturePrimaryScreenCommand => new DelegateCommand(async () =>
         {
             try
             {
-                var screenshot = remoteCommandsService.TakeScreenshot();
+                var screenshot = remoteCommandsService.CapturePrimaryScreen();
                 if (SaveScreenshotFile(screenshot))
                 {
-                    Message = "Screen screenshot saved";
+                    Message = "Primary screen screenshot saved";
                 }
             }
             catch (Exception exc)
@@ -93,14 +93,14 @@ namespace RemoteControl.Server.Core.ViewModels
             }
         });
 
-        public DelegateCommand AppScreenshotCommand => new DelegateCommand(async () =>
+        public DelegateCommand CaptureAllScreensCommand => new DelegateCommand(async () =>
         {
             try
             {
-                var screenshot = remoteCommandsService.TakeAppScreenshot();
+                var screenshot = remoteCommandsService.CaptureAllScreens();
                 if (SaveScreenshotFile(screenshot))
                 {
-                    Message = "App screenshot saved";
+                    Message = "All screens screenshot saved";
                 }
             }
             catch (Exception exc)

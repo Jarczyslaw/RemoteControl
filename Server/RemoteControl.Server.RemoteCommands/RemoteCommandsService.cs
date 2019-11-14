@@ -1,5 +1,6 @@
 ﻿using JToolbox.Desktop.Core;
 using JToolbox.Desktop.Core.Services;
+using JToolbox.WPF.Core.Extensions;
 using System.Drawing;
 
 namespace RemoteControl.Server.RemoteCommands
@@ -7,7 +8,7 @@ namespace RemoteControl.Server.RemoteCommands
     public class RemoteCommandsService : IRemoteCommandsService
     {
         private readonly ISystemService systemService;
-
+        private readonly ScreenCapture screenCapture = new ScreenCapture();
         public RemoteCommandsService(ISystemService systemService)
         {
             this.systemService = systemService;
@@ -23,14 +24,14 @@ namespace RemoteControl.Server.RemoteCommands
             systemService.Restart();
         }
 
-        public Bitmap TakeScreenshot()
+        public Bitmap CapturePrimaryScreen()
         {
-            return ScreenCapture.CaptureDesktop();
+            return screenCapture.CapturePrimaryScreen();
         }
 
-        public Bitmap TakeAppScreenshot()
+        public Bitmap CaptureAllScreens()
         {
-            return ScreenCapture.CaptureActiveWindow();
+            return screenCapture.CaptureAllScreens();
         }
     }
 }

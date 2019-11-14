@@ -6,7 +6,7 @@ namespace RemoteControl.Server.RemoteCommands
     {
         void Restart();
         void Shutdown();
-        Bitmap TakeAppScreenshot();
-        Bitmap TakeScreenshot();
+        Bitmap CapturePrimaryScreen();
+        Bitmap CaptureAllScreens();
     }
 }

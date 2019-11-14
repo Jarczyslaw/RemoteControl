@@ -1,17 +1,13 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 
 namespace JToolbox.Desktop.Core
 {
-    public static class ScreenCapture
+    public class ScreenCapture
     {
-        [DllImport("user32.dll")]
-        private static extern IntPtr GetForegroundWindow();
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
-        public static extern IntPtr GetDesktopWindow();
-
         [StructLayout(LayoutKind.Sequential)]
         private struct Rect
         {
@@ -22,31 +18,41 @@ namespace JToolbox.Desktop.Core
         }
 
         [DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll")]
         private static extern IntPtr GetWindowRect(IntPtr hWnd, ref Rect rect);
 
-        public static Bitmap CaptureDesktop()
+        public Bitmap CaptureForegroundWindow()
         {
-            return CaptureWindow(GetDesktopWindow());
+            return Capture(GetBoundFromWindow(GetForegroundWindow()));
         }
 
-        public static Bitmap CaptureActiveWindow()
+        public Bitmap CaptureWindow(Rectangle windowBounds)
         {
-            return CaptureWindow(GetForegroundWindow());
+            return Capture(windowBounds);
         }
 
-        public static Bitmap CaptureWindow(IntPtr handle)
+        public Bitmap CaptureProcess(Process process)
+        {
+            return CaptureWindow(GetBoundFromWindow(process.MainWindowHandle));
+        }
+
+        public Bitmap Capture(Rectangle bounds)
+        {
+            var bitmap = new Bitmap(bounds.Width, bounds.Height, PixelFormat.Format32bppArgb);
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.CopyFromScreen(bounds.Location, Point.Empty, bounds.Size, CopyPixelOperation.SourceCopy);
+            }
+            return bitmap;
+        }
+
+        private Rectangle GetBoundFromWindow(IntPtr intPtr)
         {
             var rect = new Rect();
-            GetWindowRect(handle, ref rect);
-            var bounds = new Rectangle(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top);
-            var result = new Bitmap(bounds.Width, bounds.Height);
-
-            using (var graphics = Graphics.FromImage(result))
-            {
-                graphics.CopyFromScreen(new Point(bounds.Left, bounds.Top), Point.Empty, bounds.Size);
-            }
-
-            return result;
+            GetWindowRect(intPtr, ref rect);
+            return new Rectangle(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top);
         }
     }
 }

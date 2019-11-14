@@ -68,13 +68,13 @@
                         Style="{DynamicResource AccentedSquareButtonStyle}" />
                     <Button
                         Margin="0,5,0,0"
-                        Command="{Binding ScreenshotCommand}"
-                        Content="Take screenshot"
+                        Command="{Binding CapturePrimaryScreenCommand}"
+                        Content="Capture primary screen"
                         Style="{DynamicResource AccentedSquareButtonStyle}" />
                     <Button
                         Margin="0,5,0,0"
-                        Command="{Binding AppScreenshotCommand}"
-                        Content="Take app screenshot"
+                        Command="{Binding CaptureAllScreensCommand}"
+                        Content="Capture all screens"
                         Style="{DynamicResource AccentedSquareButtonStyle}" />
                 </StackPanel>
             </GroupBox>
