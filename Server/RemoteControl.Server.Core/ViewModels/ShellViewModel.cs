@@ -1,22 +1,25 @@
-﻿using JToolbox.Desktop.Core.Services;
-using JToolbox.Desktop.Dialogs;
+﻿using JToolbox.Desktop.Dialogs;
 using Prism.Commands;
 using Prism.Mvvm;
 using RemoteControl.Server.Core.Services;
+using RemoteControl.Server.RemoteCommands;
 using System;
+using System.Drawing;
+using System.Threading.Tasks;
 
 namespace RemoteControl.Server.Core.ViewModels
 {
     public class ShellViewModel : BindableBase
     {
         private string logs;
-        private readonly ISystemService systemService;
+        private string message;
+        private readonly IRemoteCommandsService remoteCommandsService;
         private readonly IShellDialogsService shellDialogsService;
         private readonly IDialogsService dialogsService;
 
-        public ShellViewModel(ISystemService systemService, IShellDialogsService shellDialogsService, IDialogsService dialogsService)
+        public ShellViewModel(IRemoteCommandsService remoteCommandsService, IShellDialogsService shellDialogsService, IDialogsService dialogsService)
         {
-            this.systemService = systemService;
+            this.remoteCommandsService = remoteCommandsService;
             this.shellDialogsService = shellDialogsService;
             this.dialogsService = dialogsService;
         }
@@ -27,11 +30,82 @@ namespace RemoteControl.Server.Core.ViewModels
             set => SetProperty(ref logs, value);
         }
 
+        public string Message
+        {
+            get => message;
+            set
+            {
+                SetProperty(ref message, value);
+                if (!string.IsNullOrEmpty(value))
+                {
+                    Task.Run(async () =>
+                    {
+                        await Task.Delay(5000);
+                        Message = string.Empty;
+                    });
+                }
+            }
+        }
+
         public DelegateCommand ShutdownCommand => new DelegateCommand(async () =>
         {
-            if (await shellDialogsService.ShowYesNoQuestion("Do you really want o shutdown this machine?"))
+            try
             {
-                systemService.Shutdown();
+                if (await shellDialogsService.ShowYesNoQuestion("Do you really want o shutdown this machine?"))
+                {
+                    remoteCommandsService.Shutdown();
+                }
+            }
+            catch (Exception exc)
+            {
+                await shellDialogsService.ShowException(exc);
+            }
+        });
+
+        public DelegateCommand RestartCommand => new DelegateCommand(async () =>
+        {
+            try
+            {
+                if (await shellDialogsService.ShowYesNoQuestion("Do you really want o restart this machine?"))
+                {
+                    remoteCommandsService.Restart();
+                }
+            }
+            catch (Exception exc)
+            {
+                await shellDialogsService.ShowException(exc);
+            }
+        });
+
+        public DelegateCommand ScreenshotCommand => new DelegateCommand(async () =>
+        {
+            try
+            {
+                var screenshot = remoteCommandsService.TakeScreenshot();
+                if (SaveScreenshotFile(screenshot))
+                {
+                    Message = "Screen screenshot saved";
+                }
+            }
+            catch (Exception exc)
+            {
+                await shellDialogsService.ShowException(exc);
+            }
+        });
+
+        public DelegateCommand AppScreenshotCommand => new DelegateCommand(async () =>
+        {
+            try
+            {
+                var screenshot = remoteCommandsService.TakeAppScreenshot();
+                if (SaveScreenshotFile(screenshot))
+                {
+                    Message = "App screenshot saved";
+                }
+            }
+            catch (Exception exc)
+            {
+                await shellDialogsService.ShowException(exc);
             }
         });
 
@@ -39,6 +113,21 @@ namespace RemoteControl.Server.Core.ViewModels
         {
             Logs = $"[{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")}] - {message}"
                 + Environment.NewLine + Logs;
+        }
+
+        private bool SaveScreenshotFile(Bitmap bitmap)
+        {
+            var screenshotFile = dialogsService.SaveFile("Screen shot", null, $"screenshot_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}", new DialogFilterPair
+            {
+                DisplayName = "png",
+                ExtensionsList = "png"
+            });
+            if (!string.IsNullOrEmpty(screenshotFile))
+            {
+                bitmap.Save(screenshotFile);
+                return true;
+            }
+            return false;
         }
     }
 }

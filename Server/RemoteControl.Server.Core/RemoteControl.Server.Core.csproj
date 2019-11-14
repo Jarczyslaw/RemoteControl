@@ -57,6 +57,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
@@ -94,15 +95,14 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\rc.ico" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Views\ShellWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\rc.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\JToolbox\Desktop\JToolbox.Desktop.Core\JToolbox.Desktop.Core.csproj">
@@ -116,6 +116,10 @@
     <ProjectReference Include="..\..\JToolbox\WPF\JToolbox.WPF.UI\JToolbox.WPF.UI.csproj">
       <Project>{9594D7EE-C5D6-4F07-8F3E-63B7C83E21D0}</Project>
       <Name>JToolbox.WPF.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RemoteControl.Server.RemoteCommands\RemoteControl.Server.RemoteCommands.csproj">
+      <Project>{206dac2a-2554-4f30-bda9-f5cba1960be5}</Project>
+      <Name>RemoteControl.Server.RemoteCommands</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

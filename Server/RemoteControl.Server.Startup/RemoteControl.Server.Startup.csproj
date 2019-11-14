@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>rc.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\..\packages\CommonServiceLocator.2.0.4\lib\net47\CommonServiceLocator.dll</HintPath>
@@ -166,6 +169,13 @@
       <Project>{84264C4D-C966-403A-AB8B-CA3CC46B6C45}</Project>
       <Name>RemoteControl.Server.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RemoteControl.Server.RemoteCommands\RemoteControl.Server.RemoteCommands.csproj">
+      <Project>{206dac2a-2554-4f30-bda9-f5cba1960be5}</Project>
+      <Name>RemoteControl.Server.RemoteCommands</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="rc.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

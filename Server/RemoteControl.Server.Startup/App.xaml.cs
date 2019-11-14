@@ -9,6 +9,7 @@ using Prism.Mvvm;
 using Prism.Unity;
 using RemoteControl.Server.Core.Services;
 using RemoteControl.Server.Core.Views;
+using RemoteControl.Server.RemoteCommands;
 using System.Windows;
 using Unity;
 
@@ -28,6 +29,7 @@ namespace RemoteControl.Server.Startup
             containerRegistry.RegisterSingleton<IShellDialogsService, ShellDialogsService>();
             containerRegistry.RegisterSingleton<IAppConfigService, AppConfigService>();
             containerRegistry.RegisterSingleton<ISystemService, SystemService>();
+            containerRegistry.RegisterSingleton<IRemoteCommandsService, RemoteCommandsService>();
             RegisterGlobalExceptionHandler();
         }
 

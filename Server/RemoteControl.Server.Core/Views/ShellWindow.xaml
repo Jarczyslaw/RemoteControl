@@ -44,42 +44,55 @@
     </mahapps:MetroWindow.Flyouts>
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
-        <GroupBox Header="Control panel">
-            <StackPanel>
-                <Button
-                    Command="{Binding ShutdownCommand}"
-                    Content="Shutdown"
-                    Style="{DynamicResource AccentedSquareButtonStyle}" />
-                <Button
-                    Margin="0,5,0,0"
-                    Command="{Binding RestartCommand}"
-                    Content="Restart"
-                    Style="{DynamicResource AccentedSquareButtonStyle}" />
-                <Button
-                    Margin="0,5,0,0"
-                    Command="{Binding ScreenshotCommand}"
-                    Content="Take screenshot"
-                    Style="{DynamicResource AccentedSquareButtonStyle}" />
-                <Button
-                    Margin="0,5,0,0"
-                    Command="{Binding AppScreenshotCommand}"
-                    Content="Take app screenshot"
-                    Style="{DynamicResource AccentedSquareButtonStyle}" />
-            </StackPanel>
-        </GroupBox>
-        <GroupBox Grid.Column="1" Header="Logs">
-            <TextBox
-                AcceptsReturn="True"
-                Focusable="False"
-                IsReadOnly="True"
-                Text="{Binding Logs}"
-                TextWrapping="Wrap" />
-        </GroupBox>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <GroupBox Header="Control panel">
+                <StackPanel>
+                    <Button
+                        Command="{Binding ShutdownCommand}"
+                        Content="Shutdown"
+                        Style="{DynamicResource AccentedSquareButtonStyle}" />
+                    <Button
+                        Margin="0,5,0,0"
+                        Command="{Binding RestartCommand}"
+                        Content="Restart"
+                        Style="{DynamicResource AccentedSquareButtonStyle}" />
+                    <Button
+                        Margin="0,5,0,0"
+                        Command="{Binding ScreenshotCommand}"
+                        Content="Take screenshot"
+                        Style="{DynamicResource AccentedSquareButtonStyle}" />
+                    <Button
+                        Margin="0,5,0,0"
+                        Command="{Binding AppScreenshotCommand}"
+                        Content="Take app screenshot"
+                        Style="{DynamicResource AccentedSquareButtonStyle}" />
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Grid.Column="1" Header="Logs">
+                <TextBox
+                    AcceptsReturn="True"
+                    Focusable="False"
+                    IsReadOnly="True"
+                    Text="{Binding Logs}"
+                    TextWrapping="Wrap" />
+            </GroupBox>
+        </Grid>
+
+        <StatusBar Grid.Row="1">
+            <StatusBarItem>
+                <TextBlock Text="{Binding Message}" />
+            </StatusBarItem>
+        </StatusBar>
 
         <tb:TaskbarIcon
             x:Name="taskBarIcon"

@@ -24,7 +24,7 @@ namespace JToolbox.Desktop.Core
         [DllImport("user32.dll")]
         private static extern IntPtr GetWindowRect(IntPtr hWnd, ref Rect rect);
 
-        public static Image CaptureDesktop()
+        public static Bitmap CaptureDesktop()
         {
             return CaptureWindow(GetDesktopWindow());
         }
