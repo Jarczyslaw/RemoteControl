@@ -1,0 +1,40 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "RemoteControl.Proxy";
+
+package Proxy;
+
+service ProxyService {
+	rpc Connect (ConnectionRequest) returns (ConnectResponse);
+	rpc Disconnect (ConnectionRequest) returns (DisconnectResponse);
+	rpc Shutdown (ConnectionRequest) returns (ShutdownResponse);
+	rpc Restart (ConnectionRequest) returns (RestartResponse);
+}
+
+message ConnectionRequest {
+	enum DeviceType {
+		Unknown = 0;
+		Desktop = 1;
+		Mobile = 2;
+	}
+	
+	DeviceType Type = 1;
+	string Name = 2;
+	string Adddress = 3;
+}
+
+message ConnectResponse {
+	bool Result = 1;
+}
+
+message DisconnectResponse {
+	bool Result = 1;
+}
+
+message ShutdownResponse {
+	bool Result = 1;
+}
+
+message RestartResponse {
+	bool Result = 1;
+}

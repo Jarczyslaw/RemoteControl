@@ -113,6 +113,10 @@
       <Project>{7519097D-59FF-4717-A043-C083A7AA9A5D}</Project>
       <Name>JToolbox.Desktop.Dialogs</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\JToolbox\WPF\JToolbox.WPF.Core\JToolbox.WPF.Core.csproj">
+      <Project>{56bee9b3-2fcb-46e7-a837-d07f0bfcbd98}</Project>
+      <Name>JToolbox.WPF.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\JToolbox\WPF\JToolbox.WPF.UI\JToolbox.WPF.UI.csproj">
       <Project>{9594D7EE-C5D6-4F07-8F3E-63B7C83E21D0}</Project>
       <Name>JToolbox.WPF.UI</Name>

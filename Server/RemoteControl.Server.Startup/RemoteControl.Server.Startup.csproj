@@ -133,6 +133,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Commons\RemoteControl.Proxy\RemoteControl.Proxy.csproj">
+      <Project>{123f2446-6ad9-41c8-86ac-2db426d779e0}</Project>
+      <Name>RemoteControl.Proxy</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\JToolbox\Desktop\JToolbox.Desktop.Core\JToolbox.Desktop.Core.csproj">
       <Project>{F91C51E8-EEE9-405D-8D53-1BD1A8B462A9}</Project>
       <Name>JToolbox.Desktop.Core</Name>

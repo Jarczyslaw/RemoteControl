@@ -1,37 +1,54 @@
-﻿using JToolbox.Desktop.Core;
+﻿using Grpc.Core;
 using JToolbox.Desktop.Core.Services;
-using JToolbox.WPF.Core.Extensions;
-using System.Drawing;
+using RemoteControl.Proxy;
+using System.Threading.Tasks;
 
 namespace RemoteControl.Server.RemoteCommands
 {
-    public class RemoteCommandsService : IRemoteCommandsService
+    public class RemoteCommandsService : ProxyService.ProxyServiceBase, IRemoteCommandsService
     {
         private readonly ISystemService systemService;
-        private readonly ScreenCapture screenCapture = new ScreenCapture();
+        private Grpc.Core.Server server;
+
         public RemoteCommandsService(ISystemService systemService)
         {
             this.systemService = systemService;
         }
 
-        public void Shutdown()
+        public Task Start(int port)
         {
-            systemService.Shutdown();
+            server = new Grpc.Core.Server
+            {
+                Services = { ProxyService.BindService(this) },
+                Ports = { new ServerPort("localhost", port, ServerCredentials.Insecure) }
+            };
+            server.Start();
+            return Task.CompletedTask;
         }
 
-        public void Restart()
+        public Task Stop()
         {
-            systemService.Restart();
+            return server?.ShutdownAsync();
         }
 
-        public Bitmap CapturePrimaryScreen()
+        public override Task<ConnectResponse> Connect(ConnectionRequest request, ServerCallContext context)
         {
-            return screenCapture.CapturePrimaryScreen();
+            return base.Connect(request, context);
         }
 
-        public Bitmap CaptureAllScreens()
+        public override Task<DisconnectResponse> Disconnect(ConnectionRequest request, ServerCallContext context)
         {
-            return screenCapture.CaptureAllScreens();
+            return base.Disconnect(request, context);
+        }
+
+        public override Task<RestartResponse> Restart(ConnectionRequest request, ServerCallContext context)
+        {
+            return base.Restart(request, context);
+        }
+
+        public override Task<ShutdownResponse> Shutdown(ConnectionRequest request, ServerCallContext context)
+        {
+            return base.Shutdown(request, context);
         }
     }
 }

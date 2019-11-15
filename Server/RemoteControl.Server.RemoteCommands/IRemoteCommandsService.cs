@@ -1,12 +1,10 @@
-﻿using System.Drawing;
+﻿using System.Threading.Tasks;
 
 namespace RemoteControl.Server.RemoteCommands
 {
     public interface IRemoteCommandsService
     {
-        void Restart();
-        void Shutdown();
-        Bitmap CapturePrimaryScreen();
-        Bitmap CaptureAllScreens();
+        Task Start(int port);
+        Task Stop();
     }
 }

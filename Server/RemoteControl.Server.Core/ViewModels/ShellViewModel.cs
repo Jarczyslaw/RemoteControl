@@ -1,8 +1,10 @@
-﻿using JToolbox.Desktop.Dialogs;
+﻿using JToolbox.Desktop.Core;
+using JToolbox.Desktop.Core.Services;
+using JToolbox.Desktop.Dialogs;
+using JToolbox.WPF.Core.Extensions;
 using Prism.Commands;
 using Prism.Mvvm;
 using RemoteControl.Server.Core.Services;
-using RemoteControl.Server.RemoteCommands;
 using System;
 using System.Drawing;
 using System.Threading.Tasks;
@@ -13,15 +15,16 @@ namespace RemoteControl.Server.Core.ViewModels
     {
         private string logs;
         private string message;
-        private readonly IRemoteCommandsService remoteCommandsService;
         private readonly IShellDialogsService shellDialogsService;
         private readonly IDialogsService dialogsService;
+        private readonly ISystemService systemService;
+        private ScreenCapture screenCapture = new ScreenCapture();
 
-        public ShellViewModel(IRemoteCommandsService remoteCommandsService, IShellDialogsService shellDialogsService, IDialogsService dialogsService)
+        public ShellViewModel(ISystemService systemService, IShellDialogsService shellDialogsService, IDialogsService dialogsService)
         {
-            this.remoteCommandsService = remoteCommandsService;
             this.shellDialogsService = shellDialogsService;
             this.dialogsService = dialogsService;
+            this.systemService = systemService;
         }
 
         public string Logs
@@ -53,7 +56,7 @@ namespace RemoteControl.Server.Core.ViewModels
             {
                 if (await shellDialogsService.ShowYesNoQuestion("Do you really want o shutdown this machine?"))
                 {
-                    remoteCommandsService.Shutdown();
+                    systemService.Shutdown();
                 }
             }
             catch (Exception exc)
@@ -68,7 +71,7 @@ namespace RemoteControl.Server.Core.ViewModels
             {
                 if (await shellDialogsService.ShowYesNoQuestion("Do you really want o restart this machine?"))
                 {
-                    remoteCommandsService.Restart();
+                    systemService.Restart();
                 }
             }
             catch (Exception exc)
@@ -81,7 +84,7 @@ namespace RemoteControl.Server.Core.ViewModels
         {
             try
             {
-                var screenshot = remoteCommandsService.CapturePrimaryScreen();
+                var screenshot = screenCapture.CapturePrimaryScreen();
                 if (SaveScreenshotFile(screenshot))
                 {
                     Message = "Primary screen screenshot saved";
@@ -97,7 +100,7 @@ namespace RemoteControl.Server.Core.ViewModels
         {
             try
             {
-                var screenshot = remoteCommandsService.CaptureAllScreens();
+                var screenshot = screenCapture.CaptureAllScreens();
                 if (SaveScreenshotFile(screenshot))
                 {
                     Message = "All screens screenshot saved";
