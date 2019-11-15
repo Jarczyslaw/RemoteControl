@@ -7,6 +7,7 @@ using Prism.Mvvm;
 using RemoteControl.Server.Core.Services;
 using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Threading.Tasks;
 
 namespace RemoteControl.Server.Core.ViewModels
@@ -131,7 +132,7 @@ namespace RemoteControl.Server.Core.ViewModels
             });
             if (!string.IsNullOrEmpty(screenshotFile))
             {
-                bitmap.Save(screenshotFile);
+                bitmap.Save(screenshotFile, ImageFormat.Png);
                 return true;
             }
             return false;
