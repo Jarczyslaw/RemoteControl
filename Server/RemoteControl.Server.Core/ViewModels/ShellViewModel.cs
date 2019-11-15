@@ -84,10 +84,12 @@ namespace RemoteControl.Server.Core.ViewModels
         {
             try
             {
-                var screenshot = screenCapture.CapturePrimaryScreen();
-                if (SaveScreenshotFile(screenshot))
+                using (var screenshot = screenCapture.CapturePrimaryScreen())
                 {
-                    Message = "Primary screen screenshot saved";
+                    if (SaveScreenshotFile(screenshot))
+                    {
+                        Message = "Primary screen screenshot saved";
+                    }
                 }
             }
             catch (Exception exc)
@@ -100,10 +102,12 @@ namespace RemoteControl.Server.Core.ViewModels
         {
             try
             {
-                var screenshot = screenCapture.CaptureAllScreens();
-                if (SaveScreenshotFile(screenshot))
+                using (var screenshot = screenCapture.CaptureAllScreens())
                 {
-                    Message = "All screens screenshot saved";
+                    if (SaveScreenshotFile(screenshot))
+                    {
+                        Message = "All screens screenshot saved";
+                    }
                 }
             }
             catch (Exception exc)
