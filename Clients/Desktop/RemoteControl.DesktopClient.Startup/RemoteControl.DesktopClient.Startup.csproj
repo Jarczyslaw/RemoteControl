@@ -55,12 +55,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -88,6 +82,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Commons\RemoteControl.Proxy\RemoteControl.Proxy.csproj">
+      <Project>{123f2446-6ad9-41c8-86ac-2db426d779e0}</Project>
+      <Name>RemoteControl.Proxy</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RemoteControl.DesktopClient.Core\RemoteControl.DesktopClient.Core.csproj">
       <Project>{fb7f36cc-aa77-4568-91eb-176fe4bcfc7c}</Project>
       <Name>RemoteControl.DesktopClient.Core</Name>

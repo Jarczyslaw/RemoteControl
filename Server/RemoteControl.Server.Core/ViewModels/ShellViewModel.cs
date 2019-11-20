@@ -5,6 +5,7 @@ using JToolbox.WPF.Core.Extensions;
 using Prism.Commands;
 using Prism.Mvvm;
 using RemoteControl.Server.Core.Services;
+using RemoteControl.Server.RemoteCommands;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -19,13 +20,15 @@ namespace RemoteControl.Server.Core.ViewModels
         private readonly IShellDialogsService shellDialogsService;
         private readonly IDialogsService dialogsService;
         private readonly ISystemService systemService;
-        private ScreenCapture screenCapture = new ScreenCapture();
+        private readonly ScreenCapture screenCapture = new ScreenCapture();
 
-        public ShellViewModel(ISystemService systemService, IShellDialogsService shellDialogsService, IDialogsService dialogsService)
+        public ShellViewModel(IRemoteCommandsService remoteCommandsService, ISystemService systemService, IShellDialogsService shellDialogsService, IDialogsService dialogsService)
         {
             this.shellDialogsService = shellDialogsService;
             this.dialogsService = dialogsService;
             this.systemService = systemService;
+
+            remoteCommandsService.Start(1234);
         }
 
         public string Logs

@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+﻿using RemoteControl.Proxy;
 
 namespace RemoteControl.Server.RemoteCommands
 {

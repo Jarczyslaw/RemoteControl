@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace RemoteControl.DesktopClient.Startup
+namespace RemoteControl.DesktopClient.Core
 {
     public partial class MainForm : Form
     {
