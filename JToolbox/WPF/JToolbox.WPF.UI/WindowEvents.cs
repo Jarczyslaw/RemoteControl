@@ -23,6 +23,7 @@ namespace JToolbox.WPF.UI
             Window.ContentRendered += Window_ContentRendered;
             Window.Closing += Window_Closing;
             Window.Closed += Window_Closed;
+            Window.Loaded += Window_Loaded;
         }
 
         public void Detach()
@@ -31,6 +32,7 @@ namespace JToolbox.WPF.UI
             Window.ContentRendered -= Window_ContentRendered;
             Window.Closing -= Window_Closing;
             Window.Closed -= Window_Closed;
+            Window.Loaded -= Window_Loaded;
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -64,6 +66,14 @@ namespace JToolbox.WPF.UI
             if (DataContext is IOnClosingAware closingAware)
             {
                 e.Cancel = closingAware.OnClosing();
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is IOnLoadedAware loadedAware)
+            {
+                loadedAware.OnLoaded();
             }
         }
     }

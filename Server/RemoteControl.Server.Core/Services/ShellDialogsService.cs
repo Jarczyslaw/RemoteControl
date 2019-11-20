@@ -25,6 +25,11 @@ namespace RemoteControl.Server.Core.Services
             return window.ShowMessageAsync("Error", $"An exception occured: {exc.Message}");
         }
 
+        public Task ShowException(string message, Exception exc)
+        {
+            return window.ShowMessageAsync("Error", message + Environment.NewLine + $"An exception message: {exc.Message}");
+        }
+
         public Task ShowInfo(string message)
         {
             return window.ShowMessageAsync("Information", message);

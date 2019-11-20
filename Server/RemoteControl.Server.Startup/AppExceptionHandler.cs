@@ -1,10 +1,7 @@
 ﻿using JToolbox.Core.Abstraction;
+using JToolbox.Desktop.Dialogs;
 using JToolbox.WPF.Core;
 using System;
-using Unity;
-using Prism.Unity;
-using RemoteControl.Server.Core.Services;
-using JToolbox.Desktop.Dialogs;
 
 namespace RemoteControl.Server.Startup
 {

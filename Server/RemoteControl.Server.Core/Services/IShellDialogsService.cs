@@ -10,6 +10,7 @@ namespace RemoteControl.Server.Core.Services
         Task ShowError(string message);
 
         Task ShowException(Exception exc);
+        Task ShowException(string message, Exception exc);
 
         Task<bool> ShowYesNoQuestion(string question);
     }

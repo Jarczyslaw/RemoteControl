@@ -3,8 +3,16 @@ using System.Threading.Tasks;
 
 namespace RemoteControl.Proxy
 {
+    public delegate void OnStart(int port);
+
+    public delegate void OnStop();
+
     public class ProxyServer : ProxyService.ProxyServiceBase, IProxyServer
     {
+        public event OnStart OnStart = delegate { };
+
+        public event OnStop OnStop = delegate { };
+
         public Server Server { get; private set; }
 
         public Task Start(int port)
@@ -15,12 +23,14 @@ namespace RemoteControl.Proxy
                 Ports = { new ServerPort("localhost", port, ServerCredentials.Insecure) }
             };
             Server.Start();
+            OnStart(port);
             return Task.CompletedTask;
         }
 
-        public Task Stop()
+        public async Task Stop()
         {
-            return Server?.ShutdownAsync();
+            await Server?.ShutdownAsync();
+            OnStop();
         }
     }
 }
