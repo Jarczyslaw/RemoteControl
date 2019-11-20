@@ -72,7 +72,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Commons", "Commons", "{51BEE2C9-F527-4211-8E7E-202105E8C9F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteControl.Proxy", "Commons\RemoteControl.Proxy\RemoteControl.Proxy.csproj", "{123F2446-6AD9-41C8-86AC-2DB426D779E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemoteControl.Proxy", "Commons\RemoteControl.Proxy\RemoteControl.Proxy.csproj", "{123F2446-6AD9-41C8-86AC-2DB426D779E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteControl", "Commons\RemoteControl\RemoteControl.csproj", "{6FFD5142-12EB-4B3D-8655-5344326976A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -174,6 +176,10 @@ Global
 		{123F2446-6AD9-41C8-86AC-2DB426D779E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{123F2446-6AD9-41C8-86AC-2DB426D779E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{123F2446-6AD9-41C8-86AC-2DB426D779E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FFD5142-12EB-4B3D-8655-5344326976A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FFD5142-12EB-4B3D-8655-5344326976A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FFD5142-12EB-4B3D-8655-5344326976A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FFD5142-12EB-4B3D-8655-5344326976A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -208,6 +214,7 @@ Global
 		{7519097D-59FF-4717-A043-C083A7AA9A5D} = {61643ABD-80ED-407F-9811-0F0315BBC446}
 		{206DAC2A-2554-4F30-BDA9-F5CBA1960BE5} = {DA35934F-D8CE-4DF5-9C52-B16A5407D812}
 		{123F2446-6AD9-41C8-86AC-2DB426D779E0} = {51BEE2C9-F527-4211-8E7E-202105E8C9F5}
+		{6FFD5142-12EB-4B3D-8655-5344326976A3} = {51BEE2C9-F527-4211-8E7E-202105E8C9F5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BCB4424D-A73D-4F00-BC7F-7B616549F593}

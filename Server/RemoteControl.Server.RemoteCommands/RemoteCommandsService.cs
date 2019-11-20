@@ -5,30 +5,13 @@ using System.Threading.Tasks;
 
 namespace RemoteControl.Server.RemoteCommands
 {
-    public class RemoteCommandsService : ProxyService.ProxyServiceBase, IRemoteCommandsService
+    public class RemoteCommandsService : ProxyServer, IRemoteCommandsService
     {
         private readonly ISystemService systemService;
-        private Grpc.Core.Server server;
 
         public RemoteCommandsService(ISystemService systemService)
         {
             this.systemService = systemService;
-        }
-
-        public Task Start(int port)
-        {
-            server = new Grpc.Core.Server
-            {
-                Services = { ProxyService.BindService(this) },
-                Ports = { new ServerPort("localhost", port, ServerCredentials.Insecure) }
-            };
-            server.Start();
-            return Task.CompletedTask;
-        }
-
-        public Task Stop()
-        {
-            return server?.ShutdownAsync();
         }
 
         public override Task<ConnectResponse> Connect(ConnectionRequest request, ServerCallContext context)

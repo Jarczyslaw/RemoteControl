@@ -2,9 +2,7 @@
 
 namespace RemoteControl.Server.RemoteCommands
 {
-    public interface IRemoteCommandsService
+    public interface IRemoteCommandsService : IProxyServer
     {
-        Task Start(int port);
-        Task Stop();
     }
 }

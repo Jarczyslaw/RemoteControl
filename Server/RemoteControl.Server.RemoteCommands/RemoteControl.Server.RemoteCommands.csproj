@@ -72,6 +72,10 @@
       <Project>{123f2446-6ad9-41c8-86ac-2db426d779e0}</Project>
       <Name>RemoteControl.Proxy</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Commons\RemoteControl\RemoteControl.csproj">
+      <Project>{6ffd5142-12eb-4b3d-8655-5344326976a3}</Project>
+      <Name>RemoteControl</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\JToolbox\Desktop\JToolbox.Desktop.Core\JToolbox.Desktop.Core.csproj">
       <Project>{f91c51e8-eee9-405d-8d53-1bd1a8b462a9}</Project>
       <Name>JToolbox.Desktop.Core</Name>
