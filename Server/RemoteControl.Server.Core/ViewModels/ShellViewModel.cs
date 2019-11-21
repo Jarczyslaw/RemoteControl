@@ -25,14 +25,16 @@ namespace RemoteControl.Server.Core.ViewModels
         private readonly IDialogsService dialogsService;
         private readonly ISystemService systemService;
         private readonly IRemoteCommandsService remoteCommandsService;
+        private readonly ILogsAggregator logsAggregator;
         private readonly ScreenCapture screenCapture = new ScreenCapture();
 
-        public ShellViewModel(IRemoteCommandsService remoteCommandsService, ISystemService systemService, IShellDialogsService shellDialogsService, IDialogsService dialogsService)
+        public ShellViewModel(ILogsAggregator logsAggregator, IRemoteCommandsService remoteCommandsService, ISystemService systemService, IShellDialogsService shellDialogsService, IDialogsService dialogsService)
         {
             this.shellDialogsService = shellDialogsService;
             this.dialogsService = dialogsService;
             this.systemService = systemService;
             this.remoteCommandsService = remoteCommandsService;
+            this.logsAggregator = logsAggregator;
 
             Initialize(remoteCommandsService);
         }
