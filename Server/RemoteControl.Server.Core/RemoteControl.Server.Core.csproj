@@ -107,6 +107,7 @@
     <Compile Include="Services\MessagesAggregator.cs" />
     <Compile Include="Services\ShellDialogsService.cs" />
     <Compile Include="Services\IShellDialogsService.cs" />
+    <Compile Include="ViewModels\ConnectionViewModel.cs" />
     <Compile Include="ViewModels\ControlPanelViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\ControlPanelView.xaml.cs">
@@ -156,6 +157,10 @@
     <ProjectReference Include="..\..\JToolbox\WPF\JToolbox.WPF.UI\JToolbox.WPF.UI.csproj">
       <Project>{9594D7EE-C5D6-4F07-8F3E-63B7C83E21D0}</Project>
       <Name>JToolbox.WPF.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RemoteControl.Server.Connections\RemoteControl.Server.Connections.csproj">
+      <Project>{61B414C3-CC77-4263-8552-4D517A19CC56}</Project>
+      <Name>RemoteControl.Server.Connections</Name>
     </ProjectReference>
     <ProjectReference Include="..\RemoteControl.Server.RemoteCommands\RemoteControl.Server.RemoteCommands.csproj">
       <Project>{206dac2a-2554-4f30-bda9-f5cba1960be5}</Project>

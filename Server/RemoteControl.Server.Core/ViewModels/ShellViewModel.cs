@@ -3,6 +3,7 @@ using Prism.Mvvm;
 using RemoteControl.Server.Core.Services;
 using RemoteControl.Server.RemoteCommands;
 using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -38,7 +39,22 @@ namespace RemoteControl.Server.Core.ViewModels
             set => SetProperty(ref connectionStatus, value);
         }
 
-        public string Connections { get; set; }
+        public ObservableCollection<ConnectionViewModel> Connections { get; set; } = new ObservableCollection<ConnectionViewModel>
+        {
+            new ConnectionViewModel(new Server.Connections.Connection
+            {
+                Active = true,
+                UpdateTime = DateTime.Now,
+                ConnectionRequest = new Proxy.ConnectionRequest
+                {
+                    Address = "address",
+                    Name = "name",
+                    Type = Proxy.ConnectionRequest.Types.DeviceType.Desktop
+                }
+            })
+        };
+
+        public string ConnectionsCounter { get; set; }
 
         public int ActiveConnections
         {
@@ -131,7 +147,7 @@ namespace RemoteControl.Server.Core.ViewModels
 
         private void UpdateConnections()
         {
-            Connections = $"Connections: {activeConnections}/{inactiveConnections}";
+            ConnectionsCounter = $"Connections: {activeConnections}/{inactiveConnections}";
             RaisePropertyChanged(nameof(Connections));
         }
     }
