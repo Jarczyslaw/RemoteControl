@@ -20,7 +20,7 @@ message ConnectionRequest {
 	
 	DeviceType Type = 1;
 	string Name = 2;
-	string Adddress = 3;
+	string Address = 3;
 }
 
 message ConnectResponse {

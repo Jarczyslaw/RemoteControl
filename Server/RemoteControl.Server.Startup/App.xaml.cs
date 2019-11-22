@@ -7,6 +7,7 @@ using JToolbox.WPF.PrismCore;
 using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Unity;
+using RemoteControl.Server.Connections;
 using RemoteControl.Server.Core.Services;
 using RemoteControl.Server.Core.Views;
 using RemoteControl.Server.RemoteCommands;
@@ -31,6 +32,7 @@ namespace RemoteControl.Server.Startup
             containerRegistry.RegisterSingleton<ISystemService, SystemService>();
             containerRegistry.RegisterSingleton<IRemoteCommandsService, RemoteCommandsService>();
             containerRegistry.RegisterSingleton<IMessagesAggregator, MessagesAggregator>();
+            containerRegistry.RegisterSingleton<IConnectionsService, ConnectionsService>();
             RegisterGlobalExceptionHandler();
         }
 
