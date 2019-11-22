@@ -5,11 +5,15 @@ namespace RemoteControl.Server.Core.Services
 {
     public delegate void OnMessage(string message);
 
-    public class LogsAggregator : ILogsAggregator
+    public delegate void OnStatusMessage(string message);
+
+    public class MessagesAggregator : IMessagesAggregator
     {
         public event OnMessage OnMessage = delegate { };
 
-        public LogsAggregator(ILoggerService loggerService)
+        public event OnStatusMessage OnStatusMessage = delegate { };
+
+        public MessagesAggregator(ILoggerService loggerService)
         {
             LoggerService = loggerService;
         }
@@ -20,6 +24,11 @@ namespace RemoteControl.Server.Core.Services
         {
             LoggerService.Info(message);
             OnMessage(message);
+        }
+
+        public void StatusMessage(string message)
+        {
+            OnStatusMessage(message);
         }
 
         public void Error(Exception exception)

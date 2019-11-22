@@ -103,11 +103,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\ILogsAggregator.cs" />
-    <Compile Include="Services\LogsAggregator.cs" />
+    <Compile Include="Services\IMessagesAggregator.cs" />
+    <Compile Include="Services\MessagesAggregator.cs" />
     <Compile Include="Services\ShellDialogsService.cs" />
     <Compile Include="Services\IShellDialogsService.cs" />
+    <Compile Include="ViewModels\ControlPanelViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="Views\ControlPanelView.xaml.cs">
+      <DependentUpon>ControlPanelView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ShellWindow.xaml.cs">
       <DependentUpon>ShellWindow.xaml</DependentUpon>
     </Compile>
@@ -119,6 +123,10 @@
     <Resource Include="Resources\rc.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\ControlPanelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ShellWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

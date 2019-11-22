@@ -1,15 +1,8 @@
-﻿using JToolbox.Desktop.Core;
-using JToolbox.Desktop.Core.Services;
-using JToolbox.Desktop.Dialogs;
-using JToolbox.WPF.Core.Awareness;
-using JToolbox.WPF.Core.Extensions;
-using Prism.Commands;
+﻿using JToolbox.WPF.Core.Awareness;
 using Prism.Mvvm;
 using RemoteControl.Server.Core.Services;
 using RemoteControl.Server.RemoteCommands;
 using System;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -18,25 +11,19 @@ namespace RemoteControl.Server.Core.ViewModels
     public class ShellViewModel : BindableBase, IOnLoadedAware, ICloseSource
     {
         private string logs;
-        private string message;
+        private string statusMessage;
         private string connectionStatus;
         private int activeConnections, inactiveConnections;
         private readonly IShellDialogsService shellDialogsService;
-        private readonly IDialogsService dialogsService;
-        private readonly ISystemService systemService;
         private readonly IRemoteCommandsService remoteCommandsService;
-        private readonly ILogsAggregator logsAggregator;
-        private readonly ScreenCapture screenCapture = new ScreenCapture();
 
-        public ShellViewModel(ILogsAggregator logsAggregator, IRemoteCommandsService remoteCommandsService, ISystemService systemService, IShellDialogsService shellDialogsService, IDialogsService dialogsService)
+        public ShellViewModel(IMessagesAggregator messagesAggregator, IRemoteCommandsService remoteCommandsService, IShellDialogsService shellDialogsService)
         {
             this.shellDialogsService = shellDialogsService;
-            this.dialogsService = dialogsService;
-            this.systemService = systemService;
             this.remoteCommandsService = remoteCommandsService;
-            this.logsAggregator = logsAggregator;
 
-            Initialize(remoteCommandsService);
+            InitializeCommands(remoteCommandsService);
+            InitializeMessages(messagesAggregator);
         }
 
         public string Logs
@@ -73,18 +60,18 @@ namespace RemoteControl.Server.Core.ViewModels
             }
         }
 
-        public string Message
+        public string StatusMessage
         {
-            get => message;
+            get => statusMessage;
             set
             {
-                SetProperty(ref message, value);
+                SetProperty(ref statusMessage, value);
                 if (!string.IsNullOrEmpty(value))
                 {
                     Task.Run(async () =>
                     {
                         await Task.Delay(5000);
-                        Message = string.Empty;
+                        StatusMessage = string.Empty;
                     });
                 }
             }
@@ -92,73 +79,7 @@ namespace RemoteControl.Server.Core.ViewModels
 
         public Action OnClose { get; set; }
 
-        public DelegateCommand ShutdownCommand => new DelegateCommand(async () =>
-        {
-            try
-            {
-                if (await shellDialogsService.ShowYesNoQuestion("Do you really want o shutdown this machine?"))
-                {
-                    systemService.Shutdown();
-                }
-            }
-            catch (Exception exc)
-            {
-                await shellDialogsService.ShowException(exc);
-            }
-        });
-
-        public DelegateCommand RestartCommand => new DelegateCommand(async () =>
-        {
-            try
-            {
-                if (await shellDialogsService.ShowYesNoQuestion("Do you really want o restart this machine?"))
-                {
-                    systemService.Restart();
-                }
-            }
-            catch (Exception exc)
-            {
-                await shellDialogsService.ShowException(exc);
-            }
-        });
-
-        public DelegateCommand CapturePrimaryScreenCommand => new DelegateCommand(async () =>
-        {
-            try
-            {
-                using (var screenshot = screenCapture.CapturePrimaryScreen())
-                {
-                    if (SaveScreenshotFile(screenshot))
-                    {
-                        Message = "Primary screen screenshot saved";
-                    }
-                }
-            }
-            catch (Exception exc)
-            {
-                await shellDialogsService.ShowException(exc);
-            }
-        });
-
-        public DelegateCommand CaptureAllScreensCommand => new DelegateCommand(async () =>
-        {
-            try
-            {
-                using (var screenshot = screenCapture.CaptureAllScreens())
-                {
-                    if (SaveScreenshotFile(screenshot))
-                    {
-                        Message = "All screens screenshot saved";
-                    }
-                }
-            }
-            catch (Exception exc)
-            {
-                await shellDialogsService.ShowException(exc);
-            }
-        });
-
-        private void Initialize(IRemoteCommandsService remoteCommandsService)
+        private void InitializeCommands(IRemoteCommandsService remoteCommandsService)
         {
             remoteCommandsService.OnStart += RemoteCommandsService_OnStart;
             remoteCommandsService.OnStop += RemoteCommandsService_OnStop;
@@ -166,25 +87,16 @@ namespace RemoteControl.Server.Core.ViewModels
             UpdateConnections();
         }
 
+        private void InitializeMessages(IMessagesAggregator messagesAggregator)
+        {
+            messagesAggregator.OnMessage += AppendLog;
+            messagesAggregator.OnStatusMessage += m => StatusMessage = m;
+        }
+
         private void AppendLog(string message)
         {
             Logs = $"[{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")}] - {message}"
                 + Environment.NewLine + Logs;
-        }
-
-        private bool SaveScreenshotFile(Bitmap bitmap)
-        {
-            var screenshotFile = dialogsService.SaveFile("Screen shot", null, $"screenshot_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}", new DialogFilterPair
-            {
-                DisplayName = "png",
-                ExtensionsList = "png"
-            });
-            if (!string.IsNullOrEmpty(screenshotFile))
-            {
-                bitmap.Save(screenshotFile, ImageFormat.Png);
-                return true;
-            }
-            return false;
         }
 
         public async void OnLoaded()

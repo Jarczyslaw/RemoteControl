@@ -30,7 +30,7 @@ namespace RemoteControl.Server.Startup
             containerRegistry.RegisterSingleton<IAppConfigService, AppConfigService>();
             containerRegistry.RegisterSingleton<ISystemService, SystemService>();
             containerRegistry.RegisterSingleton<IRemoteCommandsService, RemoteCommandsService>();
-            containerRegistry.RegisterSingleton<ILogsAggregator, LogsAggregator>();
+            containerRegistry.RegisterSingleton<IMessagesAggregator, MessagesAggregator>();
             RegisterGlobalExceptionHandler();
         }
 
