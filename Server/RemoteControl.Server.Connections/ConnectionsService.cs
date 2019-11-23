@@ -66,7 +66,7 @@ namespace RemoteControl.Server.Connections
         {
             lock (connectionsLock)
             {
-                var connection = connections.Find(c => c.ConnectionRequest.Compare(connectionRequest));
+                var connection = connections.Find(c => c.ConnectionRequest.Equals(connectionRequest));
                 if (connection == null)
                 {
                     connection = new Connection

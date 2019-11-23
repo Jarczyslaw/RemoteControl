@@ -16,5 +16,6 @@ namespace RemoteControl.Server.Core.ViewModels
         public string Address => connection.ConnectionRequest.Address;
         public DateTime UpdateTime => connection.UpdateTime;
         public bool Active => connection.Active;
+        public Proxy.ConnectionRequest.Types.DeviceType Type => connection.ConnectionRequest.Type;
     }
 }

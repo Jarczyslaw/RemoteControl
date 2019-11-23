@@ -2,6 +2,7 @@
     x:Class="RemoteControl.Server.Startup.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:RemoteControl.Server.Core.Converters;assembly=RemoteControl.Server.Core"
     xmlns:local="clr-namespace:RemoteControl.Server.Startup"
     xmlns:prism="http://prismlibrary.com/">
     <Application.Resources>
@@ -11,8 +12,18 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Cobalt.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <converters:DeviceTypeToKindConverter x:Key="DeviceTypeToKindConverter" />
+            <converters:BoolToActiveConverter
+                x:Key="BoolToActiveConverter"
+                FalseValue="Inactive"
+                TrueValue="Active" />
+            <converters:BoolToActiveBrushConverter
+                x:Key="BoolToActiveBrushConverter"
+                FalseValue="OrangeRed"
+                TrueValue="LightGreen" />
         </ResourceDictionary>
     </Application.Resources>
 </prism:PrismApplication>
