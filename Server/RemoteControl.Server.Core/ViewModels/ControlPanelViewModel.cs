@@ -5,6 +5,7 @@ using JToolbox.WPF.Core.Extensions;
 using Prism.Commands;
 using Prism.Mvvm;
 using RemoteControl.Server.Core.Services;
+using RemoteControl.Server.Messages;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;

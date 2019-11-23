@@ -109,8 +109,6 @@
     <Compile Include="Converters\BoolToActiveConverter.cs" />
     <Compile Include="Converters\DeviceTypeToKindConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\IMessagesAggregator.cs" />
-    <Compile Include="Services\MessagesAggregator.cs" />
     <Compile Include="Services\ShellDialogsService.cs" />
     <Compile Include="Services\IShellDialogsService.cs" />
     <Compile Include="ViewModels\ConnectionViewModel.cs" />
@@ -174,6 +172,10 @@
     <ProjectReference Include="..\RemoteControl.Server.Connections\RemoteControl.Server.Connections.csproj">
       <Project>{61B414C3-CC77-4263-8552-4D517A19CC56}</Project>
       <Name>RemoteControl.Server.Connections</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RemoteControl.Server.Messages\RemoteControl.Server.Messages.csproj">
+      <Project>{4C71D785-6CAA-4C8F-A6CE-537D3C95E5E1}</Project>
+      <Name>RemoteControl.Server.Messages</Name>
     </ProjectReference>
     <ProjectReference Include="..\RemoteControl.Server.RemoteCommands\RemoteControl.Server.RemoteCommands.csproj">
       <Project>{206dac2a-2554-4f30-bda9-f5cba1960be5}</Project>

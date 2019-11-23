@@ -84,6 +84,10 @@
       <Project>{61b414c3-cc77-4263-8552-4d517a19cc56}</Project>
       <Name>RemoteControl.Server.Connections</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RemoteControl.Server.Messages\RemoteControl.Server.Messages.csproj">
+      <Project>{4c71d785-6caa-4c8f-a6ce-537d3c95e5e1}</Project>
+      <Name>RemoteControl.Server.Messages</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

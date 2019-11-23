@@ -8,6 +8,8 @@ namespace RemoteControl.Server.Connections
 {
     public delegate void OnNewConnection(Connection newConnection);
 
+    public delegate void OnConnectionRemove(Connection connection);
+
     public delegate void OnConnectionsStatusChanged(List<Connection> connections);
 
     public class ConnectionsService : IConnectionsService
@@ -22,6 +24,8 @@ namespace RemoteControl.Server.Connections
 
         public event OnConnectionsStatusChanged OnConnectionsStatusChanged = delegate { };
 
+        public event OnConnectionRemove OnConnectionRemove = delegate { };
+
         public ConnectionsService()
         {
             poolingTask = Task.Run(() => ConnectionsPooling(poolingTokenSource.Token), poolingTokenSource.Token);
@@ -33,7 +37,7 @@ namespace RemoteControl.Server.Connections
 
         private async void ConnectionsPooling(CancellationToken cancellationToken)
         {
-            while (cancellationToken.IsCancellationRequested)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 lock (connectionsLock)
                 {
@@ -43,6 +47,7 @@ namespace RemoteControl.Server.Connections
                         var connection = connections[i];
                         if (DateTime.Now - connection.UpdateTime >= RemoveTime)
                         {
+                            OnConnectionRemove(connection);
                             connections.RemoveAt(i);
                             connectionsStatusChanged = true;
                         }
@@ -84,6 +89,20 @@ namespace RemoteControl.Server.Connections
                 }
                 OnNewConnection(connection);
                 OnConnectionsStatusChanged(connections);
+            }
+        }
+
+        public void RemoveConnection(ConnectionRequest connectionRequest)
+        {
+            lock (connectionsLock)
+            {
+                var connection = connections.Find(c => c.ConnectionRequest.Equals(connectionRequest));
+                if (connection != null)
+                {
+                    OnConnectionRemove(connection);
+                    connections.Remove(connection);
+                    OnConnectionsStatusChanged(connections);
+                }
             }
         }
 

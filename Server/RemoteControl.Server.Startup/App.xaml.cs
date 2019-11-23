@@ -10,6 +10,7 @@ using Prism.Unity;
 using RemoteControl.Server.Connections;
 using RemoteControl.Server.Core.Services;
 using RemoteControl.Server.Core.Views;
+using RemoteControl.Server.Messages;
 using RemoteControl.Server.RemoteCommands;
 using System.Windows;
 using Unity;

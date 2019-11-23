@@ -1,9 +1,13 @@
 ﻿using JToolbox.WPF.Core.Awareness;
 using Prism.Mvvm;
+using RemoteControl.Server.Connections;
 using RemoteControl.Server.Core.Services;
+using RemoteControl.Server.Messages;
 using RemoteControl.Server.RemoteCommands;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -17,12 +21,15 @@ namespace RemoteControl.Server.Core.ViewModels
         private int activeConnections, inactiveConnections;
         private readonly IShellDialogsService shellDialogsService;
         private readonly IRemoteCommandsService remoteCommandsService;
+        private ObservableCollection<ConnectionViewModel> connections = new ObservableCollection<ConnectionViewModel>();
 
-        public ShellViewModel(IMessagesAggregator messagesAggregator, IRemoteCommandsService remoteCommandsService, IShellDialogsService shellDialogsService)
+        public ShellViewModel(IMessagesAggregator messagesAggregator, IRemoteCommandsService remoteCommandsService,
+            IConnectionsService connectionsService, IShellDialogsService shellDialogsService)
         {
             this.shellDialogsService = shellDialogsService;
             this.remoteCommandsService = remoteCommandsService;
 
+            InitializeConnections(connectionsService);
             InitializeCommands(remoteCommandsService);
             InitializeMessages(messagesAggregator);
         }
@@ -39,20 +46,11 @@ namespace RemoteControl.Server.Core.ViewModels
             set => SetProperty(ref connectionStatus, value);
         }
 
-        public ObservableCollection<ConnectionViewModel> Connections { get; set; } = new ObservableCollection<ConnectionViewModel>
+        public ObservableCollection<ConnectionViewModel> Connections
         {
-            new ConnectionViewModel(new Server.Connections.Connection
-            {
-                Active = true,
-                UpdateTime = DateTime.Now,
-                ConnectionRequest = new Proxy.ConnectionRequest
-                {
-                    Address = "address",
-                    Name = "name",
-                    Type = Proxy.ConnectionRequest.Types.DeviceType.Desktop
-                }
-            })
-        };
+            get => connections;
+            set => SetProperty(ref connections, value);
+        }
 
         public string ConnectionsCounter { get; set; }
 
@@ -149,6 +147,31 @@ namespace RemoteControl.Server.Core.ViewModels
         {
             ConnectionsCounter = $"Connections: {activeConnections}/{inactiveConnections}";
             RaisePropertyChanged(nameof(Connections));
+        }
+
+        private void InitializeConnections(IConnectionsService connectionsService)
+        {
+            connectionsService.OnConnectionsStatusChanged += ConnectionsService_OnConnectionsStatusChanged;
+            connectionsService.OnNewConnection += ConnectionsService_OnNewConnection;
+            connectionsService.OnConnectionRemove += ConnectionsService_OnConnectionRemove;
+        }
+
+        private void ConnectionsService_OnConnectionRemove(Connection connection)
+        {
+            AppendLog($"{connection.ConnectionRequest.Name} removed");
+        }
+
+        private void ConnectionsService_OnNewConnection(Connection newConnection)
+        {
+            AppendLog($"{newConnection.ConnectionRequest.Name} from {newConnection.ConnectionRequest.Address} connected");
+        }
+
+        private void ConnectionsService_OnConnectionsStatusChanged(List<Connection> connections)
+        {
+            Connections = new ObservableCollection<ConnectionViewModel>(connections.Select(c => new ConnectionViewModel(c)));
+            ActiveConnections = Connections.Count(c => c.Active);
+            InactiveConnections = Connections.Count - ActiveConnections;
+            Connections.OrderBy(c => c.UpdateTime);
         }
     }
 }

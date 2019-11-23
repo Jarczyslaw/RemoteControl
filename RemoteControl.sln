@@ -76,6 +76,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemoteControl.Proxy", "Comm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteControl.Server.Connections", "Server\RemoteControl.Server.Connections\RemoteControl.Server.Connections.csproj", "{61B414C3-CC77-4263-8552-4D517A19CC56}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteControl.Server.Messages", "Server\RemoteControl.Server.Messages\RemoteControl.Server.Messages.csproj", "{4C71D785-6CAA-4C8F-A6CE-537D3C95E5E1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -180,6 +182,10 @@ Global
 		{61B414C3-CC77-4263-8552-4D517A19CC56}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61B414C3-CC77-4263-8552-4D517A19CC56}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61B414C3-CC77-4263-8552-4D517A19CC56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C71D785-6CAA-4C8F-A6CE-537D3C95E5E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C71D785-6CAA-4C8F-A6CE-537D3C95E5E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C71D785-6CAA-4C8F-A6CE-537D3C95E5E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C71D785-6CAA-4C8F-A6CE-537D3C95E5E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -215,6 +221,7 @@ Global
 		{206DAC2A-2554-4F30-BDA9-F5CBA1960BE5} = {DA35934F-D8CE-4DF5-9C52-B16A5407D812}
 		{123F2446-6AD9-41C8-86AC-2DB426D779E0} = {51BEE2C9-F527-4211-8E7E-202105E8C9F5}
 		{61B414C3-CC77-4263-8552-4D517A19CC56} = {DA35934F-D8CE-4DF5-9C52-B16A5407D812}
+		{4C71D785-6CAA-4C8F-A6CE-537D3C95E5E1} = {DA35934F-D8CE-4DF5-9C52-B16A5407D812}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BCB4424D-A73D-4F00-BC7F-7B616549F593}

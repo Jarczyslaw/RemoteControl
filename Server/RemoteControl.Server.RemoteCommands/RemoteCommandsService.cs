@@ -1,6 +1,9 @@
 ﻿using Grpc.Core;
 using JToolbox.Desktop.Core.Services;
 using RemoteControl.Proxy;
+using RemoteControl.Server.Connections;
+using RemoteControl.Server.Messages;
+using System;
 using System.Threading.Tasks;
 
 namespace RemoteControl.Server.RemoteCommands
@@ -8,30 +11,90 @@ namespace RemoteControl.Server.RemoteCommands
     public class RemoteCommandsService : ProxyServer, IRemoteCommandsService
     {
         private readonly ISystemService systemService;
+        private readonly IConnectionsService connectionsService;
+        private readonly IMessagesAggregator messagesAggregator;
 
-        public RemoteCommandsService(ISystemService systemService)
+        public RemoteCommandsService(IMessagesAggregator messagesAggregator, IConnectionsService connectionsService, ISystemService systemService)
         {
             this.systemService = systemService;
+            this.connectionsService = connectionsService;
+            this.messagesAggregator = messagesAggregator;
         }
 
-        public override Task<ConnectResponse> Connect(ConnectionRequest request, ServerCallContext context)
+        private void HandleInfo(ConnectionRequest request, string operationName)
         {
-            return base.Connect(request, context);
+            messagesAggregator.Info($"{request.Name} from {request.Address} invoked {operationName}");
         }
 
-        public override Task<DisconnectResponse> Disconnect(ConnectionRequest request, ServerCallContext context)
+        private void HandleError(Exception exc)
         {
-            return base.Disconnect(request, context);
+            messagesAggregator.Error(exc);
         }
 
-        public override Task<RestartResponse> Restart(ConnectionRequest request, ServerCallContext context)
+        public override Task<CommonResponse> Connect(ConnectionRequest request, ServerCallContext context)
         {
-            return base.Restart(request, context);
+            var response = new CommonResponse();
+            try
+            {
+                HandleInfo(request, nameof(Connect));
+                connectionsService.HandleRequest(request);
+            }
+            catch (Exception exc)
+            {
+                HandleError(exc);
+                response.Error = exc.Message;
+            }
+            return Task.FromResult(response);
         }
 
-        public override Task<ShutdownResponse> Shutdown(ConnectionRequest request, ServerCallContext context)
+        public override Task<CommonResponse> Disconnect(ConnectionRequest request, ServerCallContext context)
         {
-            return base.Shutdown(request, context);
+            var response = new CommonResponse();
+            try
+            {
+                HandleInfo(request, nameof(Disconnect));
+                connectionsService.RemoveConnection(request);
+            }
+            catch (Exception exc)
+            {
+                HandleError(exc);
+                response.Error = exc.Message;
+            }
+            return Task.FromResult(response);
+        }
+
+        public override Task<CommonResponse> Restart(ConnectionRequest request, ServerCallContext context)
+        {
+            var response = new CommonResponse();
+            try
+            {
+                HandleInfo(request, nameof(Restart));
+                connectionsService.HandleRequest(request);
+                systemService.Restart();
+            }
+            catch (Exception exc)
+            {
+                HandleError(exc);
+                response.Error = exc.Message;
+            }
+            return Task.FromResult(response);
+        }
+
+        public override Task<CommonResponse> Shutdown(ConnectionRequest request, ServerCallContext context)
+        {
+            var response = new CommonResponse();
+            try
+            {
+                HandleInfo(request, nameof(Shutdown));
+                connectionsService.HandleRequest(request);
+                systemService.Shutdown();
+            }
+            catch (Exception exc)
+            {
+                HandleError(exc);
+                response.Error = exc.Message;
+            }
+            return Task.FromResult(response);
         }
     }
 }

@@ -201,6 +201,10 @@
       <Project>{84264C4D-C966-403A-AB8B-CA3CC46B6C45}</Project>
       <Name>RemoteControl.Server.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RemoteControl.Server.Messages\RemoteControl.Server.Messages.csproj">
+      <Project>{4C71D785-6CAA-4C8F-A6CE-537D3C95E5E1}</Project>
+      <Name>RemoteControl.Server.Messages</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RemoteControl.Server.RemoteCommands\RemoteControl.Server.RemoteCommands.csproj">
       <Project>{206dac2a-2554-4f30-bda9-f5cba1960be5}</Project>
       <Name>RemoteControl.Server.RemoteCommands</Name>

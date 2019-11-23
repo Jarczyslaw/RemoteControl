@@ -1,7 +1,7 @@
 ﻿using JToolbox.Core.Abstraction;
 using System;
 
-namespace RemoteControl.Server.Core.Services
+namespace RemoteControl.Server.Messages
 {
     public interface IMessagesAggregator
     {

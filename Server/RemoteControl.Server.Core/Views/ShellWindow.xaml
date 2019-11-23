@@ -67,7 +67,6 @@
             <GroupBox Grid.Column="1" Header="Logs">
                 <TextBox
                     AcceptsReturn="True"
-                    Focusable="False"
                     IsReadOnly="True"
                     Text="{Binding Logs}"
                     TextWrapping="Wrap" />
