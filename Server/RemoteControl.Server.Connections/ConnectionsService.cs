@@ -1,6 +1,7 @@
 ﻿using RemoteControl.Proxy;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -39,15 +40,16 @@ namespace RemoteControl.Server.Connections
         {
             while (!cancellationToken.IsCancellationRequested)
             {
+                var connectionsStatusChanged = false;
+                Connection removedConnection = null;
                 lock (connectionsLock)
                 {
-                    var connectionsStatusChanged = false;
                     for (int i = connections.Count - 1; i >= 0; i--)
                     {
                         var connection = connections[i];
                         if (DateTime.Now - connection.UpdateTime >= RemoveTime)
                         {
-                            OnConnectionRemove(connection);
+                            removedConnection = connection;
                             connections.RemoveAt(i);
                             connectionsStatusChanged = true;
                         }
@@ -57,39 +59,55 @@ namespace RemoteControl.Server.Connections
                             connectionsStatusChanged = true;
                         }
                     }
-
-                    if (connectionsStatusChanged)
-                    {
-                        OnConnectionsStatusChanged(connections);
-                    }
                 }
+
+                if (removedConnection != null)
+                {
+                    OnConnectionRemove(removedConnection);
+                }
+
+                if (connectionsStatusChanged)
+                {
+                    OnConnectionsStatusChanged(connections.ToList());
+                }
+
                 await Task.Delay(1000);
             }
         }
 
         public void HandleRequest(ConnectionRequest connectionRequest)
         {
+            Connection newConnection = null;
             lock (connectionsLock)
             {
                 var connection = connections.Find(c => c.ConnectionRequest.Equals(connectionRequest));
                 if (connection == null)
                 {
-                    connection = new Connection
+                    newConnection = new Connection
                     {
                         Active = true,
                         UpdateTime = DateTime.Now,
                         ConnectionRequest = connectionRequest
                     };
-                    connections.Add(connection);
+                    connections.Add(newConnection);
                 }
                 else
                 {
                     connection.Active = true;
                     connection.UpdateTime = DateTime.Now;
                 }
-                OnNewConnection(connection);
-                OnConnectionsStatusChanged(connections);
             }
+
+            if (newConnection != null)
+            {
+                OnNewConnection(newConnection);
+            }
+            InvokeOnConnectionsStatusChanged();
+        }
+
+        private void InvokeOnConnectionsStatusChanged()
+        {
+            OnConnectionsStatusChanged(connections.ToList());
         }
 
         public void RemoveConnection(ConnectionRequest connectionRequest)
