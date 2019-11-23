@@ -112,15 +112,20 @@ namespace RemoteControl.Server.Connections
 
         public void RemoveConnection(ConnectionRequest connectionRequest)
         {
+            Connection removedConnection = null;
             lock (connectionsLock)
             {
-                var connection = connections.Find(c => c.ConnectionRequest.Equals(connectionRequest));
-                if (connection != null)
+                removedConnection = connections.Find(c => c.ConnectionRequest.Equals(connectionRequest));
+                if (removedConnection != null)
                 {
-                    OnConnectionRemove(connection);
-                    connections.Remove(connection);
-                    OnConnectionsStatusChanged(connections);
+                    connections.Remove(removedConnection);
                 }
+            }
+
+            if (removedConnection != null)
+            {
+                OnConnectionRemove(removedConnection);
+                InvokeOnConnectionsStatusChanged();
             }
         }
 
