@@ -1,6 +1,8 @@
-﻿using JToolbox.WPF.UI;
+﻿using JToolbox.Desktop.Core.Services;
+using JToolbox.WPF.UI;
 using MahApps.Metro.Controls;
 using System;
+using System.IO;
 using System.Windows;
 
 namespace RemoteControl.Server.Core.Views
@@ -9,9 +11,12 @@ namespace RemoteControl.Server.Core.Views
     {
         private readonly WindowEvents windowEvents;
         private WindowState windowState;
+        private readonly ISystemService systemService;
 
-        public ShellWindow()
+        public ShellWindow(ISystemService systemService)
         {
+            this.systemService = systemService;
+
             Instance = this;
             InitializeComponent();
             Width = MinWidth = 800;
@@ -54,6 +59,16 @@ namespace RemoteControl.Server.Core.Views
         {
             Show();
             WindowState = windowState;
+        }
+
+        private void miAppLocation_Click(object sender, RoutedEventArgs e)
+        {
+            systemService.OpenAppLocation();
+        }
+
+        private void miAppLogsLocation_Click(object sender, RoutedEventArgs e)
+        {
+            systemService.OpenFolderLocation(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs"));
         }
     }
 }

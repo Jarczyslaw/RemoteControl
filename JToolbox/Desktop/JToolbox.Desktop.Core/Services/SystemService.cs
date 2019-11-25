@@ -15,7 +15,12 @@ namespace JToolbox.Desktop.Core.Services
         public void OpenAppLocation()
         {
             var appLocation = AppDomain.CurrentDomain.BaseDirectory;
-            StartProcess(appLocation);
+            OpenFolderLocation(appLocation);
+        }
+
+        public void OpenFolderLocation(string folderPath)
+        {
+            StartProcess(folderPath);
         }
 
         public void OpenFileLocation(string filePath)

@@ -108,14 +108,25 @@
             TrayMouseDoubleClick="taskBarIcon_TrayMouseDoubleClick">
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu>
+                    <MenuItem Header="Paths">
+                        <MenuItem
+                            x:Name="miAppLocation"
+                            Click="miAppLocation_Click"
+                            Header="App location" />
+                        <MenuItem
+                            x:Name="miAppLogsLocation"
+                            Click="miAppLogsLocation_Click"
+                            Header="App logs location" />
+                    </MenuItem>
+                    <Separator />
                     <MenuItem
                         x:Name="miRestore"
                         Click="miRestore_Click"
-                        Header="Restore" />
+                        Header="Restore app" />
                     <MenuItem
                         x:Name="miClose"
                         Click="miClose_Click"
-                        Header="Close" />
+                        Header="Close app" />
                 </ContextMenu>
             </tb:TaskbarIcon.ContextMenu>
         </tb:TaskbarIcon>

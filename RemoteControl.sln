@@ -74,9 +74,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Commons", "Commons", "{51BE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemoteControl.Proxy", "Commons\RemoteControl.Proxy\RemoteControl.Proxy.csproj", "{123F2446-6AD9-41C8-86AC-2DB426D779E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteControl.Server.Connections", "Server\RemoteControl.Server.Connections\RemoteControl.Server.Connections.csproj", "{61B414C3-CC77-4263-8552-4D517A19CC56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemoteControl.Server.Connections", "Server\RemoteControl.Server.Connections\RemoteControl.Server.Connections.csproj", "{61B414C3-CC77-4263-8552-4D517A19CC56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteControl.Server.Messages", "Server\RemoteControl.Server.Messages\RemoteControl.Server.Messages.csproj", "{4C71D785-6CAA-4C8F-A6CE-537D3C95E5E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemoteControl.Server.Messages", "Server\RemoteControl.Server.Messages\RemoteControl.Server.Messages.csproj", "{4C71D785-6CAA-4C8F-A6CE-537D3C95E5E1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.Serializers", "JToolbox\Misc\JToolbox.Serializers\JToolbox.Serializers.csproj", "{A5917EEF-45A1-4BAF-A44F-1FDCE95FAC93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -186,6 +188,10 @@ Global
 		{4C71D785-6CAA-4C8F-A6CE-537D3C95E5E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C71D785-6CAA-4C8F-A6CE-537D3C95E5E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C71D785-6CAA-4C8F-A6CE-537D3C95E5E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5917EEF-45A1-4BAF-A44F-1FDCE95FAC93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5917EEF-45A1-4BAF-A44F-1FDCE95FAC93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5917EEF-45A1-4BAF-A44F-1FDCE95FAC93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5917EEF-45A1-4BAF-A44F-1FDCE95FAC93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -222,6 +228,7 @@ Global
 		{123F2446-6AD9-41C8-86AC-2DB426D779E0} = {51BEE2C9-F527-4211-8E7E-202105E8C9F5}
 		{61B414C3-CC77-4263-8552-4D517A19CC56} = {DA35934F-D8CE-4DF5-9C52-B16A5407D812}
 		{4C71D785-6CAA-4C8F-A6CE-537D3C95E5E1} = {DA35934F-D8CE-4DF5-9C52-B16A5407D812}
+		{A5917EEF-45A1-4BAF-A44F-1FDCE95FAC93} = {896A7B42-AF7E-4849-9E31-77FA6545DC3F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BCB4424D-A73D-4F00-BC7F-7B616549F593}

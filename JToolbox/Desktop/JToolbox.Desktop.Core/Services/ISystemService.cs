@@ -8,6 +8,8 @@ namespace JToolbox.Desktop.Core.Services
 
         void OpenAppLocation();
 
+        void OpenFolderLocation(string folderPath);
+
         void OpenFileLocation(string filePath);
 
         void StartProcess(string process, string arguments = null);
