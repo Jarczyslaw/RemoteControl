@@ -1,5 +1,2 @@
 settings: service port, start minimized, add to startup
 service: grpc/wcf?
-repair logging cfg
-add open logs command
-customize tray icon's tooltip

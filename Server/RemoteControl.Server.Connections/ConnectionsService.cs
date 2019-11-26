@@ -42,6 +42,8 @@ namespace RemoteControl.Server.Connections
             {
                 var connectionsStatusChanged = false;
                 Connection removedConnection = null;
+                List<Connection> connectionsCopy = null;
+
                 lock (connectionsLock)
                 {
                     for (int i = connections.Count - 1; i >= 0; i--)
@@ -59,6 +61,7 @@ namespace RemoteControl.Server.Connections
                             connectionsStatusChanged = true;
                         }
                     }
+                    connectionsCopy = connections.ToList();
                 }
 
                 if (removedConnection != null)
@@ -68,7 +71,7 @@ namespace RemoteControl.Server.Connections
 
                 if (connectionsStatusChanged)
                 {
-                    OnConnectionsStatusChanged(connections.ToList());
+                    OnConnectionsStatusChanged(connectionsCopy);
                 }
 
                 await Task.Delay(1000);
@@ -78,6 +81,8 @@ namespace RemoteControl.Server.Connections
         public void HandleRequest(ConnectionRequest connectionRequest)
         {
             Connection newConnection = null;
+            List<Connection> connectionsCopy = null;
+
             lock (connectionsLock)
             {
                 var connection = connections.Find(c => c.ConnectionRequest.Equals(connectionRequest));
@@ -96,23 +101,23 @@ namespace RemoteControl.Server.Connections
                     connection.Active = true;
                     connection.UpdateTime = DateTime.Now;
                 }
+
+                connectionsCopy = connections.ToList();
             }
 
             if (newConnection != null)
             {
                 OnNewConnection(newConnection);
             }
-            InvokeOnConnectionsStatusChanged();
-        }
 
-        private void InvokeOnConnectionsStatusChanged()
-        {
-            OnConnectionsStatusChanged(connections.ToList());
+            OnConnectionsStatusChanged(connectionsCopy);
         }
 
         public void RemoveConnection(ConnectionRequest connectionRequest)
         {
             Connection removedConnection = null;
+            List<Connection> connectionsCopy = null;
+
             lock (connectionsLock)
             {
                 removedConnection = connections.Find(c => c.ConnectionRequest.Equals(connectionRequest));
@@ -120,12 +125,13 @@ namespace RemoteControl.Server.Connections
                 {
                     connections.Remove(removedConnection);
                 }
+                connectionsCopy = connections.ToList();
             }
 
             if (removedConnection != null)
             {
                 OnConnectionRemove(removedConnection);
-                InvokeOnConnectionsStatusChanged();
+                OnConnectionsStatusChanged(connectionsCopy);
             }
         }
 
