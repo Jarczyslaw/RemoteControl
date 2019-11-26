@@ -98,7 +98,6 @@ namespace RemoteControl.Server.Core.ViewModels
         {
             connectionsCounter = value;
             UpdateConnections();
-            RaisePropertyChanged(nameof(AppInfo));
         }
 
         private void InitializeCommands(IRemoteCommandsService remoteCommandsService)
@@ -154,7 +153,8 @@ namespace RemoteControl.Server.Core.ViewModels
         private void UpdateConnections()
         {
             ConnectionsCounter = $"Connections: {activeConnections}/{inactiveConnections}";
-            RaisePropertyChanged(nameof(Connections));
+            RaisePropertyChanged(nameof(ConnectionsCounter));
+            RaisePropertyChanged(nameof(AppInfo));
         }
 
         private void InitializeConnections(IConnectionsService connectionsService)
