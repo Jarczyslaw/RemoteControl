@@ -104,7 +104,7 @@
             x:Name="taskBarIcon"
             IconSource="pack://application:,,,/RemoteControl.Server.Core;component/Resources/rc.ico"
             MenuActivation="RightClick"
-            ToolTipText="Remote Control"
+            ToolTipText="{Binding AppInfo}"
             TrayMouseDoubleClick="taskBarIcon_TrayMouseDoubleClick">
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu>

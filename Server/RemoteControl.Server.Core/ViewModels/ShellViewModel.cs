@@ -43,7 +43,16 @@ namespace RemoteControl.Server.Core.ViewModels
         public string ConnectionStatus
         {
             get => connectionStatus;
-            set => SetProperty(ref connectionStatus, value);
+            set
+            {
+                SetProperty(ref connectionStatus, value);
+                RaisePropertyChanged(nameof(AppInfo));
+            }
+        }
+
+        public string AppInfo
+        {
+            get => $"Remote Control - {ConnectionStatus} - {ConnectionsCounter}";
         }
 
         public ObservableCollection<ConnectionViewModel> Connections
@@ -57,21 +66,13 @@ namespace RemoteControl.Server.Core.ViewModels
         public int ActiveConnections
         {
             get => activeConnections;
-            set
-            {
-                activeConnections = value;
-                UpdateConnections();
-            }
+            set => UpdateConnections(ref activeConnections, value);
         }
 
         public int InactiveConnections
         {
             get => inactiveConnections;
-            set
-            {
-                inactiveConnections = value;
-                UpdateConnections();
-            }
+            set => UpdateConnections(ref inactiveConnections, value);
         }
 
         public string StatusMessage
@@ -92,6 +93,13 @@ namespace RemoteControl.Server.Core.ViewModels
         }
 
         public Action OnClose { get; set; }
+
+        private void UpdateConnections(ref int connectionsCounter, int value)
+        {
+            connectionsCounter = value;
+            UpdateConnections();
+            RaisePropertyChanged(nameof(AppInfo));
+        }
 
         private void InitializeCommands(IRemoteCommandsService remoteCommandsService)
         {
