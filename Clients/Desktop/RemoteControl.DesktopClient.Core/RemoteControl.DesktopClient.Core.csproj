@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LazyProxyClient.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -57,6 +58,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Commons\RemoteControl.Proxy\RemoteControl.Proxy.csproj">
+      <Project>{123F2446-6AD9-41C8-86AC-2DB426D779E0}</Project>
+      <Name>RemoteControl.Proxy</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\JToolbox\Desktop\JToolbox.Desktop.Dialogs\JToolbox.Desktop.Dialogs.csproj">
       <Project>{7519097d-59ff-4717-a043-c083a7aa9a5d}</Project>
       <Name>JToolbox.Desktop.Dialogs</Name>

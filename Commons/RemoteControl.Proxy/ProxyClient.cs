@@ -15,9 +15,12 @@ namespace RemoteControl.Proxy
             return Task.CompletedTask;
         }
 
-        public Task Stop()
+        public async Task Stop()
         {
-            return Channel.ShutdownAsync();
+            if (Client != null && Channel != null)
+            {
+                await Channel.ShutdownAsync();
+            }
         }
     }
 }
