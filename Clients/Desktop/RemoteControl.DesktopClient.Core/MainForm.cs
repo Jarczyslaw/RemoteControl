@@ -1,6 +1,7 @@
-﻿using RemoteControl.Proxy;
+﻿using JToolbox.Core.Utilities;
+using JToolbox.Desktop.Dialogs;
+using RemoteControl.Proxy;
 using System;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using static RemoteControl.Proxy.ConnectionRequest.Types;
 
@@ -8,10 +9,13 @@ namespace RemoteControl.DesktopClient.Core
 {
     public partial class MainForm : Form
     {
-        private LazyProxyClient lazyProxyClient = new LazyProxyClient();
+        private readonly LazyProxyClient lazyProxyClient = new LazyProxyClient();
+        private readonly IDialogsService dialogsService;
 
-        public MainForm()
+        public MainForm(IDialogsService dialogsService)
         {
+            this.dialogsService = dialogsService;
+
             InitializeComponent();
             InitializeClientData();
         }
@@ -25,6 +29,7 @@ namespace RemoteControl.DesktopClient.Core
         public DeviceType DeviceType
         {
             set => tbDeviceType.Text = value.ToString();
+            get => DeviceType.Desktop;
         }
 
         public string LocalAddress
@@ -39,31 +44,93 @@ namespace RemoteControl.DesktopClient.Core
             set => tbRemoteAddress.Text = value;
         }
 
-        public int Port
+        public int RemotePort
         {
             get => Convert.ToInt32(nudRemotePort.Value);
             set => nudRemotePort.Value = value;
         }
 
+        public ConnectionRequest ConnectionRequest => new ConnectionRequest
+        {
+            Address = LocalAddress,
+            Name = DeviceName,
+            Type = DeviceType
+        };
+
         private void InitializeClientData()
         {
-            tbDeviceName.Text = Environment.MachineName;
+            DeviceName = Environment.MachineName;
+            DeviceType = DeviceType.Desktop;
+            RemoteAddress =
+                LocalAddress = NetworkUtils.GetLocalIPAddress()
+                .ToString();
+            RemotePort = 7890;
         }
 
-        private void btnConnect_Click(object sender, EventArgs e)
+        private async void btnConnect_Click(object sender, EventArgs e)
         {
+            try
+            {
+                var proxy = await lazyProxyClient.GetProxyClient(RemoteAddress, RemotePort);
+                var response = await proxy.Client.ConnectAsync(ConnectionRequest);
+                if (response.HasError())
+                {
+                    dialogsService.ShowError(response.Error);
+                }
+            }
+            catch (Exception exc)
+            {
+                dialogsService.ShowException(exc);
+            }
         }
 
-        private void btnDisconnect_Click(object sender, EventArgs e)
+        private async void btnDisconnect_Click(object sender, EventArgs e)
         {
+            try
+            {
+                var proxy = await lazyProxyClient.GetProxyClient(RemoteAddress, RemotePort);
+                var response = await proxy.Client.DisconnectAsync(ConnectionRequest);
+                if (response.HasError())
+                {
+                    dialogsService.ShowError(response.Error);
+                }
+            }
+            catch (Exception exc)
+            {
+                dialogsService.ShowException(exc);
+            }
         }
 
-        private void btnShutdown_Click(object sender, EventArgs e)
+        private async void btnShutdown_Click(object sender, EventArgs e)
         {
+            try
+            {
+                var proxy = await lazyProxyClient.GetProxyClient(RemoteAddress, RemotePort);
+                if (dialogsService.ShowYesNoQuestion("Do you really want to shutdown remote machine?"))
+                {
+                    await proxy.Client.ShutdownAsync(ConnectionRequest);
+                }
+            }
+            catch (Exception exc)
+            {
+                dialogsService.ShowException(exc);
+            }
         }
 
-        private void btnRestart_Click(object sender, EventArgs e)
+        private async void btnRestart_Click(object sender, EventArgs e)
         {
+            try
+            {
+                var proxy = await lazyProxyClient.GetProxyClient(RemoteAddress, RemotePort);
+                if (dialogsService.ShowYesNoQuestion("Do you really want to restart remote machine?"))
+                {
+                    await proxy.Client.RestartAsync(ConnectionRequest);
+                }
+            }
+            catch (Exception exc)
+            {
+                dialogsService.ShowException(exc);
+            }
         }
     }
 }

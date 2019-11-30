@@ -47,14 +47,14 @@ namespace JToolbox.Desktop.Dialogs
             }
         }
 
-        public void ShowException(string message, Exception exception, IntPtr? owner = null)
+        public void ShowException(Exception exception, string message = null, IntPtr? owner = null)
         {
-            ShowExceptionDialog(Resources.Resources.Exception, message, exception, owner);
+            ShowExceptionDialog(Resources.Resources.Exception, exception, message, owner);
         }
 
-        public void ShowCriticalException(string message, Exception exception, IntPtr? owner = null)
+        public void ShowCriticalException(Exception exception, string message = null, IntPtr? owner = null)
         {
-            ShowExceptionDialog(Resources.Resources.CriticalException, message, exception, owner);
+            ShowExceptionDialog(Resources.Resources.CriticalException, exception, message, owner);
         }
 
         public bool ShowYesNoQuestion(string question, IntPtr? owner = null)
@@ -191,7 +191,7 @@ namespace JToolbox.Desktop.Dialogs
             return result;
         }
 
-        private void ShowExceptionDialog(string caption, string message, Exception exception, IntPtr? owner)
+        private void ShowExceptionDialog(string caption, Exception exception, string message, IntPtr? owner)
         {
             var text = exception.Message;
             if (!string.IsNullOrEmpty(message))

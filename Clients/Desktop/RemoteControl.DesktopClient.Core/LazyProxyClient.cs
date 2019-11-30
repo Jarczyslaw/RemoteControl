@@ -5,23 +5,24 @@ namespace RemoteControl.DesktopClient.Core
 {
     public class LazyProxyClient
     {
-        private string remoteAddress = string.Empty;
-        private int remotePort;
         private ProxyClient proxyClient;
 
-        private async Task<ProxyClient> GetProxyClient(string address, int port)
+        public string RemoteAddress { get; private set; }
+        public int RemotePort { get; private set; }
+
+        public async Task<ProxyClient> GetProxyClient(string address, int port)
         {
             if (proxyClient == null)
             {
                 proxyClient = new ProxyClient();
             }
 
-            if (remotePort != port || remoteAddress != address)
+            if (RemotePort != port || RemoteAddress != address)
             {
                 await proxyClient.Stop();
                 await proxyClient.Start(address, port);
-                remotePort = port;
-                remoteAddress = address;
+                RemotePort = port;
+                RemoteAddress = address;
             }
             return proxyClient;
         }

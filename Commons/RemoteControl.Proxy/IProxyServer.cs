@@ -7,7 +7,7 @@ namespace RemoteControl.Proxy
     {
         Server Server { get; }
 
-        Task Start(int port);
+        Task Start(string address, int port);
 
         Task Stop();
     }

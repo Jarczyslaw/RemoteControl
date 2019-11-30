@@ -1,4 +1,5 @@
-﻿using RemoteControl.DesktopClient.Core;
+﻿using JToolbox.Desktop.Dialogs;
+using RemoteControl.DesktopClient.Core;
 using System;
 using System.Windows.Forms;
 using Unity;
@@ -20,6 +21,7 @@ namespace RemoteControl.DesktopClient.Startup
 
         private static void RegisterDependencies()
         {
+            Container.RegisterType<IDialogsService, DialogsService>();
         }
 
         private static void StartApplication()

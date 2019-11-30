@@ -20,7 +20,7 @@ namespace RemoteControl.Server.Startup
         {
             var message = $"Unexpected critical exception - {source}";
             loggerService.Fatal(exception, message);
-            dialogsService.ShowException(message, exception);
+            dialogsService.ShowException(exception, message);
             return true;
         }
     }

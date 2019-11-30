@@ -1,4 +1,5 @@
-﻿using JToolbox.WPF.Core.Awareness;
+﻿using JToolbox.Core.Utilities;
+using JToolbox.WPF.Core.Awareness;
 using Prism.Mvvm;
 using RemoteControl.Server.Connections;
 using RemoteControl.Server.Core.Services;
@@ -124,7 +125,7 @@ namespace RemoteControl.Server.Core.ViewModels
         {
             try
             {
-                await remoteCommandsService.Start(7890);
+                await remoteCommandsService.Start(NetworkUtils.GetLocalIPAddress().ToString(), 7890);
             }
             catch (Exception exc)
             {
@@ -139,10 +140,10 @@ namespace RemoteControl.Server.Core.ViewModels
             InitializeConnectionStatus();
         }
 
-        private void RemoteCommandsService_OnStart(int port)
+        private void RemoteCommandsService_OnStart(string address, int port)
         {
             AppendLog("Server started");
-            ConnectionStatus = $"Listening at port: {port}";
+            ConnectionStatus = $"Listening at {address}:{port}";
         }
 
         private void InitializeConnectionStatus()

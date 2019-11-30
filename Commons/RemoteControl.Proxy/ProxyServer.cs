@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace RemoteControl.Proxy
 {
-    public delegate void OnStart(int port);
+    public delegate void OnStart(string address, int port);
 
     public delegate void OnStop();
 
@@ -15,15 +15,15 @@ namespace RemoteControl.Proxy
 
         public Server Server { get; private set; }
 
-        public Task Start(int port)
+        public Task Start(string address, int port)
         {
             Server = new Server
             {
                 Services = { ProxyService.BindService(this) },
-                Ports = { new ServerPort("localhost", port, ServerCredentials.Insecure) }
+                Ports = { new ServerPort(address, port, ServerCredentials.Insecure) }
             };
             Server.Start();
-            OnStart(port);
+            OnStart(address, port);
             return Task.CompletedTask;
         }
 
