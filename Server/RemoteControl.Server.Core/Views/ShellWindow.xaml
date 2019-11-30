@@ -65,11 +65,27 @@
 
             <local:ControlPanelView prism:ViewModelLocator.AutoWireViewModel="True" />
             <GroupBox Grid.Column="1" Header="Logs">
-                <TextBox
-                    AcceptsReturn="True"
-                    IsReadOnly="True"
-                    Text="{Binding Logs}"
-                    TextWrapping="Wrap" />
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <TextBox
+                        AcceptsReturn="True"
+                        HorizontalScrollBarVisibility="Visible"
+                        IsReadOnly="True"
+                        Text="{Binding Logs}"
+                        VerticalScrollBarVisibility="Visible" />
+                    <Button
+                        Grid.Row="2"
+                        Width="150"
+                        Margin="0,5,0,0"
+                        HorizontalAlignment="Right"
+                        Command="{Binding ClearLogsCommand}"
+                        Content="Clear logs"
+                        Style="{DynamicResource AccentedSquareButtonStyle}" />
+                </Grid>
             </GroupBox>
         </Grid>
 

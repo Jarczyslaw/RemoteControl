@@ -1,5 +1,6 @@
 ﻿using JToolbox.Core.Utilities;
 using JToolbox.WPF.Core.Awareness;
+using Prism.Commands;
 using Prism.Mvvm;
 using RemoteControl.Server.Connections;
 using RemoteControl.Server.Core.Services;
@@ -34,6 +35,8 @@ namespace RemoteControl.Server.Core.ViewModels
             InitializeCommands(remoteCommandsService);
             InitializeMessages(messagesAggregator);
         }
+
+        public DelegateCommand ClearLogsCommand => new DelegateCommand(() => Logs = string.Empty);
 
         public string Logs
         {
@@ -177,10 +180,11 @@ namespace RemoteControl.Server.Core.ViewModels
 
         private void ConnectionsService_OnConnectionsStatusChanged(List<Connection> connections)
         {
-            Connections = new ObservableCollection<ConnectionViewModel>(connections.Select(c => new ConnectionViewModel(c)));
-            ActiveConnections = Connections.Count(c => c.Active);
-            InactiveConnections = Connections.Count - ActiveConnections;
-            Connections.OrderBy(c => c.UpdateTime);
+            var viewModels = connections.Select(c => new ConnectionViewModel(c));
+            ActiveConnections = viewModels.Count(c => c.Active);
+            InactiveConnections = viewModels.Count() - ActiveConnections;
+            Connections = new ObservableCollection<ConnectionViewModel>(viewModels.OrderBy(c => c.Active ? 0 : 1)
+                .ThenBy(c => c.UpdateTime));
         }
     }
 }
