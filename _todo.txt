@@ -1,2 +1,2 @@
-settings: service port, start minimized, add to startup
-service: grpc/wcf?
+settings: service address, service port, start minimized, add to startup, inactiveTime, removeTime
+refactor grpc messages and remoteCommands
