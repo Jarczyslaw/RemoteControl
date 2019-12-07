@@ -3,7 +3,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:local="clr-namespace:RemoteControl.Server.Core.Views"
     xmlns:mahapps="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -26,9 +25,15 @@
     </mahapps:MetroWindow.IconTemplate>
 
     <mahapps:MetroWindow.RightWindowCommands>
-        <mahapps:WindowCommands>
-            <Button Content="Settings" />
-            <ToggleButton Content="Connections" IsChecked="{Binding ElementName=fyConnections, Path=IsOpen}" />
+        <mahapps:WindowCommands x:Name="windowCommands">
+            <Button
+                x:Name="btnSettings"
+                Click="btnSettings_Click"
+                Content="Settings" />
+            <ToggleButton
+                x:Name="tbConnections"
+                Content="Connections"
+                IsChecked="{Binding ElementName=fyConnections, Path=IsOpen}" />
         </mahapps:WindowCommands>
     </mahapps:MetroWindow.RightWindowCommands>
 

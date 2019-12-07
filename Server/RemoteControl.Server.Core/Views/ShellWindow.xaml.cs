@@ -1,6 +1,7 @@
 ﻿using JToolbox.Desktop.Core.Services;
 using JToolbox.WPF.UI;
 using MahApps.Metro.Controls;
+using MahApps.Metro.SimpleChildWindow;
 using System;
 using System.IO;
 using System.Windows;
@@ -69,6 +70,13 @@ namespace RemoteControl.Server.Core.Views
         private void miAppLogsLocation_Click(object sender, RoutedEventArgs e)
         {
             systemService.OpenFolderLocation(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs"));
+        }
+
+        private async void btnSettings_Click(object sender, RoutedEventArgs e)
+        {
+            windowCommands.IsEnabled = false;
+            await this.ShowChildWindowAsync(new SettingsWindow());
+            windowCommands.IsEnabled = true;
         }
     }
 }

@@ -40,5 +40,22 @@ namespace JToolbox.Core.Extensions
                 oldIndex = @this.IndexOf(oldValue);
             }
         }
+
+        public static void Swap<T>(this IList<T> @this, int index1, int index2)
+        {
+            var temp = @this[index1];
+            @this[index1] = @this[index2];
+            @this[index2] = temp;
+        }
+
+        public static IList<T> GetRange<T>(this IList<T> @this, int index, int count)
+        {
+            var result = new List<T>();
+            for (int i = index; i < index + count; i++)
+            {
+                result.Add(@this[i]);
+            }
+            return result;
+        }
     }
 }
