@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:mahapps="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
@@ -20,6 +21,23 @@
     ShowCloseButton="True"
     mc:Ignorable="d">
 
+    <simpleChildWindow:ChildWindow.Resources>
+        <Style TargetType="Label">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0,0,5,0" />
+            <Setter Property="Padding" Value="0" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="0,5,0,0" />
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="Margin" Value="0,5,0,0" />
+        </Style>
+        <Style TargetType="mahapps:NumericUpDown">
+            <Setter Property="Margin" Value="0,5,0,0" />
+        </Style>
+    </simpleChildWindow:ChildWindow.Resources>
+
     <simpleChildWindow:ChildWindow.OverlayBrush>
         <SolidColorBrush Opacity="0.4" Color="{StaticResource BlackColor}" />
     </simpleChildWindow:ChildWindow.OverlayBrush>
@@ -34,11 +52,77 @@
             Kind="CogSolid" />
     </simpleChildWindow:ChildWindow.Icon>
 
-    <StackPanel Margin="20">
-        <StackPanel Orientation="Horizontal">
-            <Button Margin="5" Content="Import" />
-            <Button Margin="5" Content="Export" />
-            <Button Margin="5" Content="Reset To Default" />
-        </StackPanel>
+    <StackPanel>
+        <GroupBox Header="Remote service">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label Content="Address:" />
+                <TextBox
+                    Grid.Column="1"
+                    Width="150"
+                    VerticalContentAlignment="Center" />
+
+                <Label Grid.Row="1" Content="Port:" />
+                <mahapps:NumericUpDown
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Width="150"
+                    Maximum="65535"
+                    Minimum="1" />
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Startup">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label Content="Run at startup:" />
+                <mahapps:ToggleSwitchButton Grid.Column="1" />
+
+                <Label Grid.Row="1" Content="Start minimized:" />
+                <mahapps:ToggleSwitchButton Grid.Row="1" Grid.Column="1" />
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Connection settings">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label Content="Inactive time [s]:" />
+                <mahapps:NumericUpDown
+                    Grid.Column="1"
+                    Width="150"
+                    Maximum="3600"
+                    Minimum="1" />
+
+                <Label Grid.Row="1" Content="Remove time [s]:" />
+                <mahapps:NumericUpDown
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Width="150"
+                    Maximum="3600"
+                    Minimum="1" />
+            </Grid>
+        </GroupBox>
     </StackPanel>
 </simpleChildWindow:ChildWindow>
