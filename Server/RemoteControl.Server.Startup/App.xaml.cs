@@ -1,5 +1,6 @@
 ﻿using JToolbox.AppConfig;
 using JToolbox.Core.Abstraction;
+using JToolbox.Core.Utilities;
 using JToolbox.Desktop.Core.Services;
 using JToolbox.Desktop.Dialogs;
 using JToolbox.Logging;
@@ -7,11 +8,13 @@ using JToolbox.WPF.PrismCore;
 using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Unity;
+using RemoteControl.Server.AppSettings;
 using RemoteControl.Server.Connections;
 using RemoteControl.Server.Core.Services;
 using RemoteControl.Server.Core.Views;
 using RemoteControl.Server.Messages;
 using RemoteControl.Server.RemoteCommands;
+using System;
 using System.Windows;
 using Unity;
 
@@ -34,6 +37,7 @@ namespace RemoteControl.Server.Startup
             containerRegistry.RegisterSingleton<IRemoteCommandsService, RemoteCommandsService>();
             containerRegistry.RegisterSingleton<IMessagesAggregator, MessagesAggregator>();
             containerRegistry.RegisterSingleton<IConnectionsService, ConnectionsService>();
+            containerRegistry.RegisterSingleton<ISettingsService, SettingsService>();
             RegisterGlobalExceptionHandler();
         }
 
@@ -63,6 +67,31 @@ namespace RemoteControl.Server.Startup
 
             var logger = Container.Resolve<ILoggerService>();
             logger.Info("App started");
+
+            InitializeSettings();
+        }
+
+        private void InitializeSettings()
+        {
+            var logger = Container.Resolve<ILoggerService>();
+            var settingsService = Container.Resolve<ISettingsService>();
+            settingsService.Settings = new Settings
+            {
+                Address = NetworkUtils.GetLocalIPAddress().ToString(),
+                Port = 9977,
+                InactiveTime = 20,
+                RemoveTime = 60,
+                StartMinimized = false
+            };
+
+            try
+            {
+                settingsService.Load();
+            }
+            catch (Exception exc)
+            {
+                logger.Error(exc, "Can not load settings. Used default values");
+            }
         }
 
         protected override void OnExit(ExitEventArgs e)

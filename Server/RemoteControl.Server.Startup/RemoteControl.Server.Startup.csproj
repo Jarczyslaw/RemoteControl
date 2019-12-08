@@ -197,6 +197,10 @@
       <Project>{9594d7ee-c5d6-4f07-8f3e-63b7c83e21d0}</Project>
       <Name>JToolbox.WPF.UI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RemoteControl.Server.AppSettings\RemoteControl.Server.AppSettings.csproj">
+      <Project>{262bda3d-63c4-4044-be81-511ab3cf0368}</Project>
+      <Name>RemoteControl.Server.AppSettings</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RemoteControl.Server.Connections\RemoteControl.Server.Connections.csproj">
       <Project>{61b414c3-cc77-4263-8552-4d517a19cc56}</Project>
       <Name>RemoteControl.Server.Connections</Name>

@@ -82,6 +82,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.Serializers", "JTo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.NetworkTools", "JToolbox\Misc\JToolbox.NetworkTools\JToolbox.NetworkTools.csproj", "{B2FA8AA9-C02A-42C0-8037-02991633473A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteControl.Server.AppSettings", "Server\RemoteControl.Server.AppSettings\RemoteControl.Server.AppSettings.csproj", "{262BDA3D-63C4-4044-BE81-511AB3CF0368}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -198,6 +200,10 @@ Global
 		{B2FA8AA9-C02A-42C0-8037-02991633473A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2FA8AA9-C02A-42C0-8037-02991633473A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2FA8AA9-C02A-42C0-8037-02991633473A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{262BDA3D-63C4-4044-BE81-511AB3CF0368}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{262BDA3D-63C4-4044-BE81-511AB3CF0368}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{262BDA3D-63C4-4044-BE81-511AB3CF0368}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{262BDA3D-63C4-4044-BE81-511AB3CF0368}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -236,6 +242,7 @@ Global
 		{4C71D785-6CAA-4C8F-A6CE-537D3C95E5E1} = {DA35934F-D8CE-4DF5-9C52-B16A5407D812}
 		{A5917EEF-45A1-4BAF-A44F-1FDCE95FAC93} = {896A7B42-AF7E-4849-9E31-77FA6545DC3F}
 		{B2FA8AA9-C02A-42C0-8037-02991633473A} = {896A7B42-AF7E-4849-9E31-77FA6545DC3F}
+		{262BDA3D-63C4-4044-BE81-511AB3CF0368} = {DA35934F-D8CE-4DF5-9C52-B16A5407D812}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BCB4424D-A73D-4F00-BC7F-7B616549F593}

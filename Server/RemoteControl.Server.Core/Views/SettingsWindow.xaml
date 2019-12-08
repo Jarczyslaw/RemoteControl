@@ -22,11 +22,6 @@
     mc:Ignorable="d">
 
     <simpleChildWindow:ChildWindow.Resources>
-        <Style TargetType="Label">
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Margin" Value="0,0,5,0" />
-            <Setter Property="Padding" Value="0" />
-        </Style>
         <Style TargetType="TextBox">
             <Setter Property="Margin" Value="0,5,0,0" />
         </Style>
@@ -68,7 +63,9 @@
                 <TextBox
                     Grid.Column="1"
                     Width="150"
-                    VerticalContentAlignment="Center" />
+                    HorizontalContentAlignment="Right"
+                    VerticalContentAlignment="Center"
+                    Text="{Binding Address}" />
 
                 <Label Grid.Row="1" Content="Port:" />
                 <mahapps:NumericUpDown
@@ -76,7 +73,8 @@
                     Grid.Column="1"
                     Width="150"
                     Maximum="65535"
-                    Minimum="1" />
+                    Minimum="1"
+                    Value="{Binding Port}" />
             </Grid>
         </GroupBox>
         <GroupBox Header="Startup">
@@ -91,10 +89,13 @@
                 </Grid.RowDefinitions>
 
                 <Label Content="Run at startup:" />
-                <mahapps:ToggleSwitchButton Grid.Column="1" />
+                <mahapps:ToggleSwitchButton Grid.Column="1" IsChecked="{Binding RunAtStartup}" />
 
                 <Label Grid.Row="1" Content="Start minimized:" />
-                <mahapps:ToggleSwitchButton Grid.Row="1" Grid.Column="1" />
+                <mahapps:ToggleSwitchButton
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    IsChecked="{Binding StartMinimized}" />
             </Grid>
         </GroupBox>
         <GroupBox Header="Connection settings">
@@ -113,7 +114,8 @@
                     Grid.Column="1"
                     Width="150"
                     Maximum="3600"
-                    Minimum="1" />
+                    Minimum="1"
+                    Value="{Binding InactiveTime}" />
 
                 <Label Grid.Row="1" Content="Remove time [s]:" />
                 <mahapps:NumericUpDown
@@ -121,8 +123,14 @@
                     Grid.Column="1"
                     Width="150"
                     Maximum="3600"
-                    Minimum="1" />
+                    Minimum="1"
+                    Value="{Binding RemoveTime}" />
             </Grid>
         </GroupBox>
+        <Button
+            Margin="5"
+            Command="{Binding SaveCommand}"
+            Content="Save"
+            Style="{DynamicResource AccentedSquareButtonStyle}" />
     </StackPanel>
 </simpleChildWindow:ChildWindow>
