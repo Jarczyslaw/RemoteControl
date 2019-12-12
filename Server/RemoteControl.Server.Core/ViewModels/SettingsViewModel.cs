@@ -1,34 +1,59 @@
 ﻿using JToolbox.Desktop.Core;
+using JToolbox.WPF.Core.Awareness;
 using Prism.Commands;
 using Prism.Mvvm;
 using RemoteControl.Server.AppSettings;
 using RemoteControl.Server.Core.Services;
+using RemoteControl.Server.RemoteCommands;
 using System;
 using System.IO;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace RemoteControl.Server.Core.ViewModels
 {
-    public class SettingsViewModel : BindableBase
+    public class SettingsViewModel : BindableBase, ICloseSource
     {
         private string address;
         private int port, inactiveTime, removeTime;
         private bool runAtStartup, startMinimized;
         private readonly ISettingsService settingsService;
         private readonly IShellDialogsService shellDialogsService;
+        private readonly IRemoteCommandsService remoteCommandsService;
         private readonly string appName = Path.GetFileNameWithoutExtension(AppDomain.CurrentDomain.FriendlyName);
         private readonly string appLocation = System.Reflection.Assembly.GetEntryAssembly().Location;
+        private readonly string initialAddress;
+        private readonly int initialPort;
 
-        public SettingsViewModel(ISettingsService settingsService, IShellDialogsService shellDialogsService)
+        public SettingsViewModel(IRemoteCommandsService remoteCommandsService,
+            ISettingsService settingsService, IShellDialogsService shellDialogsService)
         {
             this.settingsService = settingsService;
             this.shellDialogsService = shellDialogsService;
+            this.remoteCommandsService = remoteCommandsService;
+
+            initialPort = settingsService.Settings.Port;
+            initialAddress = settingsService.Settings.Address;
+
             LoadSettings();
         }
 
-
-        public DelegateCommand SaveCommand => new DelegateCommand(() =>
+        public DelegateCommand SaveCommand => new DelegateCommand(async () =>
         {
+            try
+            {
+                if (!Validate())
+                {
+                    return;
+                }
 
+                await SaveSettings();
+                OnClose?.Invoke();
+            }
+            catch (Exception exc)
+            {
+                await shellDialogsService.ShowException(exc);
+            }
         });
 
         public string Address
@@ -67,6 +92,8 @@ namespace RemoteControl.Server.Core.ViewModels
             set => SetProperty(ref startMinimized, value);
         }
 
+        public Action OnClose { get; set; }
+
         private void LoadSettings()
         {
             var settings = settingsService.Settings;
@@ -76,6 +103,49 @@ namespace RemoteControl.Server.Core.ViewModels
             RemoveTime = settings.RemoveTime;
             StartMinimized = settings.StartMinimized;
             RunAtStartup = RegistryTools.CheckStartup(appName, appLocation);
+        }
+
+        private async Task SaveSettings()
+        {
+            if (initialPort != Port || initialAddress != Address)
+            {
+                await remoteCommandsService.Stop();
+                await remoteCommandsService.Start(Address, Port);
+            }
+
+            var settings = settingsService.Settings;
+            settings.Address = Address;
+            settings.Port = Port;
+            settings.InactiveTime = InactiveTime;
+            settings.RemoveTime = RemoveTime;
+            settings.StartMinimized = StartMinimized;
+            settingsService.Save();
+
+            if (RunAtStartup)
+            {
+                RegistryTools.SetStartup(appName, appLocation);
+            }
+            else
+            {
+                RegistryTools.ClearStartup(appName);
+            }
+        }
+
+        private bool Validate()
+        {
+            if (!IPAddress.TryParse(Address, out IPAddress ipAddress))
+            {
+                shellDialogsService.ShowError("Invalid address value");
+                return false;
+            }
+
+            if (InactiveTime >= RemoveTime)
+            {
+                shellDialogsService.ShowError("Inactive time must be lower than Remote time");
+                return false;
+            }
+
+            return true;
         }
     }
 }

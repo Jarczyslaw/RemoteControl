@@ -24,6 +24,7 @@ namespace RemoteControl.Server.Startup
     {
         protected override Window CreateShell()
         {
+            InitializeSettings();
             return Container.Resolve<ShellWindow>();
         }
 
@@ -67,8 +68,6 @@ namespace RemoteControl.Server.Startup
 
             var logger = Container.Resolve<ILoggerService>();
             logger.Info("App started");
-
-            InitializeSettings();
         }
 
         private void InitializeSettings()

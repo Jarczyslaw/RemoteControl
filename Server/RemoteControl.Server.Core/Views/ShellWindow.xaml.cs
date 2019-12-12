@@ -2,6 +2,7 @@
 using JToolbox.WPF.UI;
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
+using RemoteControl.Server.AppSettings;
 using System;
 using System.IO;
 using System.Windows;
@@ -13,10 +14,12 @@ namespace RemoteControl.Server.Core.Views
         private readonly WindowEvents windowEvents;
         private WindowState windowState;
         private readonly ISystemService systemService;
+        private readonly ISettingsService settingsService;
 
-        public ShellWindow(ISystemService systemService)
+        public ShellWindow(ISystemService systemService, ISettingsService settingsService)
         {
             this.systemService = systemService;
+            this.settingsService = settingsService;
 
             Instance = this;
             InitializeComponent();

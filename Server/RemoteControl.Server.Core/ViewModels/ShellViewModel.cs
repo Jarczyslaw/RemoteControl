@@ -2,6 +2,7 @@
 using JToolbox.WPF.Core.Awareness;
 using Prism.Commands;
 using Prism.Mvvm;
+using RemoteControl.Server.AppSettings;
 using RemoteControl.Server.Connections;
 using RemoteControl.Server.Core.Services;
 using RemoteControl.Server.Messages;
@@ -23,13 +24,16 @@ namespace RemoteControl.Server.Core.ViewModels
         private int activeConnections, inactiveConnections;
         private readonly IShellDialogsService shellDialogsService;
         private readonly IRemoteCommandsService remoteCommandsService;
+        private readonly ISettingsService settingsService;
         private ObservableCollection<ConnectionViewModel> connections = new ObservableCollection<ConnectionViewModel>();
 
         public ShellViewModel(IMessagesAggregator messagesAggregator, IRemoteCommandsService remoteCommandsService,
-            IConnectionsService connectionsService, IShellDialogsService shellDialogsService)
+            IConnectionsService connectionsService, IShellDialogsService shellDialogsService,
+            ISettingsService settingsService)
         {
             this.shellDialogsService = shellDialogsService;
             this.remoteCommandsService = remoteCommandsService;
+            this.settingsService = settingsService;
 
             InitializeConnections(connectionsService);
             InitializeCommands(remoteCommandsService);
@@ -128,12 +132,17 @@ namespace RemoteControl.Server.Core.ViewModels
         {
             try
             {
-                await remoteCommandsService.Start(NetworkUtils.GetLocalIPAddress().ToString(), 7890);
+                var address = settingsService.Settings.Address;
+                var port = settingsService.Settings.Port;
+                await remoteCommandsService.Start(address, port);
             }
             catch (Exception exc)
             {
-                await shellDialogsService.ShowException("Initialization error occured. Application will be closed", exc);
-                Application.Current.Shutdown();
+                var result = await shellDialogsService.ShowYesNoQuestion($"Initialization error occured: {exc.Message}. Do you want to close application?");
+                if (result)
+                {
+                    Application.Current.Shutdown();
+                }
             }
         }
 

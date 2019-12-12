@@ -10,7 +10,7 @@ namespace RemoteControl.Server.AppSettings
 
         public string SettingsPath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings.set");
 
-        public Settings Settings { get; set; }
+        public Settings Settings { get; set; } = new Settings();
 
         public void Load()
         {
