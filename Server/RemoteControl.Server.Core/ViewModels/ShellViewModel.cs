@@ -1,5 +1,4 @@
-﻿using JToolbox.Core.Utilities;
-using JToolbox.WPF.Core.Awareness;
+﻿using JToolbox.WPF.Core.Awareness;
 using Prism.Commands;
 using Prism.Mvvm;
 using RemoteControl.Server.AppSettings;
@@ -25,6 +24,7 @@ namespace RemoteControl.Server.Core.ViewModels
         private readonly IShellDialogsService shellDialogsService;
         private readonly IRemoteCommandsService remoteCommandsService;
         private readonly ISettingsService settingsService;
+        private readonly IConnectionsService connectionsService;
         private ObservableCollection<ConnectionViewModel> connections = new ObservableCollection<ConnectionViewModel>();
 
         public ShellViewModel(IMessagesAggregator messagesAggregator, IRemoteCommandsService remoteCommandsService,
@@ -34,6 +34,7 @@ namespace RemoteControl.Server.Core.ViewModels
             this.shellDialogsService = shellDialogsService;
             this.remoteCommandsService = remoteCommandsService;
             this.settingsService = settingsService;
+            this.connectionsService = connectionsService;
 
             InitializeConnections(connectionsService);
             InitializeCommands(remoteCommandsService);
@@ -132,9 +133,11 @@ namespace RemoteControl.Server.Core.ViewModels
         {
             try
             {
-                var address = settingsService.Settings.Address;
-                var port = settingsService.Settings.Port;
-                await remoteCommandsService.Start(address, port);
+                var settings = settingsService.Settings;
+                connectionsService.InactiveTime = TimeSpan.FromSeconds(settings.InactiveTime);
+                connectionsService.RemoveTime = TimeSpan.FromSeconds(settings.RemoveTime);
+
+                await remoteCommandsService.Start(settings.Address, settings.Port);
             }
             catch (Exception exc)
             {

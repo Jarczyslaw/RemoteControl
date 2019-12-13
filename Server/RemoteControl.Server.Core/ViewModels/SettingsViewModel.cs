@@ -3,6 +3,7 @@ using JToolbox.WPF.Core.Awareness;
 using Prism.Commands;
 using Prism.Mvvm;
 using RemoteControl.Server.AppSettings;
+using RemoteControl.Server.Connections;
 using RemoteControl.Server.Core.Services;
 using RemoteControl.Server.RemoteCommands;
 using System;
@@ -20,17 +21,19 @@ namespace RemoteControl.Server.Core.ViewModels
         private readonly ISettingsService settingsService;
         private readonly IShellDialogsService shellDialogsService;
         private readonly IRemoteCommandsService remoteCommandsService;
+        private readonly IConnectionsService connectionsService;
         private readonly string appName = Path.GetFileNameWithoutExtension(AppDomain.CurrentDomain.FriendlyName);
         private readonly string appLocation = System.Reflection.Assembly.GetEntryAssembly().Location;
         private readonly string initialAddress;
         private readonly int initialPort;
 
-        public SettingsViewModel(IRemoteCommandsService remoteCommandsService,
+        public SettingsViewModel(IRemoteCommandsService remoteCommandsService, IConnectionsService connectionsService,
             ISettingsService settingsService, IShellDialogsService shellDialogsService)
         {
             this.settingsService = settingsService;
             this.shellDialogsService = shellDialogsService;
             this.remoteCommandsService = remoteCommandsService;
+            this.connectionsService = connectionsService;
 
             initialPort = settingsService.Settings.Port;
             initialAddress = settingsService.Settings.Address;
@@ -121,6 +124,9 @@ namespace RemoteControl.Server.Core.ViewModels
             settings.StartMinimized = StartMinimized;
             settingsService.Save();
 
+            connectionsService.InactiveTime = TimeSpan.FromSeconds(InactiveTime);
+            connectionsService.RemoveTime = TimeSpan.FromSeconds(RemoveTime);
+
             if (RunAtStartup)
             {
                 RegistryTools.SetStartup(appName, appLocation);
@@ -141,7 +147,7 @@ namespace RemoteControl.Server.Core.ViewModels
 
             if (InactiveTime >= RemoveTime)
             {
-                shellDialogsService.ShowError("Inactive time must be lower than Remote time");
+                shellDialogsService.ShowError("Inactive time must be lower than Remove time");
                 return false;
             }
 

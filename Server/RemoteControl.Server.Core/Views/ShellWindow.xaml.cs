@@ -27,9 +27,18 @@ namespace RemoteControl.Server.Core.Views
             Height = MinHeight = 768;
             windowEvents = new WindowEvents(this);
             windowEvents.Attach();
+            Loaded += ShellWindow_Loaded;
         }
 
         public static ShellWindow Instance { get; private set; }
+
+        private void ShellWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (settingsService.Settings.StartMinimized)
+            {
+                WindowState = WindowState.Minimized;
+            }
+        }
 
         protected override void OnStateChanged(EventArgs e)
         {
