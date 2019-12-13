@@ -112,6 +112,12 @@ namespace RemoteControl.Server.Core.ViewModels
         {
             if (initialPort != Port || initialAddress != Address)
             {
+                if (connectionsService.Connections.Count != 0
+                    && !await shellDialogsService.ShowYesNoQuestion("There are connected devices. Do you want to apply changes and restart remote service?"))
+                {
+                    return;
+                }
+
                 await remoteCommandsService.Stop();
                 await remoteCommandsService.Start(Address, Port);
             }

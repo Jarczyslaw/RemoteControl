@@ -17,7 +17,6 @@ namespace RemoteControl.Server.Connections
     {
         private static readonly object connectionsLock = new object();
 
-        private readonly List<Connection> connections = new List<Connection>();
         private readonly CancellationTokenSource poolingTokenSource = new CancellationTokenSource();
         private readonly Task poolingTask;
 
@@ -31,6 +30,8 @@ namespace RemoteControl.Server.Connections
         {
             poolingTask = Task.Run(() => ConnectionsPooling(poolingTokenSource.Token), poolingTokenSource.Token);
         }
+
+        public List<Connection> Connections { get; } = new List<Connection>();
 
         public TimeSpan InactiveTime { get; set; } = TimeSpan.FromSeconds(10);
 
@@ -46,13 +47,13 @@ namespace RemoteControl.Server.Connections
 
                 lock (connectionsLock)
                 {
-                    for (int i = connections.Count - 1; i >= 0; i--)
+                    for (int i = Connections.Count - 1; i >= 0; i--)
                     {
-                        var connection = connections[i];
+                        var connection = Connections[i];
                         if (DateTime.Now - connection.UpdateTime >= RemoveTime)
                         {
                             removedConnection = connection;
-                            connections.RemoveAt(i);
+                            Connections.RemoveAt(i);
                             connectionsStatusChanged = true;
                         }
                         else if (DateTime.Now - connection.UpdateTime >= InactiveTime)
@@ -61,7 +62,7 @@ namespace RemoteControl.Server.Connections
                             connectionsStatusChanged = true;
                         }
                     }
-                    connectionsCopy = connections.ToList();
+                    connectionsCopy = Connections.ToList();
                 }
 
                 if (removedConnection != null)
@@ -85,7 +86,7 @@ namespace RemoteControl.Server.Connections
 
             lock (connectionsLock)
             {
-                var connection = connections.Find(c => c.ConnectionRequest.Equals(connectionRequest));
+                var connection = Connections.Find(c => c.ConnectionRequest.Equals(connectionRequest));
                 if (connection == null)
                 {
                     newConnection = new Connection
@@ -94,7 +95,7 @@ namespace RemoteControl.Server.Connections
                         UpdateTime = DateTime.Now,
                         ConnectionRequest = connectionRequest
                     };
-                    connections.Add(newConnection);
+                    Connections.Add(newConnection);
                 }
                 else
                 {
@@ -102,7 +103,7 @@ namespace RemoteControl.Server.Connections
                     connection.UpdateTime = DateTime.Now;
                 }
 
-                connectionsCopy = connections.ToList();
+                connectionsCopy = Connections.ToList();
             }
 
             if (newConnection != null)
@@ -120,12 +121,12 @@ namespace RemoteControl.Server.Connections
 
             lock (connectionsLock)
             {
-                removedConnection = connections.Find(c => c.ConnectionRequest.Equals(connectionRequest));
+                removedConnection = Connections.Find(c => c.ConnectionRequest.Equals(connectionRequest));
                 if (removedConnection != null)
                 {
-                    connections.Remove(removedConnection);
+                    Connections.Remove(removedConnection);
                 }
-                connectionsCopy = connections.ToList();
+                connectionsCopy = Connections.ToList();
             }
 
             if (removedConnection != null)

@@ -1,5 +1,6 @@
 ﻿using RemoteControl.Proxy;
 using System;
+using System.Collections.Generic;
 
 namespace RemoteControl.Server.Connections
 {
@@ -11,10 +12,13 @@ namespace RemoteControl.Server.Connections
 
         event OnConnectionRemove OnConnectionRemove;
 
+        List<Connection> Connections { get; }
+
         TimeSpan InactiveTime { get; set; }
         TimeSpan RemoveTime { get; set; }
 
         void HandleRequest(ConnectionRequest connectionRequest);
+
         void RemoveConnection(ConnectionRequest connectionRequest);
     }
 }
