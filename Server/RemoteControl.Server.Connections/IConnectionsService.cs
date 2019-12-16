@@ -17,8 +17,8 @@ namespace RemoteControl.Server.Connections
         TimeSpan InactiveTime { get; set; }
         TimeSpan RemoveTime { get; set; }
 
-        void HandleRequest(ConnectionRequest connectionRequest);
+        void HandleRequest(RequestBase request);
 
-        void RemoveConnection(ConnectionRequest connectionRequest);
+        void RemoveConnection(RequestBase request);
     }
 }

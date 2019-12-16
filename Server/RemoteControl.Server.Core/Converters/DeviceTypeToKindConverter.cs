@@ -2,6 +2,7 @@
 using System;
 using System.Globalization;
 using System.Windows.Data;
+using static RemoteControl.Proxy.RequestBase.Types;
 
 namespace RemoteControl.Server.Core.Converters
 {
@@ -9,13 +10,13 @@ namespace RemoteControl.Server.Core.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is Proxy.ConnectionRequest.Types.DeviceType deviceType)
+            if (value is DeviceType deviceType)
             {
-                if (deviceType == Proxy.ConnectionRequest.Types.DeviceType.Mobile)
+                if (deviceType == DeviceType.Mobile)
                 {
                     return PackIconFontAwesomeKind.MobileAltSolid;
                 }
-                else if (deviceType == Proxy.ConnectionRequest.Types.DeviceType.Desktop)
+                else if (deviceType == DeviceType.Desktop)
                 {
                     return PackIconFontAwesomeKind.DesktopSolid;
                 }

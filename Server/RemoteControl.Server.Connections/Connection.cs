@@ -5,7 +5,7 @@ namespace RemoteControl.Server.Connections
 {
     public class Connection
     {
-        public ConnectionRequest ConnectionRequest { get; set; }
+        public RequestBase Request { get; set; }
         public DateTime UpdateTime { get; set; }
         public bool Active { get; set; }
     }

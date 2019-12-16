@@ -21,7 +21,7 @@ namespace RemoteControl.Server.RemoteCommands
             this.messagesAggregator = messagesAggregator;
         }
 
-        private void HandleInfo(ConnectionRequest request, string operationName)
+        private void HandleInfo(RequestBase request, string operationName)
         {
             messagesAggregator.Info($"{request.Name} from {request.Address} invoked {operationName}");
         }
@@ -31,68 +31,80 @@ namespace RemoteControl.Server.RemoteCommands
             messagesAggregator.Error(exc);
         }
 
-        public override Task<CommonResponse> Connect(ConnectionRequest request, ServerCallContext context)
+        public override Task<ConnectResponse> Connect(ConnectRequest request, ServerCallContext context)
         {
-            var response = new CommonResponse();
+            var response = new ConnectResponse()
+            {
+                ResponseBase = new ResponseBase()
+            };
             try
             {
-                HandleInfo(request, nameof(Connect));
-                connectionsService.HandleRequest(request);
+                HandleInfo(request.RequestBase, nameof(Connect));
+                connectionsService.HandleRequest(request.RequestBase);
             }
             catch (Exception exc)
             {
                 HandleError(exc);
-                response.Error = exc.Message;
+                response.ResponseBase.Error = exc.Message;
             }
             return Task.FromResult(response);
         }
 
-        public override Task<CommonResponse> Disconnect(ConnectionRequest request, ServerCallContext context)
+        public override Task<DisconnectResponse> Disconnect(DisconnectRequest request, ServerCallContext context)
         {
-            var response = new CommonResponse();
+            var response = new DisconnectResponse()
+            {
+                ResponseBase = new ResponseBase()
+            };
             try
             {
-                HandleInfo(request, nameof(Disconnect));
-                connectionsService.RemoveConnection(request);
+                HandleInfo(request.RequestBase, nameof(Disconnect));
+                connectionsService.RemoveConnection(request.RequestBase);
             }
             catch (Exception exc)
             {
                 HandleError(exc);
-                response.Error = exc.Message;
+                response.ResponseBase.Error = exc.Message;
             }
             return Task.FromResult(response);
         }
 
-        public override Task<CommonResponse> Restart(ConnectionRequest request, ServerCallContext context)
+        public override Task<RestartResponse> Restart(RestartRequest request, ServerCallContext context)
         {
-            var response = new CommonResponse();
+            var response = new RestartResponse()
+            {
+                ResponseBase = new ResponseBase()
+            };
             try
             {
-                HandleInfo(request, nameof(Restart));
-                connectionsService.HandleRequest(request);
+                HandleInfo(request.RequestBase, nameof(Restart));
+                connectionsService.HandleRequest(request.RequestBase);
                 systemService.Restart();
             }
             catch (Exception exc)
             {
                 HandleError(exc);
-                response.Error = exc.Message;
+                response.ResponseBase.Error = exc.Message;
             }
             return Task.FromResult(response);
         }
 
-        public override Task<CommonResponse> Shutdown(ConnectionRequest request, ServerCallContext context)
+        public override Task<ShutdownResponse> Shutdown(ShutdownRequest request, ServerCallContext context)
         {
-            var response = new CommonResponse();
+            var response = new ShutdownResponse()
+            {
+                ResponseBase = new ResponseBase()
+            };
             try
             {
-                HandleInfo(request, nameof(Shutdown));
-                connectionsService.HandleRequest(request);
+                HandleInfo(request.RequestBase, nameof(Shutdown));
+                connectionsService.HandleRequest(request.RequestBase);
                 systemService.Shutdown();
             }
             catch (Exception exc)
             {
                 HandleError(exc);
-                response.Error = exc.Message;
+                response.ResponseBase.Error = exc.Message;
             }
             return Task.FromResult(response);
         }

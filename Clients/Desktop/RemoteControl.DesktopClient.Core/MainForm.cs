@@ -3,7 +3,7 @@ using JToolbox.Desktop.Dialogs;
 using RemoteControl.Proxy;
 using System;
 using System.Windows.Forms;
-using static RemoteControl.Proxy.ConnectionRequest.Types;
+using static RemoteControl.Proxy.RequestBase.Types;
 
 namespace RemoteControl.DesktopClient.Core
 {
@@ -50,7 +50,7 @@ namespace RemoteControl.DesktopClient.Core
             set => nudRemotePort.Value = value;
         }
 
-        public ConnectionRequest ConnectionRequest => new ConnectionRequest
+        public RequestBase RequestBase => new RequestBase
         {
             Address = LocalAddress,
             Name = DeviceName,
@@ -72,10 +72,13 @@ namespace RemoteControl.DesktopClient.Core
             try
             {
                 var proxy = await lazyProxyClient.GetProxyClient(RemoteAddress, RemotePort);
-                var response = await proxy.Client.ConnectAsync(ConnectionRequest);
-                if (response.HasError())
+                var response = await proxy.Client.ConnectAsync(new ConnectRequest
                 {
-                    dialogsService.ShowError(response.Error);
+                    RequestBase = RequestBase
+                });
+                if (response.ResponseBase.HasError())
+                {
+                    dialogsService.ShowError(response.ResponseBase.Error);
                 }
             }
             catch (Exception exc)
@@ -89,10 +92,13 @@ namespace RemoteControl.DesktopClient.Core
             try
             {
                 var proxy = await lazyProxyClient.GetProxyClient(RemoteAddress, RemotePort);
-                var response = await proxy.Client.DisconnectAsync(ConnectionRequest);
-                if (response.HasError())
+                var response = await proxy.Client.DisconnectAsync(new DisconnectRequest
                 {
-                    dialogsService.ShowError(response.Error);
+                    RequestBase = RequestBase
+                });
+                if (response.ResponseBase.HasError())
+                {
+                    dialogsService.ShowError(response.ResponseBase.Error);
                 }
             }
             catch (Exception exc)
@@ -108,7 +114,10 @@ namespace RemoteControl.DesktopClient.Core
                 var proxy = await lazyProxyClient.GetProxyClient(RemoteAddress, RemotePort);
                 if (dialogsService.ShowYesNoQuestion("Do you really want to shutdown remote machine?"))
                 {
-                    await proxy.Client.ShutdownAsync(ConnectionRequest);
+                    await proxy.Client.ShutdownAsync(new ShutdownRequest
+                    {
+                        RequestBase = RequestBase
+                    });
                 }
             }
             catch (Exception exc)
@@ -124,7 +133,10 @@ namespace RemoteControl.DesktopClient.Core
                 var proxy = await lazyProxyClient.GetProxyClient(RemoteAddress, RemotePort);
                 if (dialogsService.ShowYesNoQuestion("Do you really want to restart remote machine?"))
                 {
-                    await proxy.Client.RestartAsync(ConnectionRequest);
+                    await proxy.Client.RestartAsync(new RestartRequest
+                    {
+                        RequestBase = RequestBase
+                    });
                 }
             }
             catch (Exception exc)

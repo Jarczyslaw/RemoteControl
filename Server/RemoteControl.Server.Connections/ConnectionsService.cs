@@ -79,21 +79,21 @@ namespace RemoteControl.Server.Connections
             }
         }
 
-        public void HandleRequest(ConnectionRequest connectionRequest)
+        public void HandleRequest(RequestBase request)
         {
             Connection newConnection = null;
             List<Connection> connectionsCopy = null;
 
             lock (connectionsLock)
             {
-                var connection = Connections.Find(c => c.ConnectionRequest.Equals(connectionRequest));
+                var connection = Connections.Find(c => c.Request.Equals(request));
                 if (connection == null)
                 {
                     newConnection = new Connection
                     {
                         Active = true,
                         UpdateTime = DateTime.Now,
-                        ConnectionRequest = connectionRequest
+                        Request = request
                     };
                     Connections.Add(newConnection);
                 }
@@ -114,14 +114,14 @@ namespace RemoteControl.Server.Connections
             OnConnectionsStatusChanged(connectionsCopy);
         }
 
-        public void RemoveConnection(ConnectionRequest connectionRequest)
+        public void RemoveConnection(RequestBase request)
         {
             Connection removedConnection = null;
             List<Connection> connectionsCopy = null;
 
             lock (connectionsLock)
             {
-                removedConnection = Connections.Find(c => c.ConnectionRequest.Equals(connectionRequest));
+                removedConnection = Connections.Find(c => c.Request.Equals(request));
                 if (removedConnection != null)
                 {
                     Connections.Remove(removedConnection);

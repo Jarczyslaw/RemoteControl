@@ -23,8 +23,8 @@ namespace RemoteControl.Server.Core.Views
 
             Instance = this;
             InitializeComponent();
-            Width = MinWidth = 1024;
-            Height = MinHeight = 768;
+            Width = MinWidth = 800;
+            Height = MinHeight = 600;
             windowEvents = new WindowEvents(this);
             windowEvents.Attach();
             Loaded += ShellWindow_Loaded;

@@ -1,7 +1,6 @@
-﻿using RemoteControl.Proxy;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
-namespace RemoteControl.DesktopClient.Core
+namespace RemoteControl.Proxy
 {
     public class LazyProxyClient
     {

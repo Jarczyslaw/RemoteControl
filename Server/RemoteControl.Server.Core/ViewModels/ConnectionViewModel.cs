@@ -1,5 +1,6 @@
 ﻿using RemoteControl.Server.Connections;
 using System;
+using static RemoteControl.Proxy.RequestBase.Types;
 
 namespace RemoteControl.Server.Core.ViewModels
 {
@@ -12,10 +13,10 @@ namespace RemoteControl.Server.Core.ViewModels
             this.connection = connection;
         }
 
-        public string Name => connection.ConnectionRequest.Name;
-        public string Address => connection.ConnectionRequest.Address;
+        public string Name => connection.Request.Name;
+        public string Address => connection.Request.Address;
         public DateTime UpdateTime => connection.UpdateTime;
         public bool Active => connection.Active;
-        public Proxy.ConnectionRequest.Types.DeviceType Type => connection.ConnectionRequest.Type;
+        public DeviceType Type => connection.Request.Type;
     }
 }

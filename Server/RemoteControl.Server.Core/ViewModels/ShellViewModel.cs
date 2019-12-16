@@ -182,12 +182,12 @@ namespace RemoteControl.Server.Core.ViewModels
 
         private void ConnectionsService_OnConnectionRemove(Connection connection)
         {
-            AppendLog($"{connection.ConnectionRequest.Name} removed");
+            AppendLog($"{connection.Request.Name} removed");
         }
 
         private void ConnectionsService_OnNewConnection(Connection newConnection)
         {
-            AppendLog($"{newConnection.ConnectionRequest.Name} from {newConnection.ConnectionRequest.Address} connected");
+            AppendLog($"{newConnection.Request.Name} from {newConnection.Request.Address} connected");
         }
 
         private void ConnectionsService_OnConnectionsStatusChanged(List<Connection> connections)

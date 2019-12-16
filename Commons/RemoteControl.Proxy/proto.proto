@@ -5,13 +5,45 @@ option csharp_namespace = "RemoteControl.Proxy";
 package Proxy;
 
 service ProxyService {
-	rpc Connect (ConnectionRequest) returns (CommonResponse);
-	rpc Disconnect (ConnectionRequest) returns (CommonResponse);
-	rpc Shutdown (ConnectionRequest) returns (CommonResponse);
-	rpc Restart (ConnectionRequest) returns (CommonResponse);
+	rpc Connect (ConnectRequest) returns (ConnectResponse);
+	rpc Disconnect (DisconnectRequest) returns (DisconnectResponse);
+	rpc Shutdown (ShutdownRequest) returns (ShutdownResponse);
+	rpc Restart (RestartRequest) returns (RestartResponse);
 }
 
-message ConnectionRequest {
+message ConnectRequest {
+	RequestBase RequestBase = 1;
+}
+
+message ConnectResponse {
+	ResponseBase ResponseBase = 1;
+}
+
+message DisconnectRequest {
+	RequestBase RequestBase = 1;
+}
+
+message DisconnectResponse {
+	ResponseBase ResponseBase = 1;
+}
+
+message ShutdownRequest {
+	RequestBase RequestBase = 1;
+}
+
+message ShutdownResponse {
+	ResponseBase ResponseBase = 1;
+}
+
+message RestartRequest {
+	RequestBase RequestBase = 1;
+}
+
+message RestartResponse {
+	ResponseBase ResponseBase = 1;
+}
+
+message RequestBase {
 	enum DeviceType {
 		Unknown = 0;
 		Desktop = 1;
@@ -23,6 +55,6 @@ message ConnectionRequest {
 	string Address = 3;
 }
 
-message CommonResponse {
+message ResponseBase {
 	string Error = 1;
 }
