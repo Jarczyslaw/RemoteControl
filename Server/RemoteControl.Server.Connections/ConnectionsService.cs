@@ -136,6 +136,15 @@ namespace RemoteControl.Server.Connections
             }
         }
 
+        public void ClearConnections()
+        {
+            lock (connectionsLock)
+            {
+                Connections.Clear();
+                OnConnectionsStatusChanged(Connections);
+            }
+        }
+
         public void Dispose()
         {
             poolingTokenSource.Cancel();

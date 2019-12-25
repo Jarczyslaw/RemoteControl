@@ -10,6 +10,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace RemoteControl.Server.Core.ViewModels
 {
@@ -24,8 +25,6 @@ namespace RemoteControl.Server.Core.ViewModels
         private readonly IConnectionsService connectionsService;
         private readonly string appName = Path.GetFileNameWithoutExtension(AppDomain.CurrentDomain.FriendlyName);
         private readonly string appLocation = System.Reflection.Assembly.GetEntryAssembly().Location;
-        private readonly string initialAddress;
-        private readonly int initialPort;
 
         public SettingsViewModel(IRemoteCommandsService remoteCommandsService, IConnectionsService connectionsService,
             ISettingsService settingsService, IShellDialogsService shellDialogsService)
@@ -34,9 +33,6 @@ namespace RemoteControl.Server.Core.ViewModels
             this.shellDialogsService = shellDialogsService;
             this.remoteCommandsService = remoteCommandsService;
             this.connectionsService = connectionsService;
-
-            initialPort = settingsService.Settings.Port;
-            initialAddress = settingsService.Settings.Address;
 
             LoadSettings();
         }
@@ -52,6 +48,24 @@ namespace RemoteControl.Server.Core.ViewModels
 
                 await SaveSettings();
                 OnClose?.Invoke();
+            }
+            catch (Exception exc)
+            {
+                await shellDialogsService.ShowException(exc);
+            }
+        });
+
+        public DelegateCommand RestartServiceCommand => new DelegateCommand(async () =>
+        {
+            if (!ValidateService() || !await ShowConnectionsQuestion())
+            {
+                return;
+            }
+
+            try
+            {
+                connectionsService.ClearConnections();
+                await remoteCommandsService.Start(Address, Port);
             }
             catch (Exception exc)
             {
@@ -108,17 +122,22 @@ namespace RemoteControl.Server.Core.ViewModels
             RunAtStartup = RegistryTools.CheckStartup(appName, appLocation);
         }
 
+        private async Task<bool> ShowConnectionsQuestion()
+        {
+            return connectionsService.Connections.Count == 0
+                    || await shellDialogsService.ShowYesNoQuestion("There are connected devices. Do you want to restart remote service?");
+        }
+
         private async Task SaveSettings()
         {
-            if (initialPort != Port || initialAddress != Address)
+            if (!remoteCommandsService.IsListening || remoteCommandsService.Port != Port || remoteCommandsService.Address != Address)
             {
-                if (connectionsService.Connections.Count != 0
-                    && !await shellDialogsService.ShowYesNoQuestion("There are connected devices. Do you want to apply changes and restart remote service?"))
+                if (!await ShowConnectionsQuestion())
                 {
                     return;
                 }
 
-                await remoteCommandsService.Stop();
+                connectionsService.ClearConnections();
                 await remoteCommandsService.Start(Address, Port);
             }
 
@@ -143,11 +162,20 @@ namespace RemoteControl.Server.Core.ViewModels
             }
         }
 
-        private bool Validate()
+        private bool ValidateService()
         {
             if (!IPAddress.TryParse(Address, out IPAddress ipAddress))
             {
                 shellDialogsService.ShowError("Invalid address value");
+                return false;
+            }
+            return true;
+        }
+
+        private bool Validate()
+        {
+            if (!ValidateService())
+            {
                 return false;
             }
 

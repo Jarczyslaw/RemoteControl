@@ -20,5 +20,7 @@ namespace RemoteControl.Server.Connections
         void HandleRequest(RequestBase request);
 
         void RemoveConnection(RequestBase request);
+
+        void ClearConnections();
     }
 }

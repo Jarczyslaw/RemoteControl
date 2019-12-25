@@ -15,22 +15,56 @@ namespace RemoteControl.Proxy
 
         public Server Server { get; private set; }
 
-        public Task Start(string address, int port)
+        public bool IsListening { get; private set; }
+
+        public int? Port { get; private set; }
+
+        public string Address { get; private set; }
+
+        public async Task Start(string address, int port)
         {
-            Server = new Server
+            try
             {
-                Services = { ProxyService.BindService(this) },
-                Ports = { new ServerPort(address, port, ServerCredentials.Insecure) }
-            };
-            Server.Start();
-            OnStart(address, port);
-            return Task.CompletedTask;
+                await Stop();
+                Server = new Server
+                {
+                    Services = { ProxyService.BindService(this) },
+                    Ports = { new ServerPort(address, port, ServerCredentials.Insecure) }
+                };
+                Server.Start();
+                SetListening(address, port);
+                OnStart(address, port);
+            }
+            catch
+            {
+                Server = null;
+                ResetListening();
+                throw;
+            }
+        }
+
+        private void SetListening(string address, int port)
+        {
+            IsListening = true;
+            Address = address;
+            Port = port;
+        }
+
+        private void ResetListening()
+        {
+            IsListening = false;
+            Address = null;
+            Port = null;
         }
 
         public async Task Stop()
         {
-            await Server?.ShutdownAsync();
-            OnStop();
+            if (Server != null)
+            {
+                await Server.ShutdownAsync();
+                ResetListening();
+                OnStop();
+            }
         }
     }
 }

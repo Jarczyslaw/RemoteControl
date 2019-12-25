@@ -57,6 +57,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <Label Content="Address:" />
@@ -75,6 +76,14 @@
                     Maximum="65535"
                     Minimum="1"
                     Value="{Binding Port}" />
+
+                <Button
+                    Grid.Row="2"
+                    Grid.ColumnSpan="2"
+                    Margin="0,5,0,0"
+                    Command="{Binding RestartServiceCommand}"
+                    Content="Restart service"
+                    Style="{DynamicResource AccentedSquareButtonStyle}" />
             </Grid>
         </GroupBox>
         <GroupBox Header="Startup">
