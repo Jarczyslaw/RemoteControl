@@ -5,8 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Acr.UserDialogs" Version="7.0.4" />
     <PackageReference Include="Xamarin.Forms" Version="3.6.0.344457" />
     <PackageReference Include="Prism.Unity.Forms" Version="7.2.0.1367" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\JToolbox\JToolbox.Core\JToolbox.Core.csproj" />
+    <ProjectReference Include="..\..\..\JToolbox\XamarinForms\JToolbox.XamarinForms.Core\JToolbox.XamarinForms.Core.csproj" />
+    <ProjectReference Include="..\..\..\JToolbox\XamarinForms\JToolbox.XamarinForms.Dialogs\JToolbox.XamarinForms.Dialogs.csproj" />
+    <ProjectReference Include="..\..\..\JToolbox\XamarinForms\JToolbox.XamarinForms.Logging\JToolbox.XamarinForms.Logging.csproj" />
+    <ProjectReference Include="..\..\..\JToolbox\XamarinForms\JToolbox.XamarinForms.Permissions\JToolbox.XamarinForms.Permissions.csproj" />
   </ItemGroup>
 
 </Project>

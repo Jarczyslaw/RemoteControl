@@ -1,23 +1,33 @@
-﻿using Prism;
+﻿using Acr.UserDialogs;
+using JToolbox.Core.Abstraction;
+using JToolbox.XamarinForms.Core.Abstraction;
+using JToolbox.XamarinForms.Core.Navigation;
+using JToolbox.XamarinForms.Dialogs;
+using JToolbox.XamarinForms.Logging;
+using JToolbox.XamarinForms.Permissions;
+using Prism;
 using Prism.Ioc;
-using RemoteControl.MobileClient.Core.ViewModels;
-using RemoteControl.MobileClient.Core.Views;
+using System.Reflection;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
+
 namespace RemoteControl.MobileClient.Core
 {
     public partial class App
     {
-        /* 
-         * The Xamarin Forms XAML Previewer in Visual Studio uses System.Activator.CreateInstance.
-         * This imposes a limitation in which the App class must have a default constructor. 
-         * App(IPlatformInitializer initializer = null) cannot be handled by the Activator.
-         */
-        public App() : this(null) { }
+        public static IContainerProvider ContainerProvider { get; private set; }
+        private readonly INavService navService = new NavService();
 
-        public App(IPlatformInitializer initializer) : base(initializer) { }
+        public App() : this(null)
+        {
+        }
+
+        public App(IPlatformInitializer initializer) : base(initializer)
+        {
+            ContainerProvider = Container;
+        }
 
         protected override async void OnInitialized()
         {
@@ -28,8 +38,29 @@ namespace RemoteControl.MobileClient.Core
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            RegisterDependencies(containerRegistry);
+            RegisterViews(containerRegistry);
+        }
+
+        private void RegisterViews(IContainerRegistry containerRegistry)
+        {
             containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
+            navService.Register(containerRegistry, Assembly.GetExecutingAssembly());
+        }
+
+        private void RegisterDependencies(IContainerRegistry containerRegistry)
+        {
+            RegisterLogger(containerRegistry);
+            containerRegistry.RegisterInstance(UserDialogs.Instance);
+            containerRegistry.RegisterSingleton<IDialogsService, DialogsService>();
+            containerRegistry.RegisterSingleton<IPermissionsService, PermissionsService>();
+            containerRegistry.RegisterInstance(navService);
+        }
+
+        private void RegisterLogger(IContainerRegistry containerRegistry)
+        {
+            var appConfig = Container.Resolve<IAppCore>();
+            containerRegistry.RegisterInstance<ILoggerService>(new LoggerService(appConfig.LogPath));
         }
     }
 }
