@@ -7,6 +7,7 @@ using JToolbox.XamarinForms.Logging;
 using JToolbox.XamarinForms.Permissions;
 using Prism;
 using Prism.Ioc;
+using RemoteControl.MobileClient.Core.ViewModels;
 using System.Reflection;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -33,7 +34,7 @@ namespace RemoteControl.MobileClient.Core
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync("NavigationPage/MainPage");
+            await navService.StartNavigationViewModel<MainViewModel>(NavigationService);
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)

@@ -1,0 +1,8 @@
+﻿user controls
+status bar with timeout, history etc.
+buttons with commands + remote service
+themes and colors
+icons
+settings window with address, port and theme
+settings
+commands logging

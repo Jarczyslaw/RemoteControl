@@ -9,7 +9,6 @@ namespace RemoteControl.MobileClient.Core.ViewModels
         public MainViewModel(INavService navService, INavigationService navigationService)
             : base(navService, navigationService)
         {
-            Title = "Main Page View Model";
         }
     }
 }
