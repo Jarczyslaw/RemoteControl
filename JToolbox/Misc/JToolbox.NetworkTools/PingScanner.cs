@@ -1,8 +1,8 @@
 ﻿using JToolbox.Core.Extensions;
 using JToolbox.Core.Helpers;
-using JToolbox.Core.Utilities;
 using JToolbox.NetworkTools.Inputs;
 using JToolbox.NetworkTools.Results;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,8 +24,7 @@ namespace JToolbox.NetworkTools
         public async Task<List<PingResult>> PingScan(PingScanInput pingScanInput)
         {
             var result = new BlockingCollection<PingResult>();
-            var addressesRange = NetworkUtils.GetAddressesInRange(pingScanInput.StartAddress, pingScanInput.EndAddress);
-            var addressesPacks = addressesRange.ChunkInto(pingScanInput.Workers);
+            var addressesPacks = pingScanInput.Addresses.ChunkInto(pingScanInput.Workers);
 
             await AsyncHelper.ForEach(addressesPacks, async (addressPack, token) =>
             {
@@ -56,18 +55,27 @@ namespace JToolbox.NetworkTools
             using (var ping = new Ping())
             {
                 PingReply pingReply = null;
+                Exception exception = null;
                 for (int i = 0; i < pingInput.Retries; i++)
                 {
-                    pingReply = await ping.SendPingAsync(pingInput.Address, pingInput.Timeout);
-                    if (pingReply.Status == IPStatus.Success)
+                    try
                     {
-                        break;
+                        pingReply = await ping.SendPingAsync(pingInput.Address, pingInput.Timeout);
+                        if (pingReply.Status == IPStatus.Success)
+                        {
+                            break;
+                        }
+                    }
+                    catch (Exception exc)
+                    {
+                        exception = exc;
                     }
                 }
                 return new PingResult
                 {
                     Address = pingInput.Address,
-                    Reply = pingReply
+                    Reply = pingReply,
+                    LastException = exception
                 };
             }
         }

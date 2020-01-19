@@ -1,6 +1,6 @@
-﻿namespace JToolbox.NetworkTools
+﻿namespace JToolbox.NetworkTools.Clients
 {
-    public class PortScannerFactory
+    public class ClientFactory
     {
         public IPortClient GetClient(PortType portType)
         {

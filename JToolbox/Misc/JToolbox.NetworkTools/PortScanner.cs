@@ -1,17 +1,20 @@
 ﻿using JToolbox.Core.Extensions;
 using JToolbox.Core.Helpers;
+using JToolbox.NetworkTools.Clients;
 using JToolbox.NetworkTools.Inputs;
 using JToolbox.NetworkTools.Results;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace JToolbox.NetworkTools
 {
-    public delegate void OnPortScanned(PortResult result);
+    public delegate void OnPortScanned(IPAddress address, PortResult result);
 
-    public delegate void OnPortsScanComplete(List<PortResult> results);
+    public delegate void OnPortsScanComplete(List<PortScanResult> results);
 
     public class PortScanner
     {
@@ -19,33 +22,44 @@ namespace JToolbox.NetworkTools
 
         public event OnPortsScanComplete OnPortsScanComplete = delegate { };
 
-        private readonly PortScannerFactory portScannerFactory = new PortScannerFactory();
-
-        public async Task<List<PortResult>> PortScan(PortScanInput portScanInput, PortType portType = PortType.TCP)
+        public async Task<List<PortScanResult>> PortScan(PortScanInput portScanInput, IPortClient portClient)
         {
-            var result = new BlockingCollection<PortResult>();
-            var portsRange = Enumerable.Range(portScanInput.StartPort, portScanInput.EndPort - portScanInput.StartPort + 1)
-                .ToList();
-            var portsPacks = portsRange.ChunkInto(portScanInput.Workers);
+            var result = new BlockingCollection<PortScanResult>();
+            var mergedInput = MergePortScanInput(portScanInput);
+            var addressPortPairs = mergedInput.ChunkInto(portScanInput.Workers);
 
-            await AsyncHelper.ForEach(portsPacks, async (portsPack, token) =>
+            await AsyncHelper.ForEach(addressPortPairs, async (addressPortPair, token) =>
             {
-                foreach (var port in portsPack)
+                foreach (var pair in addressPortPair)
                 {
                     if (token.IsCancellationRequested)
                     {
                         break;
                     }
 
-                    var portResult = await IsPortOpen(new PortInput
+                    var portResultEntry = await IsPortOpen(new PortInput
                     {
-                        Address = portScanInput.Address,
+                        Address = pair.Address,
                         Retries = portScanInput.Retries,
                         Timeout = portScanInput.Timeout,
-                        Port = port
-                    }, portType);
-                    result.Add(portResult);
-                    OnPortScanned(portResult);
+                        Port = pair.Port
+                    }, portClient);
+
+                    var addressResult = result.FirstOrDefault(r => r.Address == pair.Address);
+                    if (addressResult == null)
+                    {
+                        var portResult = new PortScanResult
+                        {
+                            Address = pair.Address,
+                        };
+                        portResult.Results.Add(portResultEntry);
+                        result.Add(portResult);
+                    }
+                    else
+                    {
+                        addressResult.Results.Add(portResultEntry);
+                    }
+                    OnPortScanned(pair.Address, portResultEntry);
                 }
             }, portScanInput.CancellationToken);
             var finalResult = result.ToList();
@@ -53,29 +67,48 @@ namespace JToolbox.NetworkTools
             return finalResult;
         }
 
-        public async Task<PortResult> IsPortOpen(PortInput input, PortType portType = PortType.TCP)
+        private List<AddressPortPair> MergePortScanInput(PortScanInput portScanInput)
+        {
+            var result = new List<AddressPortPair>();
+            foreach (var address in portScanInput.Addresses)
+            {
+                foreach (var port in portScanInput.Ports)
+                {
+                    result.Add(new AddressPortPair
+                    {
+                        Address = address,
+                        Port = port
+                    });
+                }
+            }
+            return result;
+        }
+
+        public async Task<PortResult> IsPortOpen(PortInput input, IPortClient portClient)
         {
             var isOpen = false;
-            using (var client = portScannerFactory.GetClient(portType))
+            Exception exception = null;
+            for (int i = 0; i < input.Retries; i++)
             {
-                for (int i = 0; i < input.Retries; i++)
+                try
                 {
-                    try
+                    isOpen = await portClient.Check(input.Address, input.Port, input.Timeout);
+                    if (isOpen)
                     {
-                        await client.Connect(input.Address, input.Port, input.Timeout);
-                        isOpen = true;
                         break;
                     }
-                    catch { }
+                }
+                catch (Exception exc)
+                {
+                    exception = exc;
                 }
             }
 
             return new PortResult
             {
                 IsOpen = isOpen,
-                Address = input.Address,
                 Port = input.Port,
-                Type = portType
+                LastException = exception
             };
         }
     }

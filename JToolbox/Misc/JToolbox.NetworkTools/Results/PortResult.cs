@@ -1,12 +1,11 @@
-﻿using System.Net;
+﻿using System;
 
 namespace JToolbox.NetworkTools.Results
 {
     public class PortResult
     {
-        public IPAddress Address { get; set; }
-        public int Port { get; set; }
-        public PortType Type { get; set; }
-        public bool IsOpen { get; set; }
+        public int Port { get; internal set; }
+        public bool IsOpen { get; internal set; }
+        public Exception LastException { get; internal set; }
     }
 }

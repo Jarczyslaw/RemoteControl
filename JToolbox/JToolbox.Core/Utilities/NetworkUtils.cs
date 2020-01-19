@@ -171,5 +171,29 @@ namespace JToolbox.Core.Utilities
             return address.Compare(startAddress) >= 0
                 && address.Compare(endAddress) <= 0;
         }
+
+        public static List<int> GetActiveTcpConnections()
+        {
+            var properties = IPGlobalProperties.GetIPGlobalProperties();
+            return properties.GetActiveTcpConnections()
+                .Select(c => c.LocalEndPoint.Port)
+                .ToList();
+        }
+
+        public static List<int> GetOpenTcpPorts()
+        {
+            var properties = IPGlobalProperties.GetIPGlobalProperties();
+            return properties.GetActiveTcpListeners()
+                .Select(c => c.Port)
+                .ToList();
+        }
+
+        public static List<int> GetOpenUdpPorts()
+        {
+            var properties = IPGlobalProperties.GetIPGlobalProperties();
+            return properties.GetActiveUdpListeners()
+                .Select(c => c.Port)
+                .ToList();
+        }
     }
 }

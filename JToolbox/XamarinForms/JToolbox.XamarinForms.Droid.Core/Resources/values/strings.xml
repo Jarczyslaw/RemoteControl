@@ -1,4 +1,4 @@
 <resources>
-    <string name="hello">Hello World, Click Me!</string>
-    <string name="app_name">FormsApp.Droid.Core</string>
+    <string name="app_name">JToolbox.XamarinForms.Droid.Core</string>
+    <string name="action_settings">Settings</string>
 </resources>

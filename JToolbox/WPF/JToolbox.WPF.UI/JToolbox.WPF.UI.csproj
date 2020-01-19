@@ -47,6 +47,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\CenterContainer.xaml.cs">
+      <DependentUpon>CenterContainer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\BoolNegationConverter.cs" />
     <Compile Include="Converters\BoolToValueConverter.cs" />
     <Compile Include="Converters\DictionaryConverter.cs" />
@@ -64,6 +67,12 @@
       <Project>{56bee9b3-2fcb-46e7-a837-d07f0bfcbd98}</Project>
       <Name>JToolbox.WPF.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Controls\CenterContainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
