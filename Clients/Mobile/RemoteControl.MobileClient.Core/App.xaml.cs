@@ -7,6 +7,7 @@ using JToolbox.XamarinForms.Logging;
 using JToolbox.XamarinForms.Permissions;
 using Prism;
 using Prism.Ioc;
+using RemoteControl.MobileClient.Core.Themes;
 using RemoteControl.MobileClient.Core.ViewModels;
 using System.Reflection;
 using Xamarin.Forms;
@@ -55,6 +56,7 @@ namespace RemoteControl.MobileClient.Core
             containerRegistry.RegisterInstance(UserDialogs.Instance);
             containerRegistry.RegisterSingleton<IDialogsService, DialogsService>();
             containerRegistry.RegisterSingleton<IPermissionsService, PermissionsService>();
+            containerRegistry.RegisterSingleton<IThemeManager, ThemeManager>();
             containerRegistry.RegisterInstance(navService);
         }
 

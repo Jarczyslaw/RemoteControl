@@ -3,7 +3,8 @@
     x:Class="RemoteControl.MobileClient.Core.Views.MainPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="RemoteControl Client">
+    Title="RemoteControl Client"
+    BackgroundColor="{DynamicResource PageBackgroundColor}">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -21,7 +22,10 @@
             <Button Command="{Binding RestartCommand}" Text="Restart" />
         </StackLayout>
 
-        <StackLayout Grid.Row="1" HeightRequest="30">
+        <StackLayout
+            Grid.Row="1"
+            BackgroundColor="{DynamicResource PrimaryColor}"
+            HeightRequest="30">
             <Label
                 Margin="3"
                 LineBreakMode="TailTruncation"

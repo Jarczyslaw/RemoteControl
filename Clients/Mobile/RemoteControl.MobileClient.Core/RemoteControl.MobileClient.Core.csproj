@@ -18,4 +18,16 @@
     <ProjectReference Include="..\..\..\JToolbox\XamarinForms\JToolbox.XamarinForms.Permissions\JToolbox.XamarinForms.Permissions.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Themes\ThemesResources\DarkTheme.xaml.cs">
+      <DependentUpon>DarkTheme.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Themes\ThemesResources\LightTheme.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>
