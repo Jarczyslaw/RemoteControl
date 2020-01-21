@@ -25,5 +25,16 @@ namespace RemoteControl.Proxy
             }
             return proxyClient;
         }
+
+        public async Task Disconnect()
+        {
+            if (proxyClient != null)
+            {
+                await proxyClient.Stop();
+                proxyClient = null;
+                RemotePort = 0;
+                RemoteAddress = null;
+            }
+        }
     }
 }

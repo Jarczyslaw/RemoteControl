@@ -18,10 +18,4 @@
     <ProjectReference Include="..\..\..\JToolbox\XamarinForms\JToolbox.XamarinForms.Permissions\JToolbox.XamarinForms.Permissions.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="Controls\StatusBar.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-
 </Project>

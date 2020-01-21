@@ -3,7 +3,6 @@
     x:Class="RemoteControl.MobileClient.Core.Views.MainPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:controls="clr-namespace:RemoteControl.MobileClient.Core.Controls"
     Title="RemoteControl Client">
 
     <Grid>
@@ -12,8 +11,23 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Label Text="Test" VerticalOptions="CenterAndExpand" />
-        <controls:StatusBar Grid.Row="1" />
+        <StackLayout
+            HorizontalOptions="FillAndExpand"
+            Orientation="Vertical"
+            VerticalOptions="FillAndExpand">
+            <Button Command="{Binding ConnectCommand}" Text="Connect" />
+            <Button Command="{Binding DisconnectCommand}" Text="Disconnect" />
+            <Button Command="{Binding ShutdownCommand}" Text="Shutdown" />
+            <Button Command="{Binding RestartCommand}" Text="Restart" />
+        </StackLayout>
+
+        <StackLayout Grid.Row="1" HeightRequest="30">
+            <Label
+                Margin="3"
+                LineBreakMode="TailTruncation"
+                Text="{Binding StatusText}"
+                VerticalOptions="CenterAndExpand" />
+        </StackLayout>
     </Grid>
 
 </ContentPage>
