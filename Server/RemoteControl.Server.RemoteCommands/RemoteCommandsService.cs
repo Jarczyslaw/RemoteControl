@@ -35,7 +35,7 @@ namespace RemoteControl.Server.RemoteCommands
         {
             var response = new ConnectResponse()
             {
-                ResponseBase = new ResponseBase()
+                ResponseBase = CreateResponseBase()
             };
             try
             {
@@ -54,7 +54,7 @@ namespace RemoteControl.Server.RemoteCommands
         {
             var response = new DisconnectResponse()
             {
-                ResponseBase = new ResponseBase()
+                ResponseBase = CreateResponseBase()
             };
             try
             {
@@ -73,7 +73,7 @@ namespace RemoteControl.Server.RemoteCommands
         {
             var response = new RestartResponse()
             {
-                ResponseBase = new ResponseBase()
+                ResponseBase = CreateResponseBase()
             };
             try
             {
@@ -93,7 +93,7 @@ namespace RemoteControl.Server.RemoteCommands
         {
             var response = new ShutdownResponse()
             {
-                ResponseBase = new ResponseBase()
+                ResponseBase = CreateResponseBase()
             };
             try
             {
@@ -107,6 +107,18 @@ namespace RemoteControl.Server.RemoteCommands
                 response.ResponseBase.Error = exc.Message;
             }
             return Task.FromResult(response);
+        }
+
+        private ResponseBase CreateResponseBase()
+        {
+            return new ResponseBase
+            {
+                Error = null,
+                ConnectionsCount = connectionsService.Connections.Count,
+                ServerName = Environment.MachineName,
+                ServerAddress = Address,
+                ServerPort = Port.Value
+            };
         }
     }
 }
