@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Xamarin.Forms;
 
 namespace RemoteControl.MobileClient.Core.Themes
@@ -12,6 +13,13 @@ namespace RemoteControl.MobileClient.Core.Themes
             if (mergedDictionaries != null)
             {
                 mergedDictionaries.Clear();
+                foreach (var dictionary in mergedDictionaries)
+                {
+                    if (!(dictionary is ITheme))
+                    {
+                        mergedDictionaries.Add(dictionary);
+                    }
+                }
                 mergedDictionaries.Add(Activator.CreateInstance<T>());
             }
         }

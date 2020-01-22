@@ -2,7 +2,7 @@
 
 namespace RemoteControl.MobileClient.Core.Themes.ThemesResources
 {
-    public partial class DarkTheme : ResourceDictionary
+    public partial class DarkTheme : ResourceDictionary, ITheme
     {
         public DarkTheme()
         {
