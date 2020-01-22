@@ -6,5 +6,10 @@
     xmlns:prism="clr-namespace:Prism.Unity;assembly=Prism.Unity.Forms">
     <Application.Resources>
         <ResourceDictionary Source="Themes/ThemesResources/DarkTheme.xaml" />
+
+        <Style TargetType="NavigationPage">
+            <Setter Property="BarBackgroundColor" Value="{DynamicResource NavigationBarColor}" />
+            <Setter Property="BarTextColor" Value="{DynamicResource SecondaryColor}" />
+        </Style>
     </Application.Resources>
 </prism:PrismApplication>
