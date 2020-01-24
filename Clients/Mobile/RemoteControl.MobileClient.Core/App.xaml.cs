@@ -5,6 +5,7 @@ using JToolbox.XamarinForms.Core.Navigation;
 using JToolbox.XamarinForms.Dialogs;
 using JToolbox.XamarinForms.Logging;
 using JToolbox.XamarinForms.Permissions;
+using JToolbox.XamarinForms.Themes;
 using Prism;
 using Prism.Ioc;
 using RemoteControl.MobileClient.Core.Themes;

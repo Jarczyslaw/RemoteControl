@@ -17,7 +17,7 @@ namespace RemoteControl.MobileClient.Droid
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
-
+            
             base.OnCreate(bundle);
 
             RequestedOrientation = ScreenOrientation.Portrait;
@@ -39,4 +39,3 @@ namespace RemoteControl.MobileClient.Droid
         }
     }
 }
-

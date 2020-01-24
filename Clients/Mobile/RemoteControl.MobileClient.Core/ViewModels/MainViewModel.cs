@@ -1,11 +1,10 @@
 ﻿using JToolbox.XamarinForms.Core.Base;
 using JToolbox.XamarinForms.Core.Navigation;
 using JToolbox.XamarinForms.Dialogs;
+using JToolbox.XamarinForms.Themes;
 using Prism.Commands;
 using Prism.Navigation;
 using RemoteControl.MobileClient.Core.Themes;
-using RemoteControl.MobileClient.Core.Themes.ThemesResources;
-
 namespace RemoteControl.MobileClient.Core.ViewModels
 {
     public class MainViewModel : ViewModelBase
