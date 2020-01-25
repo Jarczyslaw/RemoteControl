@@ -17,18 +17,22 @@ namespace RemoteControl.MobileClient.Droid
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
-            
+
             base.OnCreate(bundle);
 
             RequestedOrientation = ScreenOrientation.Portrait;
+            InitializeApplication(bundle);
 
+            LoadApplication(new App(new AndroidInitializer()));
+        }
+
+        private void InitializeApplication(Bundle bundle)
+        {
             globalExceptionHandler.Attach();
             Xamarin.Forms.Forms.Init(this, bundle);
             Xamarin.Essentials.Platform.Init(this, bundle);
             Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, bundle);
             UserDialogs.Init(this);
-
-            LoadApplication(new App(new AndroidInitializer()));
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
