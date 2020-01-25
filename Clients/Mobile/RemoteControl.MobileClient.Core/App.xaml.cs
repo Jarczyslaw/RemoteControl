@@ -10,6 +10,7 @@ using Prism;
 using Prism.Ioc;
 using RemoteControl.MobileClient.Core.Themes;
 using RemoteControl.MobileClient.Core.ViewModels;
+using System;
 using System.Reflection;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -35,8 +36,14 @@ namespace RemoteControl.MobileClient.Core
         protected override async void OnInitialized()
         {
             InitializeComponent();
-
+            ApplyTheme();
             await navService.StartNavigationViewModel<MainViewModel>(NavigationService);
+        }
+
+        private void ApplyTheme()
+        {
+            var themeManager = Container.Resolve<IThemeManager>();
+            themeManager.SetTheme<LightTheme>();
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)

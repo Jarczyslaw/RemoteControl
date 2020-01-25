@@ -5,11 +5,35 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:prism="clr-namespace:Prism.Unity;assembly=Prism.Unity.Forms">
     <Application.Resources>
-        <ResourceDictionary Source="Themes/DarkTheme.xaml" />
+        <ResourceDictionary Source="Themes/LightTheme.xaml" />
 
         <Style TargetType="NavigationPage">
             <Setter Property="BarBackgroundColor" Value="{DynamicResource NavigationBarColor}" />
             <Setter Property="BarTextColor" Value="{DynamicResource SecondaryColor}" />
+        </Style>
+
+        <Thickness
+            x:Key="DefaultMargin"
+            Bottom="0"
+            Left="4"
+            Right="4"
+            Top="4" />
+
+        <Thickness
+            x:Key="DefaultPadding"
+            Bottom="4"
+            Left="4"
+            Right="4"
+            Top="4" />
+
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="{StaticResource DefaultMargin}" />
+            <Setter Property="HeightRequest" Value="40" />
+            <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}" />
+            <Setter Property="TextColor" Value="{DynamicResource PrimaryTextColor}" />
+            <Setter Property="BorderColor" Value="{DynamicResource BorderColor}" />
+            <Setter Property="CornerRadius" Value="0" />
+            <Setter Property="BorderWidth" Value="1" />
         </Style>
     </Application.Resources>
 </prism:PrismApplication>

@@ -30,6 +30,7 @@
                 Margin="3"
                 LineBreakMode="TailTruncation"
                 Text="{Binding StatusText}"
+                TextColor="{DynamicResource PrimaryTextColor}"
                 VerticalOptions="CenterAndExpand" />
         </StackLayout>
     </Grid>

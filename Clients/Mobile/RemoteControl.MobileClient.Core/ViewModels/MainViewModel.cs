@@ -26,13 +26,13 @@ namespace RemoteControl.MobileClient.Core.ViewModels
 
         public DelegateCommand ConnectCommand => new DelegateCommand(() =>
         {
-            dialogsService.Toast("ConnectCommand");
+            //dialogsService.Toast("ConnectCommand");
             themeManager.SetTheme<LightTheme>();
         });
 
         public DelegateCommand DisconnectCommand => new DelegateCommand(() =>
         {
-            dialogsService.Toast("DisconnectCommand");
+            //dialogsService.Toast("DisconnectCommand");
             themeManager.SetTheme<DarkTheme>();
         });
 
