@@ -9,7 +9,10 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{Binding SettingsCommand}">
             <ToolbarItem.IconImageSource>
-                <FontImageSource FontFamily="{StaticResource FontAwesomeSolid}" Glyph="&#xf085;" />
+                <FontImageSource
+                    x:Name="fisSettings"
+                    FontFamily="{StaticResource FontAwesomeSolid}"
+                    Glyph="&#xf085;" />
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
     </ContentPage.ToolbarItems>

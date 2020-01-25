@@ -8,8 +8,9 @@ namespace RemoteControl.MobileClient.Core.Themes
         public DarkTheme()
         {
             InitializeComponent();
+            ThemeColorExtractor = new ThemeColorExtractor(this);
         }
 
-        public Color NotificationBarColor => (Color)this["NavigationBarColor"];
+        public ThemeColorExtractor ThemeColorExtractor { get; }
     }
 }

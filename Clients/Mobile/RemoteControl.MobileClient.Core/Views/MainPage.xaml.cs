@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using JToolbox.XamarinForms.Themes;
 using Xamarin.Forms;
 
 namespace RemoteControl.MobileClient.Core.Views
 {
     public partial class MainPage : ContentPage
     {
-        public MainPage()
+        public MainPage(IThemeManager themeManager)
         {
             InitializeComponent();
+
+            themeManager.OnThemeChanged += t =>
+            {
+                fisSettings.Color = t.ThemeColorExtractor.PrimaryTextColor;
+            };
         }
     }
 }

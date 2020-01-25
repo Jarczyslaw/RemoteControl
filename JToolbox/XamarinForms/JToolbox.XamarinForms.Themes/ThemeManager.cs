@@ -4,9 +4,13 @@ using Xamarin.Forms;
 
 namespace JToolbox.XamarinForms.Themes
 {
+    public delegate void ThemeChanged(IThemeResourceDictionary themeResourceDictionary);
+
     public class ThemeManager : IThemeManager
     {
         private readonly IStatusBarColorManager statusBarColorManager;
+
+        public event ThemeChanged OnThemeChanged = delegate { };
 
         public ThemeManager(IStatusBarColorManager statusBarColorManager)
         {
@@ -21,27 +25,37 @@ namespace JToolbox.XamarinForms.Themes
 
         public void SetTheme(ResourceDictionary resourceDictionary)
         {
+            var themeResourceDictionary = resourceDictionary as IThemeResourceDictionary;
+            if (themeResourceDictionary == null)
+            {
+                throw new Exception("Invalid resource dictionary type");
+            }
+
             var mergedDictionaries = Application.Current.Resources.MergedDictionaries;
             if (mergedDictionaries != null)
             {
-                var dictionaries = new List<ResourceDictionary>();
-                foreach (var dictionary in mergedDictionaries)
-                {
-                    if (!(dictionary is IThemeResourceDictionary))
-                    {
-                        dictionaries.Add(dictionary);
-                    }
-                }
+                ReplaceThemeResourceDictionaries(mergedDictionaries, resourceDictionary);
+                statusBarColorManager.SetColor(themeResourceDictionary.ThemeColorExtractor.NavigationBarColor);
+                OnThemeChanged(themeResourceDictionary);
+            }
+        }
 
-                mergedDictionaries.Clear();
-                mergedDictionaries.Add(resourceDictionary);
-                foreach (var dictionary in dictionaries)
+        private void ReplaceThemeResourceDictionaries(ICollection<ResourceDictionary> mergedDictionaries, ResourceDictionary resourceDictionary)
+        {
+            var dictionaries = new List<ResourceDictionary>();
+            foreach (var dictionary in mergedDictionaries)
+            {
+                if (!(dictionary is IThemeResourceDictionary))
                 {
-                    mergedDictionaries.Add(dictionary);
+                    dictionaries.Add(dictionary);
                 }
+            }
 
-                var themeResourceDictionary = resourceDictionary as IThemeResourceDictionary;
-                statusBarColorManager.SetColor(themeResourceDictionary.NotificationBarColor);
+            mergedDictionaries.Clear();
+            mergedDictionaries.Add(resourceDictionary);
+            foreach (var dictionary in dictionaries)
+            {
+                mergedDictionaries.Add(dictionary);
             }
         }
     }
