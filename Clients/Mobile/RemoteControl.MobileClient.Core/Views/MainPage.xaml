@@ -6,6 +6,14 @@
     Title="RemoteControl Client"
     BackgroundColor="{DynamicResource PageBackgroundColor}">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding SettingsCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="{StaticResource FontAwesomeSolid}" Glyph="&#xf085;" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -21,6 +29,7 @@
             <Button Command="{Binding ShutdownCommand}" Text="Shutdown" />
             <Button Command="{Binding RestartCommand}" Text="Restart" />
         </StackLayout>
+
 
         <StackLayout
             Grid.Row="1"
