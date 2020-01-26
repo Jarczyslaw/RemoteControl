@@ -1,15 +1,13 @@
-﻿using Acr.UserDialogs;
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
-using Android.Runtime;
-using Plugin.Permissions;
+using JToolbox.XamarinForms.Droid.Core;
 using RemoteControl.MobileClient.Core;
 
 namespace RemoteControl.MobileClient.Droid
 {
-    [Activity(Label = "RemoteControl.MobileClient", Icon = "@mipmap/ic_launcher", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    [Activity(Label = "RemoteControlClient", Icon = "@mipmap/ic_launcher", Theme = "@style/Splash", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    public class MainActivity : MainActivityBase
     {
         private readonly AppGlobalExceptionHandler globalExceptionHandler = new AppGlobalExceptionHandler();
 
@@ -17,29 +15,14 @@ namespace RemoteControl.MobileClient.Droid
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
-
-            base.OnCreate(bundle);
+            SetTheme(Resource.Style.MainTheme);
 
             RequestedOrientation = ScreenOrientation.Portrait;
-            InitializeApplication(bundle);
+            globalExceptionHandler.Attach();
+            Initialize(bundle);
+            base.OnCreate(bundle);
 
             LoadApplication(new App(new AndroidInitializer()));
-        }
-
-        private void InitializeApplication(Bundle bundle)
-        {
-            globalExceptionHandler.Attach();
-            Xamarin.Forms.Forms.Init(this, bundle);
-            Xamarin.Essentials.Platform.Init(this, bundle);
-            Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, bundle);
-            UserDialogs.Init(this);
-        }
-
-        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
-        {
-            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-            PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 }

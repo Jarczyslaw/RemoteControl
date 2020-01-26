@@ -17,6 +17,8 @@ namespace JToolbox.XamarinForms.Themes
             this.statusBarColorManager = statusBarColorManager;
         }
 
+        public IThemeResourceDictionary CurrentTheme { get; private set; }
+
         public void SetTheme<T>()
             where T : ResourceDictionary, IThemeResourceDictionary
         {
@@ -34,6 +36,7 @@ namespace JToolbox.XamarinForms.Themes
             var mergedDictionaries = Application.Current.Resources.MergedDictionaries;
             if (mergedDictionaries != null)
             {
+                CurrentTheme = themeResourceDictionary;
                 ReplaceThemeResourceDictionaries(mergedDictionaries, resourceDictionary);
                 statusBarColorManager.SetColor(themeResourceDictionary.ThemeColorExtractor.NavigationBarColor);
                 OnThemeChanged(themeResourceDictionary);
