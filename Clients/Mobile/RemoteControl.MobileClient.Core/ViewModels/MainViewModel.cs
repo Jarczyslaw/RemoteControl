@@ -11,8 +11,8 @@ namespace RemoteControl.MobileClient.Core.ViewModels
     {
         private string statusText;
 
-        private IDialogsService dialogsService;
-        private IThemeManager themeManager;
+        private readonly IDialogsService dialogsService;
+        private readonly IThemeManager themeManager;
 
         public MainViewModel(INavService navService, INavigationService navigationService,
             IDialogsService dialogsService, IThemeManager themeManager)

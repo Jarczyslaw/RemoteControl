@@ -60,5 +60,19 @@ namespace JToolbox.Core.Helpers
             await Task.WhenAll(tasks.Select(p => p.Value));
             return tasks.Select(p => new KeyValuePair<TItem, TResult>(p.Key, p.Value.Result)).ToList();
         }
+
+        public static Task<T> AsyncCallback<T>(Action<Action<T>> methodWithCallback)
+        {
+            var tcs = new TaskCompletionSource<T>();
+            try
+            {
+                methodWithCallback(t => tcs.SetResult(t));
+            }
+            catch (Exception ex)
+            {
+                tcs.SetException(ex);
+            }
+            return tcs.Task;
+        }
     }
 }
