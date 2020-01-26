@@ -5,7 +5,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="RemoteControl Client"
     BackgroundColor="{DynamicResource PageBackgroundColor}">
-
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{Binding SettingsCommand}">
             <ToolbarItem.IconImageSource>
@@ -16,7 +15,6 @@
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
     </ContentPage.ToolbarItems>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />

@@ -17,6 +17,7 @@
     <ProjectReference Include="..\..\..\JToolbox\XamarinForms\JToolbox.XamarinForms.Logging\JToolbox.XamarinForms.Logging.csproj" />
     <ProjectReference Include="..\..\..\JToolbox\XamarinForms\JToolbox.XamarinForms.Permissions\JToolbox.XamarinForms.Permissions.csproj" />
     <ProjectReference Include="..\..\..\JToolbox\XamarinForms\JToolbox.XamarinForms.Themes\JToolbox.XamarinForms.Themes.csproj" />
+    <ProjectReference Include="..\..\..\JToolbox\XamarinForms\JToolbox.XamarinForms.UI\JToolbox.XamarinForms.UI.csproj" />
   </ItemGroup>
 
   <ItemGroup>

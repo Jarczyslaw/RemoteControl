@@ -84,7 +84,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.NetworkTools", "JT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteControl.Server.AppSettings", "Server\RemoteControl.Server.AppSettings\RemoteControl.Server.AppSettings.csproj", "{262BDA3D-63C4-4044-BE81-511AB3CF0368}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.XamarinForms.Themes", "JToolbox\XamarinForms\JToolbox.XamarinForms.Themes\JToolbox.XamarinForms.Themes.csproj", "{C20CCA31-D4DE-4568-A5BF-172116DBB49A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.XamarinForms.Themes", "JToolbox\XamarinForms\JToolbox.XamarinForms.Themes\JToolbox.XamarinForms.Themes.csproj", "{C20CCA31-D4DE-4568-A5BF-172116DBB49A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.XamarinForms.UI", "JToolbox\XamarinForms\JToolbox.XamarinForms.UI\JToolbox.XamarinForms.UI.csproj", "{DB5FBE6C-E0F7-4154-AD08-43BD87FFE34A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -210,6 +212,10 @@ Global
 		{C20CCA31-D4DE-4568-A5BF-172116DBB49A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C20CCA31-D4DE-4568-A5BF-172116DBB49A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C20CCA31-D4DE-4568-A5BF-172116DBB49A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB5FBE6C-E0F7-4154-AD08-43BD87FFE34A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB5FBE6C-E0F7-4154-AD08-43BD87FFE34A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB5FBE6C-E0F7-4154-AD08-43BD87FFE34A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB5FBE6C-E0F7-4154-AD08-43BD87FFE34A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -250,6 +256,7 @@ Global
 		{B2FA8AA9-C02A-42C0-8037-02991633473A} = {896A7B42-AF7E-4849-9E31-77FA6545DC3F}
 		{262BDA3D-63C4-4044-BE81-511AB3CF0368} = {DA35934F-D8CE-4DF5-9C52-B16A5407D812}
 		{C20CCA31-D4DE-4568-A5BF-172116DBB49A} = {69FB1547-D586-4BFD-AF82-8F49037C594D}
+		{DB5FBE6C-E0F7-4154-AD08-43BD87FFE34A} = {69FB1547-D586-4BFD-AF82-8F49037C594D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BCB4424D-A73D-4F00-BC7F-7B616549F593}
