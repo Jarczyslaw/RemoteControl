@@ -24,9 +24,9 @@ namespace RemoteControl.MobileClient.Core.ViewModels
             SetDisconnectedStatus();
         }
 
-        public DelegateCommand SettingsCommand => new DelegateCommand(() =>
+        public DelegateCommand SettingsCommand => new DelegateCommand(async () =>
         {
-            dialogsService.Toast("SettingsCommand");
+            await navService.NavigateToViewModel<SettingsViewModel>(navigationService);
         });
 
         public DelegateCommand ConnectCommand => new DelegateCommand(() =>
