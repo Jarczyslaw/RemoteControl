@@ -8,13 +8,13 @@ namespace JToolbox.XamarinForms.Themes
 
     public class ThemeManager : IThemeManager
     {
-        private readonly IStatusBarColorManager statusBarColorManager;
+        private readonly IPlatformThemeManager platformThemeManager;
 
         public event ThemeChanged OnThemeChanged = delegate { };
 
-        public ThemeManager(IStatusBarColorManager statusBarColorManager)
+        public ThemeManager(IPlatformThemeManager platformThemeManager)
         {
-            this.statusBarColorManager = statusBarColorManager;
+            this.platformThemeManager = platformThemeManager;
         }
 
         public IThemeResourceDictionary CurrentTheme { get; private set; }
@@ -37,8 +37,8 @@ namespace JToolbox.XamarinForms.Themes
             if (mergedDictionaries != null)
             {
                 CurrentTheme = themeResourceDictionary;
+                platformThemeManager.SetTheme(themeResourceDictionary);
                 ReplaceThemeResourceDictionaries(mergedDictionaries, resourceDictionary);
-                statusBarColorManager.SetColor(themeResourceDictionary.ThemeColorExtractor.NavigationBarColor);
                 OnThemeChanged(themeResourceDictionary);
             }
         }

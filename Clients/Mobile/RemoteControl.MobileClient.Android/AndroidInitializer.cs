@@ -12,7 +12,7 @@ namespace RemoteControl.MobileClient.Droid
         {
             containerRegistry.RegisterSingleton<IPaths, Paths>();
             containerRegistry.RegisterSingleton<IAppCore, AppCore>();
-            containerRegistry.RegisterSingleton<IStatusBarColorManager, StatusBarColorManager>();
+            containerRegistry.RegisterSingleton<IPlatformThemeManager, PlatformThemeManager>();
         }
     }
 }
