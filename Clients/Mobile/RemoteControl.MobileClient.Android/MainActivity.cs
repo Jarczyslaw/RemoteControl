@@ -15,12 +15,13 @@ namespace RemoteControl.MobileClient.Droid
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
+            RequestedOrientation = ScreenOrientation.Portrait;
             SetTheme(Resource.Style.MainTheme);
 
-            RequestedOrientation = ScreenOrientation.Portrait;
+            base.OnCreate(bundle);
+
             globalExceptionHandler.Attach();
             Initialize(bundle);
-            base.OnCreate(bundle);
 
             LoadApplication(new App(new AndroidInitializer()));
         }
