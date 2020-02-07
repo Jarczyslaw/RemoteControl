@@ -31,22 +31,13 @@ namespace RemoteControl.Server.RemoteCommands
             messagesAggregator.Error(exc);
         }
 
-        public override Task<ConnectResponse> Connect(ConnectRequest request, ServerCallContext context)
+        public override Task<PingResponse> Ping(PingRequest request, ServerCallContext context)
         {
-            var response = new ConnectResponse()
+            var response = new PingResponse()
             {
                 ResponseBase = CreateResponseBase()
             };
-            try
-            {
-                HandleInfo(request.RequestBase, nameof(Connect));
-                connectionsService.HandleRequest(request.RequestBase);
-            }
-            catch (Exception exc)
-            {
-                HandleError(exc);
-                response.ResponseBase.Error = exc.Message;
-            }
+            response.ResponseMessage = request.Message;
             return Task.FromResult(response);
         }
 

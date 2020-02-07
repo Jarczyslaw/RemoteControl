@@ -1,2 +1,3 @@
 settings: service address, service port, start minimized, add to startup, inactiveTime, removeTime
 refactor grpc messages and remoteCommands
+create status command to get information from server

@@ -5,18 +5,19 @@ option csharp_namespace = "RemoteControl.Proxy";
 package Proxy;
 
 service ProxyService {
-	rpc Connect (ConnectRequest) returns (ConnectResponse);
+	rpc Ping (PingRequest) returns (PingResponse);
 	rpc Disconnect (DisconnectRequest) returns (DisconnectResponse);
 	rpc Shutdown (ShutdownRequest) returns (ShutdownResponse);
 	rpc Restart (RestartRequest) returns (RestartResponse);
 }
 
-message ConnectRequest {
-	RequestBase RequestBase = 1;
+message PingRequest {
+	string Message = 1;
 }
 
-message ConnectResponse {
+message PingResponse {
 	ResponseBase ResponseBase = 1;
+	string ResponseMessage = 2;
 }
 
 message DisconnectRequest {

@@ -67,18 +67,30 @@ namespace RemoteControl.DesktopClient.Core
             RemotePort = 7890;
         }
 
-        private async void btnConnect_Click(object sender, EventArgs e)
+        private async void btnPing_Click(object sender, EventArgs e)
         {
             try
             {
+                var testMessage = "Test message";
                 var proxy = await lazyProxyClient.GetProxyClient(RemoteAddress, RemotePort);
-                var response = await proxy.Client.ConnectAsync(new ConnectRequest
+                var response = await proxy.Client.PingAsync(new PingRequest
                 {
-                    RequestBase = RequestBase
+                    Message = testMessage
                 });
+
                 if (response.ResponseBase.HasError())
                 {
                     dialogsService.ShowError(response.ResponseBase.Error);
+                    return;
+                }
+
+                if (response.ResponseMessage == testMessage)
+                {
+                    dialogsService.ShowInfo($"Successfully received message from server: {response.ResponseMessage}");
+                }
+                else
+                {
+                    dialogsService.ShowError($"Invalid message from server: {response.ResponseMessage}");
                 }
             }
             catch (Exception exc)
