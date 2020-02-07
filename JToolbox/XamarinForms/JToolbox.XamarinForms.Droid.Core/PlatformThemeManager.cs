@@ -19,7 +19,7 @@ namespace JToolbox.XamarinForms.Droid.Core
 
         public void SetTheme(IThemeResourceDictionary themeResourceDictionary)
         {
-            SetStatusBar(themeResourceDictionary.ThemeColorExtractor.NavigationBarColor);
+            SetStatusBar(themeResourceDictionary.ThemeColorExtractor.SecondaryColor);
         }
     }
 }

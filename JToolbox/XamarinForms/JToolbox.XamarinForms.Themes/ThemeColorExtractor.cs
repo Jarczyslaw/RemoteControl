@@ -17,14 +17,14 @@ namespace JToolbox.XamarinForms.Themes
             return (Color)resourceDictionary[colorName];
         }
 
-        public Color PageBackgroundColor => GetColor();
-        public Color NavigationBarColor => GetColor();
+        public Color PrimaryBackgroundColor => GetColor();
+        public Color SecondaryBackgroundColor => GetColor();
         public Color PrimaryColor => GetColor();
         public Color SecondaryColor => GetColor();
+        public Color TertiaryColor => GetColor();
         public Color PrimaryTextColor => GetColor();
         public Color SecondaryTextColor => GetColor();
         public Color TertiaryTextColor => GetColor();
-        public Color BorderColor => GetColor();
         public Color TransparentColor => GetColor();
     }
 }

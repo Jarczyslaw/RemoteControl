@@ -6,13 +6,13 @@ namespace RemoteControl.MobileClient.Core.Themes
     {
         public IThemeResourceDictionary GetThemeResourceDictionary(Theme theme)
         {
-            if (theme == Theme.Dark)
+            if (theme == Theme.Blue)
             {
-                return new DarkTheme();
+                return new BlueTheme();
             }
-            else if (theme == Theme.Light)
+            else if (theme == Theme.Gray)
             {
-                return new LightTheme();
+                return new GrayTheme();
             }
             else
             {

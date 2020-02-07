@@ -43,7 +43,7 @@ namespace RemoteControl.MobileClient.Core
         private void ApplyTheme()
         {
             var themeManager = Container.Resolve<IThemeManager>();
-            themeManager.SetTheme<LightTheme>();
+            themeManager.SetTheme<BlueTheme>();
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)

@@ -21,13 +21,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Themes\DarkTheme.xaml.cs">
-      <DependentUpon>DarkTheme.xaml</DependentUpon>
+    <Compile Update="Themes\GrayTheme.xaml.cs">
+      <DependentUpon>GrayTheme.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Themes\BlueTheme.xaml.cs">
+      <DependentUpon>BlueTheme.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Themes\LightTheme.xaml">
+    <EmbeddedResource Update="Themes\BlueTheme.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

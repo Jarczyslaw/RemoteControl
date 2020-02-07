@@ -3,9 +3,9 @@ using Xamarin.Forms;
 
 namespace RemoteControl.MobileClient.Core.Themes
 {
-    public partial class LightTheme : ResourceDictionary, IThemeResourceDictionary
+    public partial class BlueTheme : ResourceDictionary, IThemeResourceDictionary
     {
-        public LightTheme()
+        public BlueTheme()
         {
             InitializeComponent();
             ThemeColorExtractor = new ThemeColorExtractor(this);
