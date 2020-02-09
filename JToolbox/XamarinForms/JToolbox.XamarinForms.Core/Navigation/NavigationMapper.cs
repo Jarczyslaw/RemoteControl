@@ -8,9 +8,12 @@ using System.Reflection;
 
 namespace JToolbox.XamarinForms.Core.Navigation
 {
-    public class NavMapper : INavMapper
+    public class NavigationMapper
     {
+        private static readonly Lazy<NavigationMapper> instance = new Lazy<NavigationMapper>(() => new NavigationMapper());
         private readonly RegisterForNavigationWrapper wrapper = new RegisterForNavigationWrapper();
+
+        public static NavigationMapper Instance => instance.Value;
 
         public List<string> ViewsSuffixes => new List<string>
         {

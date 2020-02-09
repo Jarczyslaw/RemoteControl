@@ -19,8 +19,6 @@ namespace RemoteControl.MobileClient.Core
 {
     public partial class App
     {
-        private INavMapper navMapper = new NavMapper();
-
         public App() : this(null)
         {
         }
@@ -40,10 +38,7 @@ namespace RemoteControl.MobileClient.Core
 
         private async Task StartNavigation()
         {
-            var navService = Container.Resolve<INavService>();
-            navService.NavigationService = NavigationService;
-            navService.NavMapper = navMapper;
-            await navService.StartNavigationViewModel<MainViewModel>();
+            await NavigationService.StartNavigationViewModel<MainViewModel>();
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -55,7 +50,6 @@ namespace RemoteControl.MobileClient.Core
         private void RegisterDependencies(IContainerRegistry containerRegistry)
         {
             RegisterLogger(containerRegistry);
-            containerRegistry.RegisterSingleton<INavService, NavService>();
             containerRegistry.RegisterInstance(UserDialogs.Instance);
             containerRegistry.RegisterSingleton<IDialogsService, DialogsService>();
             containerRegistry.RegisterSingleton<IPermissionsService, PermissionsService>();
@@ -64,7 +58,7 @@ namespace RemoteControl.MobileClient.Core
         private void RegisterViews(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
-            navMapper.Register(containerRegistry, Assembly.GetExecutingAssembly());
+            NavigationMapper.Instance.Register(containerRegistry, Assembly.GetExecutingAssembly());
         }
 
         private void RegisterLogger(IContainerRegistry containerRegistry)

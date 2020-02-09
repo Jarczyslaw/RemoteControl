@@ -7,14 +7,14 @@ namespace JToolbox.XamarinForms.Core.Base
 {
     public class ViewModelBase : BindableBase, INavigationAware, IDestructible
     {
-        protected readonly INavService navService;
+        protected readonly INavigationService navigationService;
         protected Parameters Parameters { get; private set; }
 
         private string title;
 
-        public ViewModelBase(INavService navService)
+        public ViewModelBase(INavigationService navigationService)
         {
-            this.navService = navService;
+            this.navigationService = navigationService;
         }
 
         public string Title
@@ -28,17 +28,17 @@ namespace JToolbox.XamarinForms.Core.Base
         protected Task<INavigationResult> Navigate<T>(Parameters parameters = null)
             where T : ViewModelBase
         {
-            return navService.NavigateToViewModel<T>(parameters);
+            return navigationService.NavigateToViewModel<T>(parameters);
         }
 
         protected Task<INavigationResult> Close(Parameters parameters = null)
         {
-            return navService.Close(parameters);
+            return navigationService.Close(parameters);
         }
 
         protected Task<INavigationResult> ReturnToRoot(Parameters parameters = null)
         {
-            return navService.ReturnToRoot(parameters);
+            return navigationService.ReturnToRoot(parameters);
         }
 
         public virtual void OnNavigatedFrom(INavigationParameters parameters)
