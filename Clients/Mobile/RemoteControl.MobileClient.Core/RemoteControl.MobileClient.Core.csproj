@@ -16,23 +16,7 @@
     <ProjectReference Include="..\..\..\JToolbox\XamarinForms\JToolbox.XamarinForms.Dialogs\JToolbox.XamarinForms.Dialogs.csproj" />
     <ProjectReference Include="..\..\..\JToolbox\XamarinForms\JToolbox.XamarinForms.Logging\JToolbox.XamarinForms.Logging.csproj" />
     <ProjectReference Include="..\..\..\JToolbox\XamarinForms\JToolbox.XamarinForms.Permissions\JToolbox.XamarinForms.Permissions.csproj" />
-    <ProjectReference Include="..\..\..\JToolbox\XamarinForms\JToolbox.XamarinForms.Themes\JToolbox.XamarinForms.Themes.csproj" />
     <ProjectReference Include="..\..\..\JToolbox\XamarinForms\JToolbox.XamarinForms.UI\JToolbox.XamarinForms.UI.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Themes\GrayTheme.xaml.cs">
-      <DependentUpon>GrayTheme.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Themes\BlueTheme.xaml.cs">
-      <DependentUpon>BlueTheme.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Themes\BlueTheme.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

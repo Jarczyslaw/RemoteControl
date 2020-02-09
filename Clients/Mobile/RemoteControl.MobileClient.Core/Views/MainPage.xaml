@@ -5,16 +5,25 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="RemoteControl Client"
     BackgroundColor="{DynamicResource PrimaryBackgroundColor}">
+
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{Binding SettingsCommand}">
             <ToolbarItem.IconImageSource>
                 <FontImageSource
                     x:Name="fisSettings"
                     FontFamily="{StaticResource FontAwesomeSolid}"
-                    Glyph="&#xf085;" />
+                    Glyph="&#xf085;"
+                    Color="{DynamicResource PrimaryTextColor}" />
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
     </ContentPage.ToolbarItems>
+
+    <ContentPage.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="3" />
+        </Style>
+    </ContentPage.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -25,12 +34,24 @@
             HorizontalOptions="FillAndExpand"
             Orientation="Vertical"
             VerticalOptions="FillAndExpand">
-            <Button Command="{Binding ConnectCommand}" Text="Connect" />
-            <Button Command="{Binding DisconnectCommand}" Text="Disconnect" />
-            <Button Command="{Binding ShutdownCommand}" Text="Shutdown" />
-            <Button Command="{Binding RestartCommand}" Text="Restart" />
-        </StackLayout>
 
+            <Grid Style="{DynamicResource BorderGrid}">
+                <Grid BackgroundColor="{DynamicResource SecondaryBackgroundColor}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Label Style="{DynamicResource HeaderLabel}" Text="Commands" />
+
+                    <StackLayout Grid.Row="1">
+                        <Button Command="{Binding ConnectCommand}" Text="Ping" />
+                        <Button Command="{Binding ShutdownCommand}" Text="Shutdown" />
+                        <Button Command="{Binding RestartCommand}" Text="Restart" />
+                    </StackLayout>
+                </Grid>
+            </Grid>
+        </StackLayout>
 
         <StackLayout
             Grid.Row="1"

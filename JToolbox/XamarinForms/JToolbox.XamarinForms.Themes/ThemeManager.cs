@@ -27,6 +27,11 @@ namespace JToolbox.XamarinForms.Themes
 
         public void SetTheme(ResourceDictionary resourceDictionary)
         {
+            SetTheme(resourceDictionary, true);
+        }
+
+        private void SetTheme(ResourceDictionary resourceDictionary, bool invokeOnThemeChanged)
+        {
             var themeResourceDictionary = resourceDictionary as IThemeResourceDictionary;
             if (themeResourceDictionary == null)
             {
@@ -39,8 +44,17 @@ namespace JToolbox.XamarinForms.Themes
                 CurrentTheme = themeResourceDictionary;
                 platformThemeManager.SetTheme(themeResourceDictionary);
                 ReplaceThemeResourceDictionaries(mergedDictionaries, resourceDictionary);
-                OnThemeChanged(themeResourceDictionary);
+
+                if (invokeOnThemeChanged)
+                {
+                    OnThemeChanged(themeResourceDictionary);
+                }
             }
+        }
+
+        public void ReloadTheme()
+        {
+            SetTheme(CurrentTheme as ResourceDictionary, false);
         }
 
         private void ReplaceThemeResourceDictionaries(ICollection<ResourceDictionary> mergedDictionaries, ResourceDictionary resourceDictionary)

@@ -115,10 +115,6 @@
       <Project>{7367D159-5011-4588-8888-44DDFEE2B890}</Project>
       <Name>JToolbox.XamarinForms.Droid.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\JToolbox\XamarinForms\JToolbox.XamarinForms.Themes\JToolbox.XamarinForms.Themes.csproj">
-      <Project>{c20cca31-d4de-4568-a5bf-172116dbb49a}</Project>
-      <Name>JToolbox.XamarinForms.Themes</Name>
-    </ProjectReference>
     <ProjectReference Include="..\RemoteControl.MobileClient.Core\RemoteControl.MobileClient.Core.csproj">
       <Project>{58499a3d-0727-42aa-898f-09a3e4e94162}</Project>
       <Name>RemoteControl.MobileClient.Core</Name>

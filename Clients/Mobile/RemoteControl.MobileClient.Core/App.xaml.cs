@@ -5,12 +5,9 @@ using JToolbox.XamarinForms.Core.Navigation;
 using JToolbox.XamarinForms.Dialogs;
 using JToolbox.XamarinForms.Logging;
 using JToolbox.XamarinForms.Permissions;
-using JToolbox.XamarinForms.Themes;
 using Prism;
 using Prism.Ioc;
-using RemoteControl.MobileClient.Core.Themes;
 using RemoteControl.MobileClient.Core.ViewModels;
-using System;
 using System.Reflection;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -36,14 +33,7 @@ namespace RemoteControl.MobileClient.Core
         protected override async void OnInitialized()
         {
             InitializeComponent();
-            ApplyTheme();
             await navService.StartNavigationViewModel<MainViewModel>(NavigationService);
-        }
-
-        private void ApplyTheme()
-        {
-            var themeManager = Container.Resolve<IThemeManager>();
-            themeManager.SetTheme<BlueTheme>();
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -64,7 +54,6 @@ namespace RemoteControl.MobileClient.Core
             containerRegistry.RegisterInstance(UserDialogs.Instance);
             containerRegistry.RegisterSingleton<IDialogsService, DialogsService>();
             containerRegistry.RegisterSingleton<IPermissionsService, PermissionsService>();
-            containerRegistry.RegisterSingleton<IThemeManager, ThemeManager>();
             containerRegistry.RegisterInstance(navService);
         }
 

@@ -6,16 +6,89 @@
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Settings"
+    BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
     mc:Ignorable="d">
+
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+            <Setter Property="Padding" Value="6,0,0,0" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="FontAttributes" Value="Bold" />
+        </Style>
+    </ContentPage.Resources>
+
     <ContentPage.Content>
-        <TableView Intent="Settings">
-            <TableRoot>
-                <TableSection Title="Device info">
-                    <EntryCell Label="Device name:" Text="{Binding DeviceName}" />
-                    <EntryCell Label="Device type:" Text="{Binding DeviceType}" />
-                    <EntryCell Label="Local address:" Text="{Binding LocalAddress}" />
-                </TableSection>
-            </TableRoot>
-        </TableView>
+        <StackLayout>
+            <Grid Style="{DynamicResource BorderGrid}">
+                <Grid BackgroundColor="{DynamicResource SecondaryBackgroundColor}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Label Style="{DynamicResource HeaderLabel}" Text="Device info" />
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Label Text="Name:" />
+                        <Entry Grid.Column="1" />
+
+                        <Label Grid.Row="1" Text="Type:" />
+                        <Entry
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            IsReadOnly="True" />
+
+                        <Label Grid.Row="2" Text="Address:" />
+                        <Entry Grid.Row="2" Grid.Column="1" />
+                    </Grid>
+                </Grid>
+            </Grid>
+
+            <Grid Style="{DynamicResource BorderGrid}">
+                <Grid BackgroundColor="{DynamicResource SecondaryBackgroundColor}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Label Style="{DynamicResource HeaderLabel}" Text="Remote info" />
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Label Text="Address:" />
+                        <Entry Grid.Column="1" />
+
+                        <Label Grid.Row="1" Text="Port:" />
+                        <Entry
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            IsReadOnly="True"
+                            Keyboard="Numeric" />
+                    </Grid>
+                </Grid>
+            </Grid>
+        </StackLayout>
+
     </ContentPage.Content>
 </ContentPage>

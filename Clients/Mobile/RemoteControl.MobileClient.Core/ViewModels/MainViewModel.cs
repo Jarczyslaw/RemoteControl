@@ -1,10 +1,9 @@
 ﻿using JToolbox.XamarinForms.Core.Base;
 using JToolbox.XamarinForms.Core.Navigation;
 using JToolbox.XamarinForms.Dialogs;
-using JToolbox.XamarinForms.Themes;
 using Prism.Commands;
 using Prism.Navigation;
-using RemoteControl.MobileClient.Core.Themes;
+
 namespace RemoteControl.MobileClient.Core.ViewModels
 {
     public class MainViewModel : ViewModelBase
@@ -12,14 +11,12 @@ namespace RemoteControl.MobileClient.Core.ViewModels
         private string statusText;
 
         private readonly IDialogsService dialogsService;
-        private readonly IThemeManager themeManager;
 
         public MainViewModel(INavService navService, INavigationService navigationService,
-            IDialogsService dialogsService, IThemeManager themeManager)
+            IDialogsService dialogsService)
             : base(navService, navigationService)
         {
             this.dialogsService = dialogsService;
-            this.themeManager = themeManager;
 
             SetDisconnectedStatus();
         }
@@ -32,13 +29,11 @@ namespace RemoteControl.MobileClient.Core.ViewModels
         public DelegateCommand ConnectCommand => new DelegateCommand(() =>
         {
             //dialogsService.Toast("ConnectCommand");
-            themeManager.SetTheme<BlueTheme>();
         });
 
         public DelegateCommand DisconnectCommand => new DelegateCommand(() =>
         {
             //dialogsService.Toast("DisconnectCommand");
-            themeManager.SetTheme<GrayTheme>();
         });
 
         public DelegateCommand ShutdownCommand => new DelegateCommand(() =>
