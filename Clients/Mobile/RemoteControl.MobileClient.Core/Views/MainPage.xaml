@@ -11,7 +11,6 @@
         <ToolbarItem Command="{Binding SettingsCommand}">
             <ToolbarItem.IconImageSource>
                 <FontImageSource
-                    x:Name="fisSettings"
                     FontFamily="{StaticResource FontAwesomeSolid}"
                     Glyph="&#xf085;"
                     Color="{DynamicResource PrimaryTextColor}" />
@@ -46,7 +45,6 @@
                     <Label Style="{DynamicResource HeaderLabel}" Text="Commands" />
 
                     <StackLayout Grid.Row="1">
-                        <Button Command="{Binding ConnectCommand}" Text="Ping" />
                         <Button Command="{Binding ShutdownCommand}" Text="Shutdown" />
                         <Button Command="{Binding RestartCommand}" Text="Restart" />
                     </StackLayout>

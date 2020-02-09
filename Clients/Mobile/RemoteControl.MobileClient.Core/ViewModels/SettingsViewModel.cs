@@ -1,5 +1,6 @@
 ﻿using JToolbox.XamarinForms.Core.Base;
 using JToolbox.XamarinForms.Core.Navigation;
+using Prism.Commands;
 
 namespace RemoteControl.MobileClient.Core.ViewModels
 {
@@ -9,5 +10,9 @@ namespace RemoteControl.MobileClient.Core.ViewModels
             : base(navService)
         {
         }
+
+        public DelegateCommand SaveCommand => new DelegateCommand(async () =>
+        {
+        });
     }
 }

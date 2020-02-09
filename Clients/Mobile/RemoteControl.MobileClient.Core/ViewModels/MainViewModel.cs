@@ -24,16 +24,6 @@ namespace RemoteControl.MobileClient.Core.ViewModels
             await navService.NavigateToViewModel<SettingsViewModel>();
         });
 
-        public DelegateCommand ConnectCommand => new DelegateCommand(() =>
-        {
-            //dialogsService.Toast("ConnectCommand");
-        });
-
-        public DelegateCommand DisconnectCommand => new DelegateCommand(() =>
-        {
-            //dialogsService.Toast("DisconnectCommand");
-        });
-
         public DelegateCommand ShutdownCommand => new DelegateCommand(() =>
         {
             dialogsService.Toast("ShutdownCommand");
