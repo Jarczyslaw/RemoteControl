@@ -9,6 +9,7 @@ using Prism;
 using Prism.Ioc;
 using RemoteControl.MobileClient.Core.ViewModels;
 using System.Reflection;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -18,8 +19,7 @@ namespace RemoteControl.MobileClient.Core
 {
     public partial class App
     {
-        public static IContainerProvider ContainerProvider { get; private set; }
-        private readonly INavService navService = new NavService();
+        private INavMapper navMapper = new NavMapper();
 
         public App() : this(null)
         {
@@ -27,13 +27,23 @@ namespace RemoteControl.MobileClient.Core
 
         public App(IPlatformInitializer initializer) : base(initializer)
         {
-            ContainerProvider = Container;
         }
+
+        public static IContainerProvider ContainerProvider { get; private set; }
 
         protected override async void OnInitialized()
         {
             InitializeComponent();
-            await navService.StartNavigationViewModel<MainViewModel>(NavigationService);
+            ContainerProvider = Container;
+            await StartNavigation();
+        }
+
+        private async Task StartNavigation()
+        {
+            var navService = Container.Resolve<INavService>();
+            navService.NavigationService = NavigationService;
+            navService.NavMapper = navMapper;
+            await navService.StartNavigationViewModel<MainViewModel>();
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -42,19 +52,19 @@ namespace RemoteControl.MobileClient.Core
             RegisterViews(containerRegistry);
         }
 
-        private void RegisterViews(IContainerRegistry containerRegistry)
-        {
-            containerRegistry.RegisterForNavigation<NavigationPage>();
-            navService.Register(containerRegistry, Assembly.GetExecutingAssembly());
-        }
-
         private void RegisterDependencies(IContainerRegistry containerRegistry)
         {
             RegisterLogger(containerRegistry);
+            containerRegistry.RegisterSingleton<INavService, NavService>();
             containerRegistry.RegisterInstance(UserDialogs.Instance);
             containerRegistry.RegisterSingleton<IDialogsService, DialogsService>();
             containerRegistry.RegisterSingleton<IPermissionsService, PermissionsService>();
-            containerRegistry.RegisterInstance(navService);
+        }
+
+        private void RegisterViews(IContainerRegistry containerRegistry)
+        {
+            containerRegistry.RegisterForNavigation<NavigationPage>();
+            navMapper.Register(containerRegistry, Assembly.GetExecutingAssembly());
         }
 
         private void RegisterLogger(IContainerRegistry containerRegistry)

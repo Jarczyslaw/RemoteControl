@@ -2,7 +2,6 @@
 using JToolbox.XamarinForms.Core.Navigation;
 using JToolbox.XamarinForms.Dialogs;
 using Prism.Commands;
-using Prism.Navigation;
 
 namespace RemoteControl.MobileClient.Core.ViewModels
 {
@@ -12,9 +11,8 @@ namespace RemoteControl.MobileClient.Core.ViewModels
 
         private readonly IDialogsService dialogsService;
 
-        public MainViewModel(INavService navService, INavigationService navigationService,
-            IDialogsService dialogsService)
-            : base(navService, navigationService)
+        public MainViewModel(INavService navService, IDialogsService dialogsService)
+            : base(navService)
         {
             this.dialogsService = dialogsService;
 
@@ -23,7 +21,7 @@ namespace RemoteControl.MobileClient.Core.ViewModels
 
         public DelegateCommand SettingsCommand => new DelegateCommand(async () =>
         {
-            await navService.NavigateToViewModel<SettingsViewModel>(navigationService);
+            await navService.NavigateToViewModel<SettingsViewModel>();
         });
 
         public DelegateCommand ConnectCommand => new DelegateCommand(() =>

@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
+<base:PageBase
     x:Class="RemoteControl.MobileClient.Core.Views.MainPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:JToolbox.XamarinForms.Core.Base;assembly=JToolbox.XamarinForms.Core"
     Title="RemoteControl Client"
     BackgroundColor="{DynamicResource PrimaryBackgroundColor}">
 
@@ -66,4 +67,4 @@
         </StackLayout>
     </Grid>
 
-</ContentPage>
+</base:PageBase>

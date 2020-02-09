@@ -1,10 +1,8 @@
-﻿using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+﻿using JToolbox.XamarinForms.Core.Base;
 
 namespace RemoteControl.MobileClient.Core.Views
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class SettingsPage : ContentPage
+    public partial class SettingsPage : PageBase
     {
         public SettingsPage()
         {

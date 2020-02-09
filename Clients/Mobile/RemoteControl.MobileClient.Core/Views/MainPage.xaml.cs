@@ -1,8 +1,8 @@
-﻿using Xamarin.Forms;
+﻿using JToolbox.XamarinForms.Core.Base;
 
 namespace RemoteControl.MobileClient.Core.Views
 {
-    public partial class MainPage : ContentPage
+    public partial class MainPage : PageBase
     {
         public MainPage()
         {

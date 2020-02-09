@@ -1,11 +1,8 @@
 ﻿using JToolbox.XamarinForms.Core.Base;
 using JToolbox.XamarinForms.Core.Navigation.Exceptions;
-using Prism.Ioc;
 using Prism.Navigation;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -13,17 +10,18 @@ namespace JToolbox.XamarinForms.Core.Navigation
 {
     public class NavService : INavService
     {
-        private readonly List<string> viewsSuffixes = new List<string>
+        public NavService()
         {
-            "View",
-            "Page",
-            "Window"
-        };
+        }
 
-        private readonly string viewModelSuffix = "ViewModel";
-        private readonly RegisterForNavigationWrapper wrapper = new RegisterForNavigationWrapper();
+        public NavService(INavigationService navigationService, INavMapper navMapper)
+        {
+            NavigationService = navigationService;
+            NavMapper = navMapper;
+        }
 
-        public Dictionary<Type, Type> ViewModelsMapping { get; } = new Dictionary<Type, Type>();
+        public INavigationService NavigationService { get; set; }
+        public INavMapper NavMapper { get; set; }
 
         private void CheckType(Type type, Type constraint)
         {
@@ -69,7 +67,7 @@ namespace JToolbox.XamarinForms.Core.Navigation
         public bool IsCurrentViewModel(Type viewModelType)
         {
             CheckType(viewModelType, typeof(ViewModelBase));
-            var targetPageType = GetPageForViewModel(viewModelType);
+            var targetPageType = NavMapper.GetPageForViewModel(viewModelType);
             return IsCurrentPage(targetPageType);
         }
 
@@ -99,31 +97,31 @@ namespace JToolbox.XamarinForms.Core.Navigation
         public bool IsViewModelOpened(Type viewModelType)
         {
             CheckType(viewModelType, typeof(ViewModelBase));
-            var targetPageType = GetPageForViewModel(viewModelType);
+            var targetPageType = NavMapper.GetPageForViewModel(viewModelType);
             return IsPageOpened(targetPageType);
         }
 
-        public Task<INavigationResult> StartNavigationViewModel<T>(INavigationService navigationService, Parameters parameters = null)
+        public Task<INavigationResult> StartNavigationViewModel<T>(Parameters parameters = null)
             where T : ViewModelBase
         {
-            return NavigateToViewModel(navigationService, typeof(T), parameters, true);
+            return NavigateToViewModel(typeof(T), parameters, true);
         }
 
-        public Task<INavigationResult> NavigateToViewModel<T>(INavigationService navigationService, Parameters parameters = null)
+        public Task<INavigationResult> NavigateToViewModel<T>(Parameters parameters = null)
             where T : ViewModelBase
         {
-            return NavigateToViewModel(navigationService, typeof(T), parameters, false);
+            return NavigateToViewModel(typeof(T), parameters, false);
         }
 
-        public Task<INavigationResult> NavigateToViewModel(INavigationService navigationService, Type viewModelType, Parameters parameters = null)
+        public Task<INavigationResult> NavigateToViewModel(Type viewModelType, Parameters parameters = null)
         {
-            return NavigateToViewModel(navigationService, viewModelType, parameters, false);
+            return NavigateToViewModel(viewModelType, parameters, false);
         }
 
-        private Task<INavigationResult> NavigateToViewModel(INavigationService navigationService, Type viewModelType, Parameters parameters = null, bool isNavigationPage = false)
+        private Task<INavigationResult> NavigateToViewModel(Type viewModelType, Parameters parameters = null, bool isNavigationPage = false)
         {
             CheckType(viewModelType, typeof(ViewModelBase));
-            if (ViewModelsMapping.TryGetValue(viewModelType, out var pageType))
+            if (NavMapper.ViewModelsMapping.TryGetValue(viewModelType, out var pageType))
             {
                 var pageUri = pageType.Name;
                 if (isNavigationPage)
@@ -133,7 +131,7 @@ namespace JToolbox.XamarinForms.Core.Navigation
 
                 var navigationParams = parameters == null
                     ? new NavigationParameters() : parameters.CreateNavigationParameters();
-                return navigationService.NavigateAsync(pageUri, navigationParams);
+                return NavigationService.NavigateAsync(pageUri, navigationParams);
             }
             else
             {
@@ -141,97 +139,18 @@ namespace JToolbox.XamarinForms.Core.Navigation
             }
         }
 
-        public Task<INavigationResult> Close(INavigationService navigationService, Parameters parameters = null)
+        public Task<INavigationResult> Close(Parameters parameters = null)
         {
             var navigationParams = parameters == null
                 ? new NavigationParameters() : parameters.CreateNavigationParameters();
-            return navigationService.GoBackAsync(navigationParams);
+            return NavigationService.GoBackAsync(navigationParams);
         }
 
-        public Task<INavigationResult> ReturnToRoot(INavigationService navigationService, Parameters parameters = null)
+        public Task<INavigationResult> ReturnToRoot(Parameters parameters = null)
         {
             var navigationParams = parameters == null
                 ? new NavigationParameters() : parameters.CreateNavigationParameters();
-            return navigationService.GoBackToRootAsync(navigationParams);
-        }
-
-        private Type GetPageForViewModel(Type viewModelType)
-        {
-            CheckType(viewModelType, typeof(ViewModelBase));
-            if (ViewModelsMapping.TryGetValue(viewModelType, out var type))
-            {
-                return type;
-            }
-            throw new NoPageException(viewModelType.Name);
-        }
-
-        public void Register<TPage, TViewModel>(IContainerRegistry containerRegistry)
-            where TPage : PageBase
-            where TViewModel : ViewModelBase
-        {
-            Register(containerRegistry, typeof(TPage), typeof(TViewModel));
-        }
-
-        public void Register(IContainerRegistry containerRegistry, Type pageType, Type viewModelType)
-        {
-            CheckType(pageType, typeof(PageBase));
-            CheckType(viewModelType, typeof(ViewModelBase));
-            wrapper.RegisterTypes(containerRegistry, pageType, viewModelType);
-            ViewModelsMapping.Add(viewModelType, pageType);
-        }
-
-        public void Register(IContainerRegistry containerRegistry, Assembly assembly)
-        {
-            var types = assembly.GetTypes();
-            var pages = types.Where(t => IsValidViewName(t.Name) && t.IsSubclassOf(typeof(Page)));
-            var viewModels = types.Where(t => t.Name.EndsWith(viewModelSuffix));
-            foreach (var page in pages)
-            {
-                var pageName = GetPageName(page);
-                var targetViewModelName = pageName + viewModelSuffix;
-                var pageViewModels = viewModels.Where(v => v.Name == targetViewModelName);
-                if (!pageViewModels.Any())
-                {
-                    throw new NoViewModelException($"No view model found for: {page.Name}");
-                }
-                else if (pageViewModels.Count() > 1)
-                {
-                    var invalidViewModels = string.Join(",", pageViewModels.Select(p => p.FullName).ToArray());
-                    throw new ToManyViewModelsException($"More than one view model found for: {page.Name}. Found view models: {invalidViewModels}");
-                }
-                else
-                {
-                    var viewModel = pageViewModels.First();
-                    wrapper.RegisterTypes(containerRegistry, page, viewModel);
-                    ViewModelsMapping.Add(viewModel, page);
-                }
-            }
-        }
-
-        public bool IsValidViewName(string typeName)
-        {
-            foreach (var suffix in viewsSuffixes)
-            {
-                if (typeName.EndsWith(suffix))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public string GetPageName(Type pageType)
-        {
-            CheckType(pageType, typeof(PageBase));
-            foreach (var suffix in viewsSuffixes)
-            {
-                var tempName = pageType.Name.Replace(suffix, string.Empty);
-                if (tempName.Length != pageType.Name.Length)
-                {
-                    return tempName;
-                }
-            }
-            throw new Exception($"{pageType.Name} is not a valid page name");
+            return NavigationService.GoBackToRootAsync(navigationParams);
         }
     }
 }
