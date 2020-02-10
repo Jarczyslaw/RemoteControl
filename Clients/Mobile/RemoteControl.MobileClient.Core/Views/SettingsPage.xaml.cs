@@ -1,5 +1,4 @@
 ﻿using JToolbox.XamarinForms.Core.Base;
-using Xamarin.Forms;
 
 namespace RemoteControl.MobileClient.Core.Views
 {
@@ -8,7 +7,6 @@ namespace RemoteControl.MobileClient.Core.Views
         public SettingsPage()
         {
             InitializeComponent();
-            NavigationPage.SetHasBackButton(this, true);
         }
     }
 }

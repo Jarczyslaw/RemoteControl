@@ -2,7 +2,7 @@
 
 namespace RemoteControl.Proxy
 {
-    public class LazyProxyClient
+    public class LazyProxyClient : ILazyProxyClient
     {
         private ProxyClient proxyClient;
 

@@ -28,15 +28,15 @@
         </OnPlatform>
 
         <Style TargetType="NavigationPage">
-            <Setter Property="BarBackgroundColor" Value="{DynamicResource PrimaryColor}" />
-            <Setter Property="BarTextColor" Value="{DynamicResource PrimaryTextColor}" />
+            <Setter Property="BarBackgroundColor" Value="{StaticResource PrimaryColor}" />
+            <Setter Property="BarTextColor" Value="{StaticResource PrimaryTextColor}" />
         </Style>
 
         <Style TargetType="Button">
             <Setter Property="HeightRequest" Value="40" />
-            <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}" />
-            <Setter Property="TextColor" Value="{DynamicResource PrimaryTextColor}" />
-            <Setter Property="BorderColor" Value="{DynamicResource TertiaryColor}" />
+            <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}" />
+            <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
+            <Setter Property="BorderColor" Value="{StaticResource TertiaryColor}" />
             <Setter Property="CornerRadius" Value="0" />
             <Setter Property="BorderWidth" Value="1" />
         </Style>
@@ -44,15 +44,15 @@
         <Style x:Key="BorderGrid" TargetType="Grid">
             <Setter Property="Margin" Value="3" />
             <Setter Property="Padding" Value="1" />
-            <Setter Property="BackgroundColor" Value="{DynamicResource TertiaryColor}" />
+            <Setter Property="BackgroundColor" Value="{StaticResource TertiaryColor}" />
         </Style>
 
         <Style x:Key="HeaderLabel" TargetType="Label">
             <Setter Property="Padding" Value="5" />
-            <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}" />
+            <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}" />
             <Setter Property="FontAttributes" Value="Bold" />
             <Setter Property="HorizontalTextAlignment" Value="Center" />
-            <Setter Property="TextColor" Value="{DynamicResource PrimaryTextColor}" />
+            <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
             <Setter Property="VerticalTextAlignment" Value="Center" />
         </Style>
     </Application.Resources>

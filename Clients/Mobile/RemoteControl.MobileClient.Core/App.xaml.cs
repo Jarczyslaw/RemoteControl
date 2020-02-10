@@ -7,7 +7,9 @@ using JToolbox.XamarinForms.Logging;
 using JToolbox.XamarinForms.Permissions;
 using Prism;
 using Prism.Ioc;
+using RemoteControl.MobileClient.Core.Services;
 using RemoteControl.MobileClient.Core.ViewModels;
+using RemoteControl.Proxy;
 using System.Reflection;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -53,6 +55,8 @@ namespace RemoteControl.MobileClient.Core
             containerRegistry.RegisterInstance(UserDialogs.Instance);
             containerRegistry.RegisterSingleton<IDialogsService, DialogsService>();
             containerRegistry.RegisterSingleton<IPermissionsService, PermissionsService>();
+            containerRegistry.RegisterSingleton<ILazyProxyClient, LazyProxyClient>();
+            containerRegistry.RegisterSingleton<IAppSettings, AppSettings>();
         }
 
         private void RegisterViews(IContainerRegistry containerRegistry)

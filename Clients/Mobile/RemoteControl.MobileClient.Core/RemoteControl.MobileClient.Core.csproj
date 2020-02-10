@@ -11,11 +11,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Commons\RemoteControl.Proxy\RemoteControl.Proxy.csproj" />
     <ProjectReference Include="..\..\..\JToolbox\JToolbox.Core\JToolbox.Core.csproj" />
     <ProjectReference Include="..\..\..\JToolbox\XamarinForms\JToolbox.XamarinForms.Core\JToolbox.XamarinForms.Core.csproj" />
     <ProjectReference Include="..\..\..\JToolbox\XamarinForms\JToolbox.XamarinForms.Dialogs\JToolbox.XamarinForms.Dialogs.csproj" />
     <ProjectReference Include="..\..\..\JToolbox\XamarinForms\JToolbox.XamarinForms.Logging\JToolbox.XamarinForms.Logging.csproj" />
     <ProjectReference Include="..\..\..\JToolbox\XamarinForms\JToolbox.XamarinForms.Permissions\JToolbox.XamarinForms.Permissions.csproj" />
+    <ProjectReference Include="..\..\..\JToolbox\XamarinForms\JToolbox.XamarinForms.Settings\JToolbox.XamarinForms.Settings.csproj" />
     <ProjectReference Include="..\..\..\JToolbox\XamarinForms\JToolbox.XamarinForms.UI\JToolbox.XamarinForms.UI.csproj" />
   </ItemGroup>
 

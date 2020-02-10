@@ -7,7 +7,7 @@
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Settings"
-    BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
+    BackgroundColor="{StaticResource PrimaryBackgroundColor}"
     mc:Ignorable="d">
 
     <ContentPage.ToolbarItems>
@@ -16,7 +16,7 @@
                 <FontImageSource
                     FontFamily="{StaticResource FontAwesomeSolid}"
                     Glyph="&#xf0c7;"
-                    Color="{DynamicResource PrimaryTextColor}" />
+                    Color="{StaticResource PrimaryTextColor}" />
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
     </ContentPage.ToolbarItems>
@@ -32,14 +32,14 @@
 
     <ContentPage.Content>
         <StackLayout>
-            <Grid Style="{DynamicResource BorderGrid}">
-                <Grid BackgroundColor="{DynamicResource SecondaryBackgroundColor}">
+            <Grid Style="{StaticResource BorderGrid}">
+                <Grid BackgroundColor="{StaticResource SecondaryBackgroundColor}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <Label Style="{DynamicResource HeaderLabel}" Text="Device info" />
+                    <Label Style="{StaticResource HeaderLabel}" Text="Device info" />
 
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
@@ -54,28 +54,33 @@
                         </Grid.RowDefinitions>
 
                         <Label Text="Name:" />
-                        <Entry Grid.Column="1" />
+                        <Entry Grid.Column="1" Text="{Binding Name}" />
 
                         <Label Grid.Row="1" Text="Type:" />
                         <Entry
                             Grid.Row="1"
                             Grid.Column="1"
-                            IsReadOnly="True" />
+                            IsReadOnly="True"
+                            Text="{Binding Type}" />
 
                         <Label Grid.Row="2" Text="Address:" />
-                        <Entry Grid.Row="2" Grid.Column="1" />
+                        <Entry
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            IsReadOnly="True"
+                            Text="{Binding LocalAddress}" />
                     </Grid>
                 </Grid>
             </Grid>
 
-            <Grid Style="{DynamicResource BorderGrid}">
-                <Grid BackgroundColor="{DynamicResource SecondaryBackgroundColor}">
+            <Grid Style="{StaticResource BorderGrid}">
+                <Grid BackgroundColor="{StaticResource SecondaryBackgroundColor}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <Label Style="{DynamicResource HeaderLabel}" Text="Remote info" />
+                    <Label Style="{StaticResource HeaderLabel}" Text="Remote info" />
 
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
@@ -89,17 +94,20 @@
                         </Grid.RowDefinitions>
 
                         <Label Text="Address:" />
-                        <Entry Grid.Column="1" />
+                        <Entry Grid.Column="1" Text="{Binding RemoteAddress}" />
 
                         <Label Grid.Row="1" Text="Port:" />
                         <Entry
                             Grid.Row="1"
                             Grid.Column="1"
                             IsReadOnly="True"
-                            Keyboard="Numeric" />
+                            Keyboard="Numeric"
+                            Text="{Binding Port}" />
                     </Grid>
                 </Grid>
             </Grid>
+
+            <Button Command="{Binding CheckConnectionCommand}" Text="Check connection" />
         </StackLayout>
 
     </ContentPage.Content>
