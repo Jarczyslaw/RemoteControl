@@ -1,4 +1,5 @@
 ﻿using JToolbox.XamarinForms.Settings;
+using Xamarin.Essentials;
 
 namespace RemoteControl.MobileClient.Core.Services
 {
@@ -6,7 +7,7 @@ namespace RemoteControl.MobileClient.Core.Services
     {
         public string Name
         {
-            get => GetString(nameof(Name), string.Empty);
+            get => GetString(nameof(Name), DeviceInfo.Name);
             set => AddString(nameof(Name), value);
         }
 
@@ -18,7 +19,7 @@ namespace RemoteControl.MobileClient.Core.Services
 
         public int Port
         {
-            get => GetInt(nameof(Port), 1);
+            get => GetInt(nameof(Port), 9988);
             set => AddInt(nameof(Port), value);
         }
     }

@@ -43,6 +43,10 @@ namespace RemoteControl.MobileClient.Core.ViewModels
             await Close();
         });
 
+        public DelegateCommand FindServerCommand => new DelegateCommand(async () =>
+        {
+        });
+
         public DelegateCommand CheckConnectionCommand => new DelegateCommand(async () =>
         {
             if (!await ValidateRemoteAddress())
