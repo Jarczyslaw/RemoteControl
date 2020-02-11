@@ -28,6 +28,8 @@ namespace RemoteControl.MobileClient.Core.ViewModels
             this.lazyProxyClient = lazyProxyClient;
             this.dialogsService = dialogsService;
             this.appSettings = appSettings;
+
+            LoadSettings();
         }
 
         public DelegateCommand SaveCommand => new DelegateCommand(async () =>
@@ -37,9 +39,7 @@ namespace RemoteControl.MobileClient.Core.ViewModels
                 return;
             }
 
-            appSettings.Name = Name;
-            appSettings.Port = Port;
-            appSettings.RemoteAddress = RemoteAddress;
+            SaveSettings();
             await Close();
         });
 
@@ -101,6 +101,20 @@ namespace RemoteControl.MobileClient.Core.ViewModels
         {
             get => port;
             set => SetProperty(ref port, value);
+        }
+
+        private void SaveSettings()
+        {
+            appSettings.Name = Name;
+            appSettings.Port = Port;
+            appSettings.RemoteAddress = RemoteAddress;
+        }
+
+        private void LoadSettings()
+        {
+            Name = appSettings.Name;
+            Port = appSettings.Port;
+            RemoteAddress = appSettings.RemoteAddress;
         }
 
         private async Task<bool> ValidateRemoteAddress()
