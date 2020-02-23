@@ -122,7 +122,7 @@ namespace RemoteControl.Server.RemoteCommands
             {
                 try
                 {
-                    HandleInfo(requestBase, nameof(GetSystemInformation));
+                    HandleInfo(requestBase, commandName);
                     action();
                 }
                 catch (Exception exc)

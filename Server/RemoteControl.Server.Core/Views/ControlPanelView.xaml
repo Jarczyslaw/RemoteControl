@@ -12,6 +12,11 @@
         <GroupBox Header="Control panel">
             <StackPanel>
                 <Button
+                    Command="{Binding GetSystemInfoCommand}"
+                    Content="Get system info"
+                    Style="{DynamicResource AccentedSquareButtonStyle}" />
+                <Button
+                    Margin="0,5,0,0"
                     Command="{Binding ShutdownCommand}"
                     Content="Shutdown"
                     Style="{DynamicResource AccentedSquareButtonStyle}" />

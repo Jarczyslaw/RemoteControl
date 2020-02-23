@@ -1,6 +1,8 @@
-﻿using JToolbox.Desktop.Core;
+﻿using JToolbox.Core.Extensions;
+using JToolbox.Desktop.Core;
 using JToolbox.Desktop.Core.Services;
 using JToolbox.Desktop.Dialogs;
+using JToolbox.SysInformation;
 using JToolbox.WPF.Core.Extensions;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -9,6 +11,7 @@ using RemoteControl.Server.Messages;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Threading.Tasks;
 
 namespace RemoteControl.Server.Core.ViewModels
 {
@@ -20,13 +23,38 @@ namespace RemoteControl.Server.Core.ViewModels
         private readonly IMessagesAggregator messagesAggregator;
         private readonly ScreenCapture screenCapture = new ScreenCapture();
 
-        public ControlPanelViewModel(ISystemService systemService, IMessagesAggregator messagesAggregator, IShellDialogsService shellDialogsService, IDialogsService dialogsService)
+        public ControlPanelViewModel(ISystemService systemService, IMessagesAggregator messagesAggregator,
+            IShellDialogsService shellDialogsService, IDialogsService dialogsService)
         {
             this.systemService = systemService;
             this.shellDialogsService = shellDialogsService;
             this.dialogsService = dialogsService;
             this.messagesAggregator = messagesAggregator;
         }
+
+        public DelegateCommand GetSystemInfoCommand => new DelegateCommand(async () =>
+        {
+            await Task.Run(() =>
+            {
+                var osInfo = SystemInformation.GetOSInfo();
+                var cpuInfo = SystemInformation.GetCPUInfo();
+                var memoryInfo = SystemInformation.GetMemoryInfo();
+
+                var sysInfo = new SysInformation
+                {
+                    OSBuildNumber = osInfo.BuildNumber,
+                    OSName = osInfo.Name,
+                    OSVersion = osInfo.Version,
+                    CPUCaption = cpuInfo.Caption,
+                    CPUName = cpuInfo.Name,
+                    NumberOfCores = cpuInfo.NumberOfEnabledCores,
+                    NumberOfLogicalProcessors = cpuInfo.NumberOfLogicalProcessors,
+                    FreeMemory = memoryInfo.FreePhysicalMemory,
+                    TotalMemory = memoryInfo.TotalVisibleMemory
+                };
+                dialogsService.ShowInfo(sysInfo.PublicPropertiesToString());
+            });
+        });
 
         public DelegateCommand ShutdownCommand => new DelegateCommand(async () =>
         {
@@ -107,6 +135,19 @@ namespace RemoteControl.Server.Core.ViewModels
                 return true;
             }
             return false;
+        }
+
+        private class SysInformation
+        {
+            public string OSBuildNumber { get; set; }
+            public string OSName { get; set; }
+            public string OSVersion { get; set; }
+            public string CPUCaption { get; set; }
+            public string CPUName { get; set; }
+            public int NumberOfCores { get; set; }
+            public int NumberOfLogicalProcessors { get; set; }
+            public ulong FreeMemory { get; set; }
+            public ulong TotalMemory { get; set; }
         }
     }
 }
