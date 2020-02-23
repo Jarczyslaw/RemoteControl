@@ -38,14 +38,14 @@
             this.label5 = new System.Windows.Forms.Label();
             this.nudRemotePort = new System.Windows.Forms.NumericUpDown();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbLocalAddress = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cbRemoteAddress = new System.Windows.Forms.ComboBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btnSysInfo = new System.Windows.Forms.Button();
             this.btnRestart = new System.Windows.Forms.Button();
             this.btnShutdown = new System.Windows.Forms.Button();
             this.btnDisconnect = new System.Windows.Forms.Button();
-            this.cbLocalAddress = new System.Windows.Forms.ComboBox();
-            this.cbRemoteAddress = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudRemotePort)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -159,6 +159,14 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Device info";
             // 
+            // cbLocalAddress
+            // 
+            this.cbLocalAddress.FormattingEnabled = true;
+            this.cbLocalAddress.Location = new System.Drawing.Point(88, 71);
+            this.cbLocalAddress.Name = "cbLocalAddress";
+            this.cbLocalAddress.Size = new System.Drawing.Size(174, 21);
+            this.cbLocalAddress.TabIndex = 14;
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.cbRemoteAddress);
@@ -171,6 +179,14 @@
             this.groupBox2.TabIndex = 12;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Remote control";
+            // 
+            // cbRemoteAddress
+            // 
+            this.cbRemoteAddress.FormattingEnabled = true;
+            this.cbRemoteAddress.Location = new System.Drawing.Point(99, 18);
+            this.cbRemoteAddress.Name = "cbRemoteAddress";
+            this.cbRemoteAddress.Size = new System.Drawing.Size(163, 21);
+            this.cbRemoteAddress.TabIndex = 15;
             // 
             // groupBox3
             // 
@@ -226,27 +242,11 @@
             this.btnDisconnect.UseVisualStyleBackColor = true;
             this.btnDisconnect.Click += new System.EventHandler(this.btnDisconnect_Click);
             // 
-            // cbLocalAddress
-            // 
-            this.cbLocalAddress.FormattingEnabled = true;
-            this.cbLocalAddress.Location = new System.Drawing.Point(88, 71);
-            this.cbLocalAddress.Name = "cbLocalAddress";
-            this.cbLocalAddress.Size = new System.Drawing.Size(174, 21);
-            this.cbLocalAddress.TabIndex = 14;
-            // 
-            // cbRemoteAddress
-            // 
-            this.cbRemoteAddress.FormattingEnabled = true;
-            this.cbRemoteAddress.Location = new System.Drawing.Point(99, 18);
-            this.cbRemoteAddress.Name = "cbRemoteAddress";
-            this.cbRemoteAddress.Size = new System.Drawing.Size(163, 21);
-            this.cbRemoteAddress.TabIndex = 15;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(633, 378);
+            this.ClientSize = new System.Drawing.Size(293, 378);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
