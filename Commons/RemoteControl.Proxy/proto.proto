@@ -7,6 +7,7 @@ package Proxy;
 service ProxyService {
 	rpc Ping (PingRequest) returns (PingResponse);
 	rpc Disconnect (DisconnectRequest) returns (DisconnectResponse);
+	rpc GetSystemInformation (GetSystemInformationRequest) returns (GetSystemInformationResponse);
 	rpc Shutdown (ShutdownRequest) returns (ShutdownResponse);
 	rpc Restart (RestartRequest) returns (RestartResponse);
 }
@@ -44,6 +45,15 @@ message RestartResponse {
 	ResponseBase ResponseBase = 1;
 }
 
+message GetSystemInformationRequest {
+	RequestBase RequestBase = 1;
+}
+
+message GetSystemInformationResponse {
+	ResponseBase ResponseBase = 1;
+	SystemInformation SystemInformation = 2;
+}
+
 message RequestBase {
 	enum DeviceType {
 		Unknown = 0;
@@ -62,4 +72,16 @@ message ResponseBase {
 	string ServerAddress = 3;
 	sint32 ServerPort = 4;
 	sint32 ConnectionsCount = 5;
+}
+
+message SystemInformation {
+	string OSName = 1;
+	string OSVersion = 2;
+	string OSBuildNumber = 3;
+	string CPUName = 4;
+	string CPUCaption = 5;
+	sint32 NumberOfCores = 6;
+	sint32 NumberOfLogicalProcessors = 7;
+	uint64 TotalMemory = 8;
+	uint64 FreeMemory = 9;
 }

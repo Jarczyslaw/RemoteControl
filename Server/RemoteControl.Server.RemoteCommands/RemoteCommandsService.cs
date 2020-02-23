@@ -100,6 +100,42 @@ namespace RemoteControl.Server.RemoteCommands
             return Task.FromResult(response);
         }
 
+        public override Task<GetSystemInformationResponse> GetSystemInformation(GetSystemInformationRequest request, ServerCallContext context)
+        {
+            var response = new GetSystemInformationResponse()
+            {
+                ResponseBase = CreateResponseBase()
+            };
+            try
+            {
+                HandleInfo(request.RequestBase, nameof(Shutdown));
+                connectionsService.HandleRequest(request.RequestBase);
+
+                var osInfo = JToolbox.SysInformation.SystemInformation.GetOSInfo();
+                var cpuInfo = JToolbox.SysInformation.SystemInformation.GetCPUInfo();
+                var memoryInfo = JToolbox.SysInformation.SystemInformation.GetMemoryInfo();
+
+                response.SystemInformation = new SystemInformation
+                {
+                    OSBuildNumber = osInfo.BuildNumber,
+                    OSName = osInfo.Name,
+                    OSVersion = osInfo.Version,
+                    CPUCaption = cpuInfo.Caption,
+                    CPUName = cpuInfo.Name,
+                    NumberOfCores = cpuInfo.NumberOfEnabledCores,
+                    NumberOfLogicalProcessors = cpuInfo.NumberOfLogicalProcessors,
+                    FreeMemory = memoryInfo.FreePhysicalMemory,
+                    TotalMemory = memoryInfo.TotalVisibleMemory
+                };
+            }
+            catch (Exception exc)
+            {
+                HandleError(exc);
+                response.ResponseBase.Error = exc.Message;
+            }
+            return Task.FromResult(response);
+        }
+
         private ResponseBase CreateResponseBase()
         {
             return new ResponseBase

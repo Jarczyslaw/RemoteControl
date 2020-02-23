@@ -45,6 +45,7 @@
             this.btnRestart = new System.Windows.Forms.Button();
             this.btnShutdown = new System.Windows.Forms.Button();
             this.btnDisconnect = new System.Windows.Forms.Button();
+            this.btnSysInfo = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nudRemotePort)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -187,20 +188,21 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.btnSysInfo);
             this.groupBox3.Controls.Add(this.btnRestart);
             this.groupBox3.Controls.Add(this.btnShutdown);
             this.groupBox3.Controls.Add(this.btnDisconnect);
             this.groupBox3.Controls.Add(this.btnPing);
             this.groupBox3.Location = new System.Drawing.Point(12, 199);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(268, 137);
+            this.groupBox3.Size = new System.Drawing.Size(268, 165);
             this.groupBox3.TabIndex = 13;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Commands";
             // 
             // btnRestart
             // 
-            this.btnRestart.Location = new System.Drawing.Point(6, 106);
+            this.btnRestart.Location = new System.Drawing.Point(6, 135);
             this.btnRestart.Name = "btnRestart";
             this.btnRestart.Size = new System.Drawing.Size(256, 23);
             this.btnRestart.TabIndex = 3;
@@ -210,7 +212,7 @@
             // 
             // btnShutdown
             // 
-            this.btnShutdown.Location = new System.Drawing.Point(6, 77);
+            this.btnShutdown.Location = new System.Drawing.Point(6, 106);
             this.btnShutdown.Name = "btnShutdown";
             this.btnShutdown.Size = new System.Drawing.Size(256, 23);
             this.btnShutdown.TabIndex = 2;
@@ -228,11 +230,21 @@
             this.btnDisconnect.UseVisualStyleBackColor = true;
             this.btnDisconnect.Click += new System.EventHandler(this.btnDisconnect_Click);
             // 
+            // btnSysInfo
+            // 
+            this.btnSysInfo.Location = new System.Drawing.Point(6, 77);
+            this.btnSysInfo.Name = "btnSysInfo";
+            this.btnSysInfo.Size = new System.Drawing.Size(256, 23);
+            this.btnSysInfo.TabIndex = 4;
+            this.btnSysInfo.Text = "Get system information";
+            this.btnSysInfo.UseVisualStyleBackColor = true;
+            this.btnSysInfo.Click += new System.EventHandler(this.btnSysInfo_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(292, 349);
+            this.ClientSize = new System.Drawing.Size(292, 378);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -270,5 +282,6 @@
         private System.Windows.Forms.Button btnRestart;
         private System.Windows.Forms.Button btnShutdown;
         private System.Windows.Forms.Button btnDisconnect;
+        private System.Windows.Forms.Button btnSysInfo;
     }
 }

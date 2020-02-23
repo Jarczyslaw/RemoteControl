@@ -76,6 +76,10 @@
       <Project>{f91c51e8-eee9-405d-8d53-1bd1a8b462a9}</Project>
       <Name>JToolbox.Desktop.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\JToolbox\Misc\JToolbox.SysInformation\JToolbox.SysInformation.csproj">
+      <Project>{d709e177-61b4-4761-9a5d-0db55eafe48d}</Project>
+      <Name>JToolbox.SysInformation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\JToolbox\WPF\JToolbox.WPF.Core\JToolbox.WPF.Core.csproj">
       <Project>{56bee9b3-2fcb-46e7-a837-d07f0bfcbd98}</Project>
       <Name>JToolbox.WPF.Core</Name>

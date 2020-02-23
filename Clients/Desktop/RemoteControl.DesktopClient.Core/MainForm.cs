@@ -3,6 +3,7 @@ using JToolbox.Desktop.Dialogs;
 using RemoteControl.Proxy;
 using System;
 using System.Windows.Forms;
+using JToolbox.Core.Extensions;
 using static RemoteControl.Proxy.RequestBase.Types;
 
 namespace RemoteControl.DesktopClient.Core
@@ -150,6 +151,23 @@ namespace RemoteControl.DesktopClient.Core
                         RequestBase = RequestBase
                     });
                 }
+            }
+            catch (Exception exc)
+            {
+                dialogsService.ShowException(exc);
+            }
+        }
+
+        private async void btnSysInfo_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var proxy = await lazyProxyClient.GetProxyClient(RemoteAddress, RemotePort);
+                var info = await proxy.Client.GetSystemInformationAsync(new GetSystemInformationRequest
+                {
+                    RequestBase = RequestBase
+                });
+                dialogsService.ShowInfo(info.SystemInformation.PublicPropertiesToString());
             }
             catch (Exception exc)
             {
