@@ -31,21 +31,21 @@
             this.btnPing = new System.Windows.Forms.Button();
             this.tbDeviceName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.tbLocalAddress = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.tbDeviceType = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.tbRemoteAddress = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.nudRemotePort = new System.Windows.Forms.NumericUpDown();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnSysInfo = new System.Windows.Forms.Button();
             this.btnRestart = new System.Windows.Forms.Button();
             this.btnShutdown = new System.Windows.Forms.Button();
             this.btnDisconnect = new System.Windows.Forms.Button();
-            this.btnSysInfo = new System.Windows.Forms.Button();
+            this.cbLocalAddress = new System.Windows.Forms.ComboBox();
+            this.cbRemoteAddress = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudRemotePort)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -78,13 +78,6 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Device name:";
             // 
-            // tbLocalAddress
-            // 
-            this.tbLocalAddress.Location = new System.Drawing.Point(88, 71);
-            this.tbLocalAddress.Name = "tbLocalAddress";
-            this.tbLocalAddress.Size = new System.Drawing.Size(174, 20);
-            this.tbLocalAddress.TabIndex = 3;
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -110,13 +103,6 @@
             this.label3.Size = new System.Drawing.Size(67, 13);
             this.label3.TabIndex = 6;
             this.label3.Text = "Device type:";
-            // 
-            // tbRemoteAddress
-            // 
-            this.tbRemoteAddress.Location = new System.Drawing.Point(99, 19);
-            this.tbRemoteAddress.Name = "tbRemoteAddress";
-            this.tbRemoteAddress.Size = new System.Drawing.Size(163, 20);
-            this.tbRemoteAddress.TabIndex = 7;
             // 
             // label4
             // 
@@ -160,10 +146,10 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cbLocalAddress);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.tbDeviceName);
             this.groupBox1.Controls.Add(this.tbDeviceType);
-            this.groupBox1.Controls.Add(this.tbLocalAddress);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
@@ -175,7 +161,7 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.tbRemoteAddress);
+            this.groupBox2.Controls.Add(this.cbRemoteAddress);
             this.groupBox2.Controls.Add(this.nudRemotePort);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.label5);
@@ -199,6 +185,16 @@
             this.groupBox3.TabIndex = 13;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Commands";
+            // 
+            // btnSysInfo
+            // 
+            this.btnSysInfo.Location = new System.Drawing.Point(6, 77);
+            this.btnSysInfo.Name = "btnSysInfo";
+            this.btnSysInfo.Size = new System.Drawing.Size(256, 23);
+            this.btnSysInfo.TabIndex = 4;
+            this.btnSysInfo.Text = "Get system information";
+            this.btnSysInfo.UseVisualStyleBackColor = true;
+            this.btnSysInfo.Click += new System.EventHandler(this.btnSysInfo_Click);
             // 
             // btnRestart
             // 
@@ -230,21 +226,27 @@
             this.btnDisconnect.UseVisualStyleBackColor = true;
             this.btnDisconnect.Click += new System.EventHandler(this.btnDisconnect_Click);
             // 
-            // btnSysInfo
+            // cbLocalAddress
             // 
-            this.btnSysInfo.Location = new System.Drawing.Point(6, 77);
-            this.btnSysInfo.Name = "btnSysInfo";
-            this.btnSysInfo.Size = new System.Drawing.Size(256, 23);
-            this.btnSysInfo.TabIndex = 4;
-            this.btnSysInfo.Text = "Get system information";
-            this.btnSysInfo.UseVisualStyleBackColor = true;
-            this.btnSysInfo.Click += new System.EventHandler(this.btnSysInfo_Click);
+            this.cbLocalAddress.FormattingEnabled = true;
+            this.cbLocalAddress.Location = new System.Drawing.Point(88, 71);
+            this.cbLocalAddress.Name = "cbLocalAddress";
+            this.cbLocalAddress.Size = new System.Drawing.Size(174, 21);
+            this.cbLocalAddress.TabIndex = 14;
+            // 
+            // cbRemoteAddress
+            // 
+            this.cbRemoteAddress.FormattingEnabled = true;
+            this.cbRemoteAddress.Location = new System.Drawing.Point(99, 18);
+            this.cbRemoteAddress.Name = "cbRemoteAddress";
+            this.cbRemoteAddress.Size = new System.Drawing.Size(163, 21);
+            this.cbRemoteAddress.TabIndex = 15;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(292, 378);
+            this.ClientSize = new System.Drawing.Size(633, 378);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -268,11 +270,9 @@
         private System.Windows.Forms.Button btnPing;
         private System.Windows.Forms.TextBox tbDeviceName;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox tbLocalAddress;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tbDeviceType;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox tbRemoteAddress;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.NumericUpDown nudRemotePort;
@@ -283,5 +283,7 @@
         private System.Windows.Forms.Button btnShutdown;
         private System.Windows.Forms.Button btnDisconnect;
         private System.Windows.Forms.Button btnSysInfo;
+        private System.Windows.Forms.ComboBox cbLocalAddress;
+        private System.Windows.Forms.ComboBox cbRemoteAddress;
     }
 }

@@ -68,10 +68,11 @@ message RequestBase {
 
 message ResponseBase {
 	string Error = 1;
-	string ServerName = 2;
-	string ServerAddress = 3;
-	sint32 ServerPort = 4;
-	sint32 ConnectionsCount = 5;
+	int32 ExecutionTime = 2;
+	string ServerName = 3;
+	string ServerAddress = 4;
+	sint32 ServerPort = 5;
+	sint32 ConnectionsCount = 6;
 }
 
 message SystemInformation {

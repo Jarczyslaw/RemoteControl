@@ -76,6 +76,10 @@
       <Project>{f91c51e8-eee9-405d-8d53-1bd1a8b462a9}</Project>
       <Name>JToolbox.Desktop.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\JToolbox\JToolbox.Core\JToolbox.Core.csproj">
+      <Project>{04F8EA9C-CD49-436B-A88C-0413F65E58BE}</Project>
+      <Name>JToolbox.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\JToolbox\Misc\JToolbox.SysInformation\JToolbox.SysInformation.csproj">
       <Project>{d709e177-61b4-4761-9a5d-0db55eafe48d}</Project>
       <Name>JToolbox.SysInformation</Name>

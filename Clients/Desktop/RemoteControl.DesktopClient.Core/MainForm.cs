@@ -35,14 +35,14 @@ namespace RemoteControl.DesktopClient.Core
 
         public string LocalAddress
         {
-            get => tbLocalAddress.Text;
-            set => tbLocalAddress.Text = value;
+            get => cbLocalAddress.Text;
+            set => cbLocalAddress.Text = value;
         }
 
         public string RemoteAddress
         {
-            get => tbRemoteAddress.Text;
-            set => tbRemoteAddress.Text = value;
+            get => cbRemoteAddress.Text;
+            set => cbRemoteAddress.Text = value;
         }
 
         public int RemotePort
@@ -62,10 +62,11 @@ namespace RemoteControl.DesktopClient.Core
         {
             DeviceName = Environment.MachineName;
             DeviceType = DeviceType.Desktop;
-            RemoteAddress =
-                LocalAddress = NetworkUtils.GetLocalIPAddress()
-                .ToString();
-            RemotePort = 7890;
+
+            cbLocalAddress.DataSource = NetworkUtils.GetLocalIPAddresses();
+            cbRemoteAddress.DataSource = NetworkUtils.GetLocalIPAddresses();
+
+            RemotePort = 9977;
         }
 
         private async void btnPing_Click(object sender, EventArgs e)
@@ -127,10 +128,15 @@ namespace RemoteControl.DesktopClient.Core
                 var proxy = await lazyProxyClient.GetProxyClient(RemoteAddress, RemotePort);
                 if (dialogsService.ShowYesNoQuestion("Do you really want to shutdown remote machine?"))
                 {
-                    await proxy.Client.ShutdownAsync(new ShutdownRequest
+                    var response = await proxy.Client.ShutdownAsync(new ShutdownRequest
                     {
                         RequestBase = RequestBase
                     });
+
+                    if (response.ResponseBase.HasError())
+                    {
+                        dialogsService.ShowError(response.ResponseBase.Error);
+                    }
                 }
             }
             catch (Exception exc)
@@ -146,10 +152,15 @@ namespace RemoteControl.DesktopClient.Core
                 var proxy = await lazyProxyClient.GetProxyClient(RemoteAddress, RemotePort);
                 if (dialogsService.ShowYesNoQuestion("Do you really want to restart remote machine?"))
                 {
-                    await proxy.Client.RestartAsync(new RestartRequest
+                    var response = await proxy.Client.RestartAsync(new RestartRequest
                     {
                         RequestBase = RequestBase
                     });
+
+                    if (response.ResponseBase.HasError())
+                    {
+                        dialogsService.ShowError(response.ResponseBase.Error);
+                    }
                 }
             }
             catch (Exception exc)
@@ -163,11 +174,18 @@ namespace RemoteControl.DesktopClient.Core
             try
             {
                 var proxy = await lazyProxyClient.GetProxyClient(RemoteAddress, RemotePort);
-                var info = await proxy.Client.GetSystemInformationAsync(new GetSystemInformationRequest
+                var response = await proxy.Client.GetSystemInformationAsync(new GetSystemInformationRequest
                 {
                     RequestBase = RequestBase
                 });
-                dialogsService.ShowInfo(info.SystemInformation.PublicPropertiesToString());
+
+                if (response.ResponseBase.HasError())
+                {
+                    dialogsService.ShowError(response.ResponseBase.Error);
+                    return;
+                }
+
+                dialogsService.ShowInfo(response.SystemInformation.PublicPropertiesToString());
             }
             catch (Exception exc)
             {

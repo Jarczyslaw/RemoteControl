@@ -1,4 +1,5 @@
 ﻿using Grpc.Core;
+using JToolbox.Core.Utilities;
 using JToolbox.Desktop.Core.Services;
 using RemoteControl.Proxy;
 using RemoteControl.Server.Connections;
@@ -37,7 +38,8 @@ namespace RemoteControl.Server.RemoteCommands
             {
                 ResponseBase = CreateResponseBase()
             };
-            response.ResponseMessage = request.Message;
+            ExecutionTime.Run(() => response.ResponseMessage = request.Message, out TimeSpan elapsed);
+            response.ResponseBase.ExecutionTime = elapsed.Milliseconds;
             return Task.FromResult(response);
         }
 
@@ -47,16 +49,22 @@ namespace RemoteControl.Server.RemoteCommands
             {
                 ResponseBase = CreateResponseBase()
             };
-            try
+
+            ExecutionTime.Run(() =>
             {
-                HandleInfo(request.RequestBase, nameof(Disconnect));
-                connectionsService.RemoveConnection(request.RequestBase);
-            }
-            catch (Exception exc)
-            {
-                HandleError(exc);
-                response.ResponseBase.Error = exc.Message;
-            }
+                try
+                {
+                    HandleInfo(request.RequestBase, nameof(Disconnect));
+                    connectionsService.RemoveConnection(request.RequestBase);
+                }
+                catch (Exception exc)
+                {
+                    HandleError(exc);
+                    response.ResponseBase.Error = exc.Message;
+                }
+            }, out TimeSpan elapsed);
+
+            response.ResponseBase.ExecutionTime = elapsed.Milliseconds;
             return Task.FromResult(response);
         }
 
@@ -66,17 +74,23 @@ namespace RemoteControl.Server.RemoteCommands
             {
                 ResponseBase = CreateResponseBase()
             };
-            try
+
+            ExecutionTime.Run(() =>
             {
-                HandleInfo(request.RequestBase, nameof(Restart));
-                connectionsService.HandleRequest(request.RequestBase);
-                systemService.Restart();
-            }
-            catch (Exception exc)
-            {
-                HandleError(exc);
-                response.ResponseBase.Error = exc.Message;
-            }
+                try
+                {
+                    HandleInfo(request.RequestBase, nameof(Restart));
+                    connectionsService.HandleRequest(request.RequestBase);
+                    systemService.Restart();
+                }
+                catch (Exception exc)
+                {
+                    HandleError(exc);
+                    response.ResponseBase.Error = exc.Message;
+                }
+            }, out TimeSpan elapsed);
+
+            response.ResponseBase.ExecutionTime = elapsed.Milliseconds;
             return Task.FromResult(response);
         }
 
@@ -86,17 +100,23 @@ namespace RemoteControl.Server.RemoteCommands
             {
                 ResponseBase = CreateResponseBase()
             };
-            try
+
+            ExecutionTime.Run(() =>
             {
-                HandleInfo(request.RequestBase, nameof(Shutdown));
-                connectionsService.HandleRequest(request.RequestBase);
-                systemService.Shutdown();
-            }
-            catch (Exception exc)
-            {
-                HandleError(exc);
-                response.ResponseBase.Error = exc.Message;
-            }
+                try
+                {
+                    HandleInfo(request.RequestBase, nameof(Shutdown));
+                    connectionsService.HandleRequest(request.RequestBase);
+                    systemService.Shutdown();
+                }
+                catch (Exception exc)
+                {
+                    HandleError(exc);
+                    response.ResponseBase.Error = exc.Message;
+                }
+            }, out TimeSpan elapsed);
+
+            response.ResponseBase.ExecutionTime = elapsed.Milliseconds;
             return Task.FromResult(response);
         }
 
@@ -106,33 +126,39 @@ namespace RemoteControl.Server.RemoteCommands
             {
                 ResponseBase = CreateResponseBase()
             };
-            try
+
+            ExecutionTime.Run(() =>
             {
-                HandleInfo(request.RequestBase, nameof(Shutdown));
-                connectionsService.HandleRequest(request.RequestBase);
-
-                var osInfo = JToolbox.SysInformation.SystemInformation.GetOSInfo();
-                var cpuInfo = JToolbox.SysInformation.SystemInformation.GetCPUInfo();
-                var memoryInfo = JToolbox.SysInformation.SystemInformation.GetMemoryInfo();
-
-                response.SystemInformation = new SystemInformation
+                try
                 {
-                    OSBuildNumber = osInfo.BuildNumber,
-                    OSName = osInfo.Name,
-                    OSVersion = osInfo.Version,
-                    CPUCaption = cpuInfo.Caption,
-                    CPUName = cpuInfo.Name,
-                    NumberOfCores = cpuInfo.NumberOfEnabledCores,
-                    NumberOfLogicalProcessors = cpuInfo.NumberOfLogicalProcessors,
-                    FreeMemory = memoryInfo.FreePhysicalMemory,
-                    TotalMemory = memoryInfo.TotalVisibleMemory
-                };
-            }
-            catch (Exception exc)
-            {
-                HandleError(exc);
-                response.ResponseBase.Error = exc.Message;
-            }
+                    HandleInfo(request.RequestBase, nameof(GetSystemInformation));
+                    connectionsService.HandleRequest(request.RequestBase);
+
+                    var osInfo = JToolbox.SysInformation.SystemInformation.GetOSInfo();
+                    var cpuInfo = JToolbox.SysInformation.SystemInformation.GetCPUInfo();
+                    var memoryInfo = JToolbox.SysInformation.SystemInformation.GetMemoryInfo();
+
+                    response.SystemInformation = new SystemInformation
+                    {
+                        OSBuildNumber = osInfo.BuildNumber,
+                        OSName = osInfo.Name,
+                        OSVersion = osInfo.Version,
+                        CPUCaption = cpuInfo.Caption,
+                        CPUName = cpuInfo.Name,
+                        NumberOfCores = cpuInfo.NumberOfEnabledCores,
+                        NumberOfLogicalProcessors = cpuInfo.NumberOfLogicalProcessors,
+                        FreeMemory = memoryInfo.FreePhysicalMemory,
+                        TotalMemory = memoryInfo.TotalVisibleMemory
+                    };
+                }
+                catch (Exception exc)
+                {
+                    HandleError(exc);
+                    response.ResponseBase.Error = exc.Message;
+                }
+            }, out TimeSpan elapsed);
+
+            response.ResponseBase.ExecutionTime = elapsed.Milliseconds;
             return Task.FromResult(response);
         }
 
@@ -140,7 +166,7 @@ namespace RemoteControl.Server.RemoteCommands
         {
             return new ResponseBase
             {
-                Error = null,
+                Error = string.Empty,
                 ConnectionsCount = connectionsService.Connections.Count,
                 ServerName = Environment.MachineName,
                 ServerAddress = Address,
