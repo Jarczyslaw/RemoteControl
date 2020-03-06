@@ -42,18 +42,6 @@ namespace RemoteControl.MobileClient.Core.ViewModels
             dialogsService.Toast("Saved successfully");
         });
 
-        public DelegateCommand SearchAddressCommand => new DelegateCommand(async () =>
-        {
-            var localAddresses = NetworkUtils.GetLocalIPAddresses()
-                .Select(a => a.ToString())
-                .ToArray();
-            var selectedAddress = await dialogsService.UserDialogs.ActionSheetAsync("Addresses", null, null, null, localAddresses);
-            if (!string.IsNullOrEmpty(selectedAddress))
-            {
-                LocalAddress = selectedAddress;
-            }
-        });
-
         public DelegateCommand FindServerCommand => new DelegateCommand(async () =>
         {
         });
@@ -134,6 +122,7 @@ namespace RemoteControl.MobileClient.Core.ViewModels
             Name = appSettings.Name;
             Port = appSettings.Port;
             RemoteAddress = appSettings.RemoteAddress;
+            LocalAddress = NetworkUtils.GetLocalIPAddress().ToString();
         }
 
         private async Task<bool> ValidateRemoteAddress()

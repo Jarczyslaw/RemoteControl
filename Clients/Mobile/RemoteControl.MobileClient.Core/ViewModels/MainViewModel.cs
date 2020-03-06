@@ -1,4 +1,6 @@
-﻿using JToolbox.XamarinForms.Core.Base;
+﻿using JToolbox.Core.Extensions;
+using JToolbox.Core.Utilities;
+using JToolbox.XamarinForms.Core.Base;
 using JToolbox.XamarinForms.Core.Navigation;
 using JToolbox.XamarinForms.Dialogs;
 using Prism.Commands;
@@ -6,7 +8,6 @@ using Prism.Navigation;
 using RemoteControl.MobileClient.Core.Services;
 using RemoteControl.Proxy;
 using System;
-using JToolbox.Core.Extensions;
 
 namespace RemoteControl.MobileClient.Core.ViewModels
 {
@@ -40,22 +41,27 @@ namespace RemoteControl.MobileClient.Core.ViewModels
                     return;
                 }
 
-                var client = await lazyProxyClient.GetProxyClient(appSettings.RemoteAddress, appSettings.Port);
-                var response = await client.Client.GetSystemInformationAsync(new GetSystemInformationRequest
+                await dialogsService.ShowLoading("Please wait...", async () =>
                 {
-                    RequestBase = GetRequestBase()
+                    var client = await lazyProxyClient.GetProxyClient(appSettings.RemoteAddress, appSettings.Port);
+                    var response = await client.Client.GetSystemInformationAsync(new GetSystemInformationRequest
+                    {
+                        RequestBase = GetRequestBase()
+                    });
+
+                    if (response.ResponseBase.HasError())
+                    {
+                        await dialogsService.Error(response.ResponseBase.Error);
+                        return;
+                    }
+
+                    UpdateConnectedStatus(true);
+                    await dialogsService.Information(response.SystemInformation.PublicPropertiesToString());
                 });
-
-                if (response.ResponseBase.HasError())
-                {
-                    await dialogsService.Error(response.ResponseBase.Error);
-                    return;
-                }
-
-                await dialogsService.Information(response.SystemInformation.PublicPropertiesToString());
             }
             catch (Exception exc)
             {
+                UpdateConnectedStatus(false);
                 await dialogsService.Error(exc.Message);
             }
         });
@@ -76,6 +82,18 @@ namespace RemoteControl.MobileClient.Core.ViewModels
             set => SetProperty(ref statusText, value);
         }
 
+        private void UpdateConnectedStatus(bool connected)
+        {
+            if (connected)
+            {
+                SetConnectedStatus(appSettings.RemoteAddress, appSettings.Port);
+            }
+            else
+            {
+                SetDisconnectedStatus();
+            }
+        }
+
         private void SetConnectedStatus(string address, int port)
         {
             StatusText = $"Connected to: {address} at port: {port}";
@@ -90,7 +108,7 @@ namespace RemoteControl.MobileClient.Core.ViewModels
         {
             return new RequestBase
             {
-                Address = appSettings.LocalAddress,
+                Address = NetworkUtils.GetLocalIPAddress().ToString(),
                 Type = RequestBase.Types.DeviceType.Mobile,
                 Name = appSettings.Name
             };
