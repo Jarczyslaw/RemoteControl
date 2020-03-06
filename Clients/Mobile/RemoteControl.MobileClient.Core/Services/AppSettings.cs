@@ -11,6 +11,12 @@ namespace RemoteControl.MobileClient.Core.Services
             set => AddString(nameof(Name), value);
         }
 
+        public string LocalAddress
+        {
+            get => GetString(nameof(LocalAddress), string.Empty);
+            set => AddString(nameof(LocalAddress), value);
+        }
+
         public string RemoteAddress
         {
             get => GetString(nameof(RemoteAddress), string.Empty);
@@ -19,8 +25,23 @@ namespace RemoteControl.MobileClient.Core.Services
 
         public int Port
         {
-            get => GetInt(nameof(Port), 9988);
+            get => GetInt(nameof(Port), 9977);
             set => AddInt(nameof(Port), value);
+        }
+
+        public string Validate()
+        {
+            if (string.IsNullOrEmpty(LocalAddress))
+            {
+                return "Invalid local address";
+            }
+
+            if (string.IsNullOrEmpty(RemoteAddress))
+            {
+                return "Invalid remote address";
+            }
+
+            return null;
         }
     }
 }

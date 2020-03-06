@@ -45,6 +45,7 @@
                     <Label Style="{DynamicResource HeaderLabel}" Text="Commands" />
 
                     <StackLayout Grid.Row="1">
+                        <Button Command="{Binding GetServerInfoCommand}" Text="Get server info" />
                         <Button Command="{Binding ShutdownCommand}" Text="Shutdown" />
                         <Button Command="{Binding RestartCommand}" Text="Restart" />
                     </StackLayout>

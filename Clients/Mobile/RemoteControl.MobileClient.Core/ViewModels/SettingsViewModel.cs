@@ -1,4 +1,5 @@
-﻿using JToolbox.XamarinForms.Core.Base;
+﻿using JToolbox.Core.Utilities;
+using JToolbox.XamarinForms.Core.Base;
 using JToolbox.XamarinForms.Dialogs;
 using Prism.Commands;
 using Prism.Navigation;
@@ -6,13 +7,13 @@ using RemoteControl.MobileClient.Core.Services;
 using RemoteControl.Proxy;
 using System;
 using System.Threading.Tasks;
+using System.Linq;
 using static RemoteControl.Proxy.RequestBase.Types;
 
 namespace RemoteControl.MobileClient.Core.ViewModels
 {
     public class SettingsViewModel : ViewModelBase
     {
-        private readonly ILazyProxyClient lazyProxyClient;
         private readonly IDialogsService dialogsService;
         private readonly IAppSettings appSettings;
 
@@ -21,11 +22,9 @@ namespace RemoteControl.MobileClient.Core.ViewModels
         private string remoteAddress;
         private int port;
 
-        public SettingsViewModel(INavigationService navigationService, ILazyProxyClient lazyProxyClient,
-            IDialogsService dialogsService, IAppSettings appSettings)
+        public SettingsViewModel(INavigationService navigationService, IDialogsService dialogsService, IAppSettings appSettings)
             : base(navigationService)
         {
-            this.lazyProxyClient = lazyProxyClient;
             this.dialogsService = dialogsService;
             this.appSettings = appSettings;
 
@@ -40,7 +39,19 @@ namespace RemoteControl.MobileClient.Core.ViewModels
             }
 
             SaveSettings();
-            await Close();
+            dialogsService.Toast("Saved successfully");
+        });
+
+        public DelegateCommand SearchAddressCommand => new DelegateCommand(async () =>
+        {
+            var localAddresses = NetworkUtils.GetLocalIPAddresses()
+                .Select(a => a.ToString())
+                .ToArray();
+            var selectedAddress = await dialogsService.UserDialogs.ActionSheetAsync("Addresses", null, null, null, localAddresses);
+            if (!string.IsNullOrEmpty(selectedAddress))
+            {
+                LocalAddress = selectedAddress;
+            }
         });
 
         public DelegateCommand FindServerCommand => new DelegateCommand(async () =>
