@@ -59,10 +59,18 @@ namespace RemoteControl.MobileClient.Core.ViewModels
             {
                 proxyClient = new ProxyClient();
                 await proxyClient.Start(RemoteAddress, Port);
-                var response = proxyClient.Client.PingAsync(new PingRequest
+                var response = await proxyClient.Client.PingAsync(new PingRequest
                 {
                     Message = "Test message"
                 });
+
+                if (response.ResponseBase.HasError())
+                {
+                    await dialogsService.Error(response.ResponseBase.Error);
+                    return;
+                }
+
+                await dialogsService.Information("Successfully received message from server");
             }
             catch (Exception exc)
             {

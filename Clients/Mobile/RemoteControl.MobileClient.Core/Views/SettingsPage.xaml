@@ -107,8 +107,14 @@
                 </Grid>
             </Grid>
 
-            <Button Command="{Binding FindServerCommand}" Text="Find server" />
-            <Button Command="{Binding CheckConnectionCommand}" Text="Check connection" />
+            <Button
+                Margin="3"
+                Command="{Binding FindServerCommand}"
+                Text="Find server" />
+            <Button
+                Margin="3"
+                Command="{Binding CheckConnectionCommand}"
+                Text="Check connection" />
         </StackLayout>
 
     </ContentPage.Content>
