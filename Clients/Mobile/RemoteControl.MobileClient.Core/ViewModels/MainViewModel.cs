@@ -1,4 +1,5 @@
-﻿using JToolbox.Core.Extensions;
+﻿using Acr.UserDialogs;
+using JToolbox.Core.Extensions;
 using JToolbox.Core.Utilities;
 using JToolbox.XamarinForms.Core.Base;
 using JToolbox.XamarinForms.Core.Navigation;
@@ -8,6 +9,7 @@ using Prism.Navigation;
 using RemoteControl.MobileClient.Core.Services;
 using RemoteControl.Proxy;
 using System;
+using System.Threading.Tasks;
 
 namespace RemoteControl.MobileClient.Core.ViewModels
 {
@@ -32,38 +34,34 @@ namespace RemoteControl.MobileClient.Core.ViewModels
 
         public DelegateCommand SettingsCommand => new DelegateCommand(async () => await navigationService.NavigateToViewModel<SettingsViewModel>());
 
+        public DelegateCommand TestCommand => new DelegateCommand(async () =>
+        {
+            /*await dialogsService.ShowLoading("Please wait", async () =>
+            {
+                await Task.Delay(2000);
+            })*/
+            UserDialogs.Instance.ShowLoading("Title...");
+        });
+
+
         public DelegateCommand GetServerInfoCommand => new DelegateCommand(async () =>
         {
-            try
+            await ExecuteRemoteCommand(async (client) =>
             {
-                if (!ValidateAppSettings())
+                var response = await client.Client.GetSystemInformationAsync(new GetSystemInformationRequest
                 {
-                    return;
+                    RequestBase = GetRequestBase()
+                });
+
+                if (response.ResponseBase.HasError())
+                {
+                    await dialogsService.Error(response.ResponseBase.Error);
+                    return false;
                 }
 
-                await dialogsService.ShowLoading("Please wait...", async () =>
-                {
-                    var client = await lazyProxyClient.GetProxyClient(appSettings.RemoteAddress, appSettings.Port);
-                    var response = await client.Client.GetSystemInformationAsync(new GetSystemInformationRequest
-                    {
-                        RequestBase = GetRequestBase()
-                    });
-
-                    if (response.ResponseBase.HasError())
-                    {
-                        await dialogsService.Error(response.ResponseBase.Error);
-                        return;
-                    }
-
-                    UpdateConnectedStatus(true);
-                    await dialogsService.Information(response.SystemInformation.PublicPropertiesToString());
-                });
-            }
-            catch (Exception exc)
-            {
-                UpdateConnectedStatus(false);
-                await dialogsService.Error(exc.Message);
-            }
+                await dialogsService.Information(response.SystemInformation.PublicPropertiesToString());
+                return true;
+            });
         });
 
         public DelegateCommand ShutdownCommand => new DelegateCommand(() =>
@@ -75,6 +73,32 @@ namespace RemoteControl.MobileClient.Core.ViewModels
         {
             dialogsService.Toast("RestartCommand");
         });
+
+        private async Task ExecuteRemoteCommand(Func<ProxyClient, Task<bool>> remoteCommandAction)
+        {
+            try
+            {
+                if (!ValidateAppSettings())
+                {
+                    return;
+                }
+
+                await dialogsService.ShowLoading("Please wait...", async () =>
+                {
+                    var client = await lazyProxyClient.GetProxyClient(appSettings.RemoteAddress, appSettings.Port);
+                    var remoteCommandActionResult = await remoteCommandAction(client);
+                    if (remoteCommandActionResult)
+                    {
+                        UpdateConnectedStatus(true);
+                    }
+                });
+            }
+            catch (Exception exc)
+            {
+                UpdateConnectedStatus(false);
+                await dialogsService.Error(exc.Message);
+            }
+        }
 
         public string StatusText
         {

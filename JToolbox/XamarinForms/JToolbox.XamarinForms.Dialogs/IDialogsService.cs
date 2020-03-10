@@ -23,5 +23,7 @@ namespace JToolbox.XamarinForms.Dialogs
         Task ShowLoading(string message, Func<Task> loadingAction, Action cancelAction = null);
 
         Task Busy(string message, Func<Task> busyAction);
+
+        Task<T> ShowActionSheet<T>(ActionSheet<T> actionSheet);
     }
 }

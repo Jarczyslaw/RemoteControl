@@ -48,6 +48,7 @@
                         <Button Command="{Binding GetServerInfoCommand}" Text="Get server info" />
                         <Button Command="{Binding ShutdownCommand}" Text="Shutdown" />
                         <Button Command="{Binding RestartCommand}" Text="Restart" />
+                        <Button Command="{Binding TestCommand}" Text="Test" />
                     </StackLayout>
                 </Grid>
             </Grid>

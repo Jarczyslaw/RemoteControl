@@ -73,5 +73,16 @@ namespace JToolbox.XamarinForms.Dialogs
                 await busyAction();
             }
         }
+
+        public Task<T> ShowActionSheet<T>(ActionSheet<T> actionSheet)
+        {
+            return Task.Run(() =>
+            {
+                var t = new TaskCompletionSource<T>();
+                actionSheet.ActionSheetSelected += v => t.TrySetResult(v);
+                UserDialogs.ActionSheet(actionSheet);
+                return t.Task;
+            });
+        }
     }
 }
