@@ -1,5 +1,4 @@
-﻿using Acr.UserDialogs;
-using JToolbox.Core.Extensions;
+﻿using JToolbox.Core.Extensions;
 using JToolbox.Core.Utilities;
 using JToolbox.XamarinForms.Core.Base;
 using JToolbox.XamarinForms.Core.Navigation;
@@ -34,16 +33,6 @@ namespace RemoteControl.MobileClient.Core.ViewModels
 
         public DelegateCommand SettingsCommand => new DelegateCommand(async () => await navigationService.NavigateToViewModel<SettingsViewModel>());
 
-        public DelegateCommand TestCommand => new DelegateCommand(async () =>
-        {
-            /*await dialogsService.ShowLoading("Please wait", async () =>
-            {
-                await Task.Delay(2000);
-            })*/
-            UserDialogs.Instance.ShowLoading("Title...");
-        });
-
-
         public DelegateCommand GetServerInfoCommand => new DelegateCommand(async () =>
         {
             await ExecuteRemoteCommand(async (client) =>
@@ -64,14 +53,52 @@ namespace RemoteControl.MobileClient.Core.ViewModels
             });
         });
 
-        public DelegateCommand ShutdownCommand => new DelegateCommand(() =>
+        public DelegateCommand ShutdownCommand => new DelegateCommand(async () =>
         {
-            dialogsService.Toast("ShutdownCommand");
+            var dialogResult = await dialogsService.QuestionYesNo("Do you really want to shutdown remote machine?");
+            if (dialogResult)
+            {
+                await ExecuteRemoteCommand(async (client) =>
+                {
+                    var response = await client.Client.ShutdownAsync(new ShutdownRequest
+                    {
+                        RequestBase = GetRequestBase()
+                    });
+
+                    if (response.ResponseBase.HasError())
+                    {
+                        await dialogsService.Error(response.ResponseBase.Error);
+                        return false;
+                    }
+
+                    await dialogsService.Information("Remote machine should now be turned off");
+                    return true;
+                });
+            }
         });
 
-        public DelegateCommand RestartCommand => new DelegateCommand(() =>
+        public DelegateCommand RestartCommand => new DelegateCommand(async () =>
         {
-            dialogsService.Toast("RestartCommand");
+            var dialogResult = await dialogsService.QuestionYesNo("Do you really want to restart remote machine?");
+            if (!dialogResult)
+            {
+                await ExecuteRemoteCommand(async (client) =>
+                {
+                    var response = await client.Client.RestartAsync(new RestartRequest
+                    {
+                        RequestBase = GetRequestBase()
+                    });
+
+                    if (response.ResponseBase.HasError())
+                    {
+                        await dialogsService.Error(response.ResponseBase.Error);
+                        return false;
+                    }
+
+                    await dialogsService.Information("Remote machine should now be restarted");
+                    return true;
+                });
+            }
         });
 
         private async Task ExecuteRemoteCommand(Func<ProxyClient, Task<bool>> remoteCommandAction)
@@ -83,7 +110,7 @@ namespace RemoteControl.MobileClient.Core.ViewModels
                     return;
                 }
 
-                await dialogsService.ShowLoading("Please wait...", async () =>
+                await dialogsService.ShowLoading("Executing command...", async () =>
                 {
                     var client = await lazyProxyClient.GetProxyClient(appSettings.RemoteAddress, appSettings.Port);
                     var remoteCommandActionResult = await remoteCommandAction(client);
