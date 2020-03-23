@@ -1,5 +1,7 @@
 ﻿using JToolbox.Core.Extensions;
 using JToolbox.Core.Utilities;
+using JToolbox.XamarinForms.Core.Abstraction;
+using JToolbox.XamarinForms.Core.Awareness;
 using JToolbox.XamarinForms.Core.Base;
 using JToolbox.XamarinForms.Core.Navigation;
 using JToolbox.XamarinForms.Dialogs;
@@ -12,18 +14,20 @@ using System.Threading.Tasks;
 
 namespace RemoteControl.MobileClient.Core.ViewModels
 {
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : ViewModelBase, IOnBackButtonAware
     {
         private string statusText;
 
         private readonly IDialogsService dialogsService;
         private readonly ILazyProxyClient lazyProxyClient;
         private readonly IAppSettings appSettings;
+        private readonly IAppCore appCore;
 
-        public MainViewModel(ILazyProxyClient lazyProxyClient, INavigationService navigationService,
+        public MainViewModel(IAppCore appCore, ILazyProxyClient lazyProxyClient, INavigationService navigationService,
             IDialogsService dialogsService, IAppSettings appSettings)
             : base(navigationService)
         {
+            this.appCore = appCore;
             this.dialogsService = dialogsService;
             this.lazyProxyClient = lazyProxyClient;
             this.appSettings = appSettings;
@@ -174,6 +178,16 @@ namespace RemoteControl.MobileClient.Core.ViewModels
                 return false;
             }
             return true;
+        }
+
+        public async Task<bool> OnBackButton()
+        {
+            var result = await dialogsService.QuestionYesNo("Do you really want to close application?");
+            if (result)
+            {
+                appCore.Kill();
+            }
+            return false;
         }
     }
 }
