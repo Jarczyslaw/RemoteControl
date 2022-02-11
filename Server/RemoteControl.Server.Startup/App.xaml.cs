@@ -78,8 +78,8 @@ namespace RemoteControl.Server.Startup
             {
                 Address = NetworkUtils.GetLocalIPAddress().ToString(),
                 Port = 9977,
-                InactiveTime = 20,
-                RemoveTime = 60,
+                InactiveTime = 60,
+                RemoveTime = 300,
                 StartMinimized = false
             };
 
